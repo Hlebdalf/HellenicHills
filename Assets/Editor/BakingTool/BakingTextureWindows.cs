@@ -21,11 +21,13 @@ public class BakeTextureWindow : EditorWindow
     void OnGUI()
     {
         ImageMaterial = (Material)EditorGUILayout.ObjectField("Material", ImageMaterial, typeof(Material), false);
+        bakingObj = (GameObject)EditorGUILayout.ObjectField("GameObject", bakingObj, typeof(GameObject), false);
         Resolution = EditorGUILayout.Vector2IntField("Image Resolution", Resolution);
         FilePath = EditorGUILayout.TextField("Image Path", FilePath);
 
         if (GUILayout.Button("Bake"))
         {
+            bakingObj.GetComponent<MeshRenderer>().materials[0].SetFloat("_Xpos", 10);
             BakeTexture();
         }
     }
