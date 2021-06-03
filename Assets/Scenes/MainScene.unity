@@ -221,9 +221,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cnt: 4
-  Resolution: {x: 128, y: 128}
+  Resolution: {x: 1024, y: 1024}
   ImageMaterial: {fileID: 2100000, guid: baa33f483b1f4d542803bbccf2eb6841, type: 2}
-  FilePath: Assets/MaterialImage
+  FilePath: Assets/Textures/MaterialImage
 --- !u!114 &1644744612
 MonoBehaviour:
   m_ObjectHideFlags: 0
