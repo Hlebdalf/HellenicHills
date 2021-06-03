@@ -224,6 +224,7 @@ MonoBehaviour:
   Resolution: {x: 1024, y: 1024}
   ImageMaterial: {fileID: 2100000, guid: baa33f483b1f4d542803bbccf2eb6841, type: 2}
   FilePath: Assets/Textures/MaterialImage
+  seed: 666
 --- !u!114 &1644744612
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,8 +9,8 @@ public class BakingScript : MonoBehaviour
     public int cnt;
     public Vector2Int Resolution = new Vector2Int(0, 0);
     public Material ImageMaterial;
-    public string FilePath = "Assets/MaterialImage";
-    private int nowPos = 0;
+    public string FilePath = "Assets/Textures/MaterialImage";
+    public int seed = 0;
     void Start()
     {
         Bake(cnt);
@@ -20,17 +20,15 @@ public class BakingScript : MonoBehaviour
     {
         for (int i = 0; i < num; i++)
         {
-            ImageMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", nowPos);
-            nowPos += 10;
-
-            Debug.Log(ImageMaterial.GetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46"));
+            ImageMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", seed);
+            seed += 10;
             RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x, Resolution.y);
             Graphics.Blit(null, renderTexture, ImageMaterial);
             Texture2D texture = new Texture2D(Resolution.x, Resolution.y);
             RenderTexture.active = renderTexture;
             texture.ReadPixels(new Rect(Vector2.zero, Resolution), 0, 0);
             byte[] png = texture.EncodeToPNG();
-            File.WriteAllBytes(FilePath + (nowPos/10).ToString() + ".png", png);
+            File.WriteAllBytes(FilePath + (seed/10).ToString() + ".png", png);
             AssetDatabase.Refresh();
             RenderTexture.active = null;
             RenderTexture.ReleaseTemporary(renderTexture);
