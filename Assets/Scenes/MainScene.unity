@@ -217,14 +217,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1644744607}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75a861efa0796c941b380b706a9256ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 3962978c37700154ca00e9ee9e5be64c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cnt: 4
+  cnt: 2
   Resolution: {x: 1024, y: 1024}
-  ImageMaterial: {fileID: 2100000, guid: baa33f483b1f4d542803bbccf2eb6841, type: 2}
+  ImageMaterial: {fileID: 2100000, guid: b9b1f454bb204a3419e2e06516d426c2, type: 2}
   FilePath: Assets/Textures/MaterialImage
-  seed: 666
+  seed: 0
 --- !u!114 &1644744612
 MonoBehaviour:
   m_ObjectHideFlags: 0
