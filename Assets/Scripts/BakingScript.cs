@@ -29,7 +29,7 @@ public class BakingScript : MonoBehaviour
             texture.ReadPixels(new Rect(Vector2.zero, Resolution), 0, 0);
             byte[] png = texture.EncodeToPNG();
             File.WriteAllBytes(FilePath + (seed/10).ToString() + ".png", png);
-            AssetDatabase.Refresh();
+            //AssetDatabase.Refresh();
             RenderTexture.active = null;
             RenderTexture.ReleaseTemporary(renderTexture);
             DestroyImmediate(texture);
