@@ -13,10 +13,10 @@ public class BakingScript : MonoBehaviour
     public GameObject Ball;
     public GameObject RefTerrain;
     public Material TerrainMaterial;
-    
     public GameObject[] Terrains = new GameObject[6];
     public TerrainData[] Data = new TerrainData[6];
     public Texture2D[] HeightMaps = new Texture2D[6];
+    //public Material[] Materials = new Material[9];
     private TerrainData[] SwitchData = new TerrainData[3];
     private Transform BallTransform;
     private float border = -1000;
@@ -42,7 +42,7 @@ public class BakingScript : MonoBehaviour
         Texture2D texture = new Texture2D(Resolution.x, Resolution.y);
         RenderTexture.active = renderTexture;
         texture.ReadPixels(new Rect(Vector2.zero, Resolution), 0, 0);
-        //AssetDatabase.Refresh();
+        //AssetDatabase.Refresh();      
         RenderTexture.active = null;
         RenderTexture.ReleaseTemporary(renderTexture);
         return texture;
@@ -70,20 +70,22 @@ public class BakingScript : MonoBehaviour
             SwitchData[i+1] = Data[i + 1];
             Data[i + 1] = Data[i + 4];
             Data[i + 4] = SwitchData[i + 1];
-            HeightMaps[i + 4] = Bake(new Vector2(X, Z * i));
+            //Materials[i + 7] = Materials[i + 1];
+            //Materials[i + 1] = Materials[i + 4];
+            //Materials[i + 4] = Materials[i + 7];
+            HeightMaps[i + 4] = Bake(new Vector2(X, Z + i * 1000));
             float[,] HeightColors = new float[Resolution.x, Resolution.y];
             for (int y = 0; y < Resolution.x; y++)
             {
                 for (int p = 0; p < Resolution.y; p++)
                 {
-                    HeightColors[y, p] = HeightMaps[i+4].GetPixel(y,p)[0]/10;
+                    HeightColors[p, y] = HeightMaps[i + 4].GetPixel(y, p)[0] / 10;
                 }
             }
-            GameObject NewTerrain = Terrain.CreateTerrainGameObject(Data[i+4]);
+            GameObject NewTerrain = Terrain.CreateTerrainGameObject(Data[i + 4]);
             NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x  + 1;
             NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
-            //NewTerrain.GetComponent<Terrain>().terrainData.heightmapScale.Scale(new Vector3(0.5f, 0.5f, 0.5f));
-            //NewTerrain.GetComponent<Terrain>().terrainData.
+            //Materials[i + 4].SetTexture("_MainTex", HeightMaps[i + 4]);
             NewTerrain.GetComponent<Terrain>().materialTemplate = TerrainMaterial;
             Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
             NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);           
