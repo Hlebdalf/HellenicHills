@@ -12,12 +12,14 @@ public class BakingScript : MonoBehaviour
     public float seed;
     public GameObject Ball;
     public GameObject RefTerrain;
-    private Transform BallTransform;
-    private float border = -1000;
+    public Material TerrainMaterial;
+    
     public GameObject[] Terrains = new GameObject[6];
     public TerrainData[] Data = new TerrainData[6];
     public Texture2D[] HeightMaps = new Texture2D[6];
     private TerrainData[] SwitchData = new TerrainData[3];
+    private Transform BallTransform;
+    private float border = -1000;
 
     private void Awake()
     {
@@ -40,7 +42,7 @@ public class BakingScript : MonoBehaviour
         Texture2D texture = new Texture2D(Resolution.x, Resolution.y);
         RenderTexture.active = renderTexture;
         texture.ReadPixels(new Rect(Vector2.zero, Resolution), 0, 0);
-        AssetDatabase.Refresh();
+        //AssetDatabase.Refresh();
         RenderTexture.active = null;
         RenderTexture.ReleaseTemporary(renderTexture);
         return texture;
@@ -82,6 +84,7 @@ public class BakingScript : MonoBehaviour
             NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
             //NewTerrain.GetComponent<Terrain>().terrainData.heightmapScale.Scale(new Vector3(0.5f, 0.5f, 0.5f));
             //NewTerrain.GetComponent<Terrain>().terrainData.
+            NewTerrain.GetComponent<Terrain>().materialTemplate = TerrainMaterial;
             Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
             NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);           
             Terrains[i + 4] = NewTerrain;             

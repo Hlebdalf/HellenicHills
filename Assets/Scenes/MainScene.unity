@@ -723,6 +723,7 @@ MonoBehaviour:
   Ball: {fileID: 465162882}
   RefTerrain: {fileID: 8003963944475019791, guid: 46e4930502970e44da53ac136e566f39,
     type: 3}
+  TerrainMaterial: {fileID: 2100000, guid: 1abd001b49366e94abba14d0988a2c31, type: 2}
   Terrains:
   - {fileID: 0}
   - {fileID: 0}
