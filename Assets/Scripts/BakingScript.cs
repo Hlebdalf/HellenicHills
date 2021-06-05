@@ -14,8 +14,8 @@ public class BakingScript : MonoBehaviour
     public GameObject Ball;
     public GameObject RefTerrain;
     private Transform BallTransform;
-    private float border = -1000;
-    //private GameObject[] Trash = new GameObject[6];
+    private float border = 0;
+    public GameObject[] Trash = new GameObject[6];
     void Start()
     {
         //Bake(cnt);
@@ -51,11 +51,15 @@ public class BakingScript : MonoBehaviour
     {
         float X = Mathf.Floor(BallTransform.position.x / 1000) * 1000;
         float Z = Mathf.Floor(BallTransform.position.z / 1000) * 1000;
+        
         for (int i = -1; i < 2; i++)
         {
+            Destroy(Trash[i+1]);
+            Trash[i+1] = Trash[i + 4];
             GameObject NewTerrain = Instantiate(RefTerrain);
             Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
             NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);
+            Trash[i + 4] = NewTerrain;
         }
     }
 }
