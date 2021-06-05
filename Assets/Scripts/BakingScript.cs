@@ -16,11 +16,9 @@ public class BakingScript : MonoBehaviour
     public GameObject[] Terrains = new GameObject[6];
     public TerrainData[] Data = new TerrainData[6];
     public Texture2D[] HeightMaps = new Texture2D[6];
-    //public Material[] Materials = new Material[9];
     private TerrainData[] SwitchData = new TerrainData[3];
     private Transform BallTransform;
     private float border = -1000;
-
     private void Awake()
     {
         BallTransform = Ball.GetComponent<Transform>();
@@ -41,8 +39,7 @@ public class BakingScript : MonoBehaviour
         Graphics.Blit(null, renderTexture, ImageMaterial);
         Texture2D texture = new Texture2D(Resolution.x, Resolution.y);
         RenderTexture.active = renderTexture;
-        texture.ReadPixels(new Rect(Vector2.zero, Resolution), 0, 0);
-        //AssetDatabase.Refresh();      
+        texture.ReadPixels(new Rect(Vector2.zero, Resolution), 0, 0);     
         RenderTexture.active = null;
         RenderTexture.ReleaseTemporary(renderTexture);
         return texture;
@@ -70,9 +67,6 @@ public class BakingScript : MonoBehaviour
             SwitchData[i+1] = Data[i + 1];
             Data[i + 1] = Data[i + 4];
             Data[i + 4] = SwitchData[i + 1];
-            //Materials[i + 7] = Materials[i + 1];
-            //Materials[i + 1] = Materials[i + 4];
-            //Materials[i + 4] = Materials[i + 7];
             HeightMaps[i + 4] = Bake(new Vector2(X, Z + i * 1000));
             float[,] HeightColors = new float[Resolution.x, Resolution.y];
             for (int y = 0; y < Resolution.x; y++)
@@ -85,12 +79,10 @@ public class BakingScript : MonoBehaviour
             GameObject NewTerrain = Terrain.CreateTerrainGameObject(Data[i + 4]);
             NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x  + 1;
             NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
-            //Materials[i + 4].SetTexture("_MainTex", HeightMaps[i + 4]);
             NewTerrain.GetComponent<Terrain>().materialTemplate = TerrainMaterial;
             Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
             NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);           
             Terrains[i + 4] = NewTerrain;             
-            Debug.Log("Good Luck!");
         }
     }
  
