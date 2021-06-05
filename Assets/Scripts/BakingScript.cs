@@ -1,4 +1,4 @@
-using System.Collections;
+//using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System.IO;
@@ -6,37 +6,44 @@ using System.IO;
 
 public class BakingScript : MonoBehaviour
 {
-    public int cnt;
     public Vector2Int Resolution = new Vector2Int(0, 0);
     public Material ImageMaterial;
     public string FilePath = "Assets/Textures/MaterialImage";
-    public int seed = 0;
+    public float seed;
     public GameObject Ball;
     public GameObject RefTerrain;
     private Transform BallTransform;
-    private float border = 0;
-    public GameObject[] Trash = new GameObject[6];
+    private float border = -1000;
+    public GameObject[] Terrains = new GameObject[6];
+    public TerrainData[] Data = new TerrainData[6];
+    public Texture2D[] HeightMaps = new Texture2D[6];
+    private TerrainData[] SwitchData = new TerrainData[3];
+
+    private void Awake()
+    {
+        BallTransform = Ball.GetComponent<Transform>();
+        seed = Random.Range(-10000f, 10000f);
+        BuildTerrain();
+        
+    }
     void Start()
     {
-        //Bake(cnt);
-        BallTransform = Ball.GetComponent<Transform>();
+        BallTransform.position = new Vector3(10, 100, 500);
     }
 
-    public void Bake(Vector2 offset)
+    public Texture2D Bake(Vector2 offset)
     {
-        /*ImageMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", seed);
-        seed += 10;
+        ImageMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", seed + offset.x);
+        ImageMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", offset.y);
         RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x, Resolution.y);
         Graphics.Blit(null, renderTexture, ImageMaterial);
         Texture2D texture = new Texture2D(Resolution.x, Resolution.y);
         RenderTexture.active = renderTexture;
         texture.ReadPixels(new Rect(Vector2.zero, Resolution), 0, 0);
-        byte[] png = texture.EncodeToPNG();
-        File.WriteAllBytes(FilePath + (seed / 10).ToString() + ".png", png);
-        //AssetDatabase.Refresh();
+        AssetDatabase.Refresh();
         RenderTexture.active = null;
         RenderTexture.ReleaseTemporary(renderTexture);
-        DestroyImmediate(texture);*/
+        return texture;
     }
 
     private void FixedUpdate()
@@ -54,12 +61,33 @@ public class BakingScript : MonoBehaviour
         
         for (int i = -1; i < 2; i++)
         {
-            Destroy(Trash[i+1]);
-            Trash[i+1] = Trash[i + 4];
-            GameObject NewTerrain = Instantiate(RefTerrain);
+            DestroyImmediate(Terrains[i + 1], true);
+            DestroyImmediate(HeightMaps[i + 1], true);
+            Terrains[i + 1] = Terrains[i + 4];
+            HeightMaps[i + 1] = HeightMaps[i + 4];
+            SwitchData[i+1] = Data[i + 1];
+            Data[i + 1] = Data[i + 4];
+            Data[i + 4] = SwitchData[i + 1];
+            HeightMaps[i + 4] = Bake(new Vector2(X, Z * i));
+            float[,] HeightColors = new float[Resolution.x, Resolution.y];
+            for (int y = 0; y < Resolution.x; y++)
+            {
+                for (int p = 0; p < Resolution.y; p++)
+                {
+                    HeightColors[y, p] = HeightMaps[i+4].GetPixel(y,p)[0]/10;
+                }
+            }
+            GameObject NewTerrain = Terrain.CreateTerrainGameObject(Data[i+4]);
+            NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x  + 1;
+            NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
+            //NewTerrain.GetComponent<Terrain>().terrainData.heightmapScale.Scale(new Vector3(0.5f, 0.5f, 0.5f));
+            //NewTerrain.GetComponent<Terrain>().terrainData.
             Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
-            NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);
-            Trash[i + 4] = NewTerrain;
+            NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);           
+            Terrains[i + 4] = NewTerrain;             
+            Debug.Log("Good Luck!");
         }
     }
+ 
 }
+
