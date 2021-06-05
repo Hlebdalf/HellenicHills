@@ -11,29 +11,55 @@ public class BakingScript : MonoBehaviour
     public Material ImageMaterial;
     public string FilePath = "Assets/Textures/MaterialImage";
     public int seed = 0;
+    public GameObject Ball;
+    public GameObject RefTerrain;
+    private Transform BallTransform;
+    private float border = 0;
+    public GameObject[] Trash = new GameObject[6];
     void Start()
     {
-        Bake(cnt);
+        //Bake(cnt);
+        BallTransform = Ball.GetComponent<Transform>();
     }
 
-    public void Bake(int num)
+    public void Bake(Vector2 offset)
     {
-        for (int i = 0; i < num; i++)
+        /*ImageMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", seed);
+        seed += 10;
+        RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x, Resolution.y);
+        Graphics.Blit(null, renderTexture, ImageMaterial);
+        Texture2D texture = new Texture2D(Resolution.x, Resolution.y);
+        RenderTexture.active = renderTexture;
+        texture.ReadPixels(new Rect(Vector2.zero, Resolution), 0, 0);
+        byte[] png = texture.EncodeToPNG();
+        File.WriteAllBytes(FilePath + (seed / 10).ToString() + ".png", png);
+        //AssetDatabase.Refresh();
+        RenderTexture.active = null;
+        RenderTexture.ReleaseTemporary(renderTexture);
+        DestroyImmediate(texture);*/
+    }
+
+    private void FixedUpdate()
+    {
+        if (BallTransform.position.x - border > 1010)
         {
-            ImageMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", seed);
-            seed += 10;
-            RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x, Resolution.y);
-            Graphics.Blit(null, renderTexture, ImageMaterial);
-            Texture2D texture = new Texture2D(Resolution.x, Resolution.y);
-            RenderTexture.active = renderTexture;
-            texture.ReadPixels(new Rect(Vector2.zero, Resolution), 0, 0);
-            byte[] png = texture.EncodeToPNG();
-            File.WriteAllBytes(FilePath + (seed/10).ToString() + ".png", png);
-            //AssetDatabase.Refresh();
-            RenderTexture.active = null;
-            RenderTexture.ReleaseTemporary(renderTexture);
-            DestroyImmediate(texture);
-            
+            border += 1000;
+            BuildTerrain();
+        }
+    }
+    private void BuildTerrain()
+    {
+        float X = Mathf.Floor(BallTransform.position.x / 1000) * 1000;
+        float Z = Mathf.Floor(BallTransform.position.z / 1000) * 1000;
+        
+        for (int i = -1; i < 2; i++)
+        {
+            Destroy(Trash[i+1]);
+            Trash[i+1] = Trash[i + 4];
+            GameObject NewTerrain = Instantiate(RefTerrain);
+            Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
+            NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);
+            Trash[i + 4] = NewTerrain;
         }
     }
 }
