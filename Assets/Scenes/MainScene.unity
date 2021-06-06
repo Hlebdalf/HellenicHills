@@ -250,7 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   g: 10
   angle: 45
-  TurnSpeed: 500
+  TurnSpeed: 10
 --- !u!1 &739838254
 GameObject:
   m_ObjectHideFlags: 0
