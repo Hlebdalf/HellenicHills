@@ -28,18 +28,18 @@ public class BakingScript : MonoBehaviour
     }
     void Start()
     {
-        BallTransform.position = new Vector3(10, 100, 500);
+        BallTransform.position = new Vector3(10, 70, 500);
     }
 
     public Texture2D Bake(Vector2 offset)
     {
         ImageMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", seed + offset.x);
         ImageMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", offset.y);
-        RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x, Resolution.y);
+        RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x+1, Resolution.y+1);
         Graphics.Blit(null, renderTexture, ImageMaterial);
-        Texture2D texture = new Texture2D(Resolution.x, Resolution.y);
+        Texture2D texture = new Texture2D(Resolution.x+1, Resolution.y+1);
         RenderTexture.active = renderTexture;
-        texture.ReadPixels(new Rect(Vector2.zero, Resolution), 0, 0);     
+        texture.ReadPixels(new Rect(Vector2.zero, new Vector2Int(Resolution.x+1,Resolution.y+1)), 0, 0);     
         RenderTexture.active = null;
         RenderTexture.ReleaseTemporary(renderTexture);
         return texture;
@@ -68,10 +68,10 @@ public class BakingScript : MonoBehaviour
             Data[i + 1] = Data[i + 4];
             Data[i + 4] = SwitchData[i + 1];
             HeightMaps[i + 4] = Bake(new Vector2(X, Z + i * 1000));
-            float[,] HeightColors = new float[Resolution.x, Resolution.y];
-            for (int y = 0; y < Resolution.x; y++)
+            float[,] HeightColors = new float[Resolution.x+1, Resolution.y+1];
+            for (int y = 0; y < Resolution.x+1; y++)
             {
-                for (int p = 0; p < Resolution.y; p++)
+                for (int p = 0; p < Resolution.y+1; p++)
                 {
                     HeightColors[p, y] = HeightMaps[i + 4].GetPixel(y, p)[0] / 10;
                 }
