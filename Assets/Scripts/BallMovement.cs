@@ -26,7 +26,7 @@ public class BallMovement : MonoBehaviour
     }
     public void EndMoveRight()
     {
-        rb.velocity = new Vector3(rb.velocity.x, 0, 0);
+        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
     }
     public void StartMoveLeft()
     {
@@ -34,6 +34,6 @@ public class BallMovement : MonoBehaviour
     }
     public void EndMoveLeft()
     {
-        rb.velocity = new Vector3(rb.velocity.x, 0, 0);
+        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
     }
 }
