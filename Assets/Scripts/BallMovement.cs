@@ -11,29 +11,52 @@ public class BallMovement : MonoBehaviour
     private float forceY;
     private float forceX;
     private Rigidbody rb;
+    private bool moovingRight = false;
+    private bool moovingLeft = false;
     void Start()
     {
         angle = 180 / Mathf.PI * angle;
         forceY = -Mathf.Sin(angle) * g;
         forceX = -Mathf.Cos(angle) * g;
         rb = gameObject.GetComponent<Rigidbody>();
-        Physics.gravity = new Vector3(forceX, forceY, 0);
-    }
+        Physics.gravity = new Vector3(forceX, forceY, 0);    }
 
     public void StartMoveRight()
     {
-        rb.AddForce(new Vector3(0, 0, -TurnSpeed), ForceMode.Force);
+        moovingRight = true;
+        StartCoroutine(RightGrowCoroutine());  
     }
     public void EndMoveRight()
     {
-        rb.velocity = new Vector3(rb.velocity.x, 0, 0);
+        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
+        moovingRight = false;
     }
     public void StartMoveLeft()
     {
-        rb.AddForce(new Vector3(0, 0, TurnSpeed), ForceMode.Force);
+        moovingLeft = true;
+        StartCoroutine(LeftGrowCoroutine());   
     }
     public void EndMoveLeft()
     {
-        rb.velocity = new Vector3(rb.velocity.x, 0, 0);
+        moovingLeft = false;
+        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
+    }
+
+    IEnumerator LeftGrowCoroutine()
+    {
+        while (moovingLeft)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, TurnSpeed);
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    IEnumerator RightGrowCoroutine()
+    {
+        while (moovingRight)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -TurnSpeed);
+            yield return new WaitForFixedUpdate();
+        }
     }
 }

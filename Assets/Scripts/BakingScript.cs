@@ -28,7 +28,7 @@ public class BakingScript : MonoBehaviour
     }
     void Start()
     {
-        BallTransform.position = new Vector3(10, 100, 500);
+        BallTransform.position = new Vector3(10, 70, 500);
     }
 
     public Texture2D Bake(Vector2 offset)
