@@ -64,7 +64,7 @@ public class BakingScript : MonoBehaviour
             DestroyImmediate(HeightMaps[i + 1], true);
             Terrains[i + 1] = Terrains[i + 4];
             HeightMaps[i + 1] = HeightMaps[i + 4];
-            SwitchData[i+1] = Data[i + 1];
+            SwitchData[i + 1] = Data[i + 1];
             Data[i + 1] = Data[i + 4];
             Data[i + 4] = SwitchData[i + 1];
             HeightMaps[i + 4] = Bake(new Vector2(X, Z + i * 1000));

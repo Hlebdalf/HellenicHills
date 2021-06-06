@@ -22,7 +22,7 @@ public class BallMovement : MonoBehaviour
 
     public void StartMoveRight()
     {
-        rb.AddForce(new Vector3(0, 0, -TurnSpeed), ForceMode.Acceleration);
+        rb.AddForce(new Vector3(0, 0, -TurnSpeed), ForceMode.Force);
     }
     public void EndMoveRight()
     {
@@ -30,7 +30,7 @@ public class BallMovement : MonoBehaviour
     }
     public void StartMoveLeft()
     {
-        rb.AddForce(new Vector3(0, 0, TurnSpeed), ForceMode.Acceleration);
+        rb.AddForce(new Vector3(0, 0, TurnSpeed), ForceMode.Force);
     }
     public void EndMoveLeft()
     {

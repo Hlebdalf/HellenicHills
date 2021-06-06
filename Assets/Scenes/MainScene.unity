@@ -153,8 +153,8 @@ Rigidbody:
   m_GameObject: {fileID: 465162882}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
+  m_Drag: 0.05
+  m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -245,10 +245,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 465162882}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 721cc2d1a0d9e194c954497bb5fe588c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1247904125892b64c879e87f0aeb43ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g: 9.8
+  g: 10
   angle: 45
   TurnSpeed: 500
 --- !u!1 &739838254
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 739838254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 270ae39c2b2f18440b8c711e57af5ba9, type: 3}
+  m_Script: {fileID: 11500000, guid: 695e6781b45abe84086e5802e13831ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 465162882}
@@ -343,7 +343,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 871202126}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da0932f37b73e24087404000a76e890, type: 3}
+  m_Script: {fileID: 11500000, guid: 614b7dbdf0969da409f08569ceb9f006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &871202129
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.83137256}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -379,7 +379,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: FPS
 --- !u!222 &871202130
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -473,7 +473,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1233718046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d09db4ea6cdcfad418d673b689bfaff9, type: 3}
+  m_Script: {fileID: 11500000, guid: d81aedbcffcecf8409b74e93d8a76956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BallClass: {fileID: 465162888}
@@ -637,17 +637,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1644744607}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3962978c37700154ca00e9ee9e5be64c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fcc34c5b2dfdd44ca1b8d4c66bafb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Resolution: {x: 513, y: 513}
-  ImageMaterial: {fileID: 2100000, guid: b9b1f454bb204a3419e2e06516d426c2, type: 2}
+  Resolution: {x: 512, y: 512}
+  ImageMaterial: {fileID: 2100000, guid: 0c6b03d3223c6624592e71fc81208192, type: 2}
   FilePath: Assets/Textures/MaterialImage
   seed: 0
   Ball: {fileID: 465162882}
-  RefTerrain: {fileID: 8003963944475019791, guid: 46e4930502970e44da53ac136e566f39,
-    type: 3}
-  TerrainMaterial: {fileID: 2100000, guid: 1abd001b49366e94abba14d0988a2c31, type: 2}
+  RefTerrain: {fileID: 0}
+  TerrainMaterial: {fileID: 2100000, guid: 22e185ea389b1df4eb40293afdaaa043, type: 2}
   Terrains:
   - {fileID: 0}
   - {fileID: 0}
@@ -656,26 +655,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   Data:
-  - {fileID: 15600000, guid: 0b4ea1badab89b54d92df0b74a401875, type: 2}
-  - {fileID: 15600000, guid: c9cac1006aa79324385913d822571973, type: 2}
-  - {fileID: 15600000, guid: 8de2a78409c655240a587897694e6ee3, type: 2}
-  - {fileID: 15600000, guid: 82979dfe379672947bb3883be983bc97, type: 2}
-  - {fileID: 15600000, guid: f887159e9b9c3544aa34955ff885bf5e, type: 2}
-  - {fileID: 15600000, guid: 548c10321aa22d549992b02e8a119b14, type: 2}
+  - {fileID: 15600000, guid: f76a58d0218512942a00ff96f235b0ab, type: 2}
+  - {fileID: 15600000, guid: de32e9d9b5c91f14298876dcc3c36e09, type: 2}
+  - {fileID: 15600000, guid: 13b61195eafb9924abc5de30e3f2f758, type: 2}
+  - {fileID: 15600000, guid: 8ec817a2e4e331647b77b0861b4e1282, type: 2}
+  - {fileID: 15600000, guid: c90cf84362cbf9d4aa0b84f464624704, type: 2}
+  - {fileID: 15600000, guid: 812fbfc563e37154a9c80a25f871cb91, type: 2}
   HeightMaps:
-  - {fileID: 2800000, guid: 67200ab77e31a70478b1b3940e1b87f5, type: 3}
-  - {fileID: 2800000, guid: 67200ab77e31a70478b1b3940e1b87f5, type: 3}
-  - {fileID: 2800000, guid: 67200ab77e31a70478b1b3940e1b87f5, type: 3}
-  - {fileID: 2800000, guid: 67200ab77e31a70478b1b3940e1b87f5, type: 3}
-  - {fileID: 2800000, guid: 67200ab77e31a70478b1b3940e1b87f5, type: 3}
-  - {fileID: 2800000, guid: 67200ab77e31a70478b1b3940e1b87f5, type: 3}
-  Materials:
-  - {fileID: 2100000, guid: 6138203f0900d6548b91a5a5a6213555, type: 2}
-  - {fileID: 2100000, guid: eb4f4e5797f1bbd4b8f11f4c574bb831, type: 2}
-  - {fileID: 2100000, guid: 1ed3663ab58cdcd44b909ac2b23407ec, type: 2}
-  - {fileID: 2100000, guid: c0c0bfd58245c3443b6e91eaac44eda2, type: 2}
-  - {fileID: 2100000, guid: 949f047223ec9cc40a06d2754e6e20c6, type: 2}
-  - {fileID: 2100000, guid: 4f50ffe4bf90204428cfff65bc4f1fdc, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -991,7 +980,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1984243050}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8c276827abcfaf409723d73ee30613a, type: 3}
+  m_Script: {fileID: 11500000, guid: 38d1a2cfe7d2d104ca922e608740cdfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BallClass: {fileID: 465162888}
