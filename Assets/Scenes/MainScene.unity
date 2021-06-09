@@ -668,6 +668,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  Shift: 1.953125
 --- !u!114 &1644744612
 MonoBehaviour:
   m_ObjectHideFlags: 0

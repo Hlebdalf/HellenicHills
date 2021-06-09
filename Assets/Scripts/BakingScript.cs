@@ -19,6 +19,9 @@ public class BakingScript : MonoBehaviour
     private TerrainData[] SwitchData = new TerrainData[3];
     private Transform BallTransform;
     private float border = -1000;
+    private float xShift = 0;
+    private float yShift = 0;
+    public float Shift;
     private void Awake()
     {
         BallTransform = Ball.GetComponent<Transform>();
@@ -32,7 +35,10 @@ public class BakingScript : MonoBehaviour
     }
 
     public Texture2D Bake(Vector2 offset)
-    {   
+    {
+        //Texture2D bufferTexture = new Texture2D(Resolution.x + 1, 1);
+        //RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x + 1, Resolution.y + 1);
+
         ImageMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", seed + offset.x);
         ImageMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", offset.y);
         RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x+1, Resolution.y+1);
@@ -57,9 +63,11 @@ public class BakingScript : MonoBehaviour
     {
         float X = Mathf.Floor(BallTransform.position.x / 1000) * 1000;
         float Z = Mathf.Floor(BallTransform.position.z / 1000) * 1000;
-        
+        xShift = Z/513;
+        yShift += Shift;
         for (int i = -1; i < 2; i++)
         {
+            xShift += Shift;
             DestroyImmediate(Terrains[i + 1], true);
             DestroyImmediate(HeightMaps[i + 1], true);
             Terrains[i + 1] = Terrains[i + 4];
@@ -67,7 +75,7 @@ public class BakingScript : MonoBehaviour
             SwitchData[i + 1] = Data[i + 1];
             Data[i + 1] = Data[i + 4];
             Data[i + 4] = SwitchData[i + 1];
-            HeightMaps[i + 4] = Bake(new Vector2(X, Z + i * 1000));
+            HeightMaps[i + 4] = Bake(new Vector2(X - yShift, Z + i * 1000 - xShift));
             float[,] HeightColors = new float[Resolution.x+1, Resolution.y+1];
             for (int y = 0; y < Resolution.x+1; y++)
             {
@@ -82,7 +90,7 @@ public class BakingScript : MonoBehaviour
             NewTerrain.GetComponent<Terrain>().materialTemplate = TerrainMaterial;
             Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
             NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);           
-            Terrains[i + 4] = NewTerrain;             
+            Terrains[i + 4] = NewTerrain;      
         }
     }
  
