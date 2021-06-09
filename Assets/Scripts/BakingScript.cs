@@ -1,8 +1,4 @@
-//using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using System.IO;
-
 
 public class BakingScript : MonoBehaviour
 {
@@ -27,7 +23,6 @@ public class BakingScript : MonoBehaviour
         BallTransform = Ball.GetComponent<Transform>();
         seed = Random.Range(-10000f, 10000f);
         BuildTerrain();
-        
     }
     void Start()
     {
@@ -36,9 +31,6 @@ public class BakingScript : MonoBehaviour
 
     public Texture2D Bake(Vector2 offset)
     {
-        //Texture2D bufferTexture = new Texture2D(Resolution.x + 1, 1);
-        //RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x + 1, Resolution.y + 1);
-
         ImageMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", seed + offset.x);
         ImageMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", offset.y);
         RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x+1, Resolution.y+1);
@@ -63,7 +55,7 @@ public class BakingScript : MonoBehaviour
     {
         float X = Mathf.Floor(BallTransform.position.x / 1000) * 1000;
         float Z = Mathf.Floor(BallTransform.position.z / 1000) * 1000;
-        xShift = Z/513;
+        xShift = Z / (Resolution.x+1);
         yShift += Shift;
         for (int i = -1; i < 2; i++)
         {
