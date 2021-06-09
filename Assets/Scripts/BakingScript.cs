@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BakingScript : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class BakingScript : MonoBehaviour
     public TerrainData[] Data = new TerrainData[6];
     public Texture2D[] HeightMaps = new Texture2D[6];
     private TerrainData[] SwitchData = new TerrainData[3];
+    private List<List<GameObject>> Spruces = new List<List<GameObject>>(6);
     private Transform BallTransform;
     private float border = -1000;
     private float xShift = 0;
@@ -23,6 +25,10 @@ public class BakingScript : MonoBehaviour
     {
         BallTransform = Ball.GetComponent<Transform>();
         seed = Random.Range(-10000f, 10000f);
+        for (int i = 0; i < 6; i++)
+        {
+            Spruces.Add(new List<GameObject>());
+        }
         BuildTerrain();
     }
     void Start()
@@ -80,6 +86,12 @@ public class BakingScript : MonoBehaviour
             Data[i + 1] = Data[i + 4];
             Data[i + 4] = SwitchData[i + 1];
             HeightMaps[i + 4] = Bake(new Vector2(X - yShift, Z + i * 1000 - xShift));
+            foreach(GameObject it in Spruces[i+1])
+            {
+                DestroyImmediate(it, true);
+            }
+            Spruces[i + 1] = Spruces[i + 4];
+            Spruces[i + 4] = new List<GameObject>();
             Texture2D SpruceMap = BakeSpruce();
             float[,] HeightColors = new float[Resolution.x+1, Resolution.y+1];
             for (int y = 0; y < Resolution.x+1; y++)
@@ -88,13 +100,15 @@ public class BakingScript : MonoBehaviour
                 {
                     HeightColors[p, y] = HeightMaps[i + 4].GetPixel(y, p)[0] / 10;
                     float SpruceHeight = HeightColors[p, y] * 1000;
-                    if (SpruceMap.GetPixel(y, p).r > 0.8f)
+                    if (SpruceMap.GetPixel(y, p).r > 0.4f)
                     {
                         GameObject Spruce = Instantiate(RefSpruce);
                         Spruce.GetComponent<Transform>().position = new Vector3(X + y * Shift + 1000, SpruceHeight, Z + i * 1000 + p * Shift);
+                        Spruces[i + 4].Add(Spruce);
                     }
                 }
             }
+            
             GameObject NewTerrain = Terrain.CreateTerrainGameObject(Data[i + 4]);
             NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x  + 1;
             NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
@@ -102,7 +116,6 @@ public class BakingScript : MonoBehaviour
             Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
             NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);           
             Terrains[i + 4] = NewTerrain;
-            
         }
     }
  

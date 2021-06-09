@@ -152,7 +152,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 465162882}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 1
   m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -248,9 +248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 037b7cc39b2cafd48bb2a8a3a70657ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  g: 10
+  g: 70
   angle: 45
-  TurnSpeed: 10
+  TurnSpeed: 30
 --- !u!1 &739838254
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,7 +646,7 @@ MonoBehaviour:
   FilePath: Assets/Textures/MaterialImage
   seed: 0
   Ball: {fileID: 465162882}
-  RefSpruce: {fileID: 8322568430500832036, guid: 124a575537efdb04ea624dca9c71a619,
+  RefSpruce: {fileID: 8322568430500832036, guid: 84e7c8cdc04fead43af6e6700450e10c,
     type: 3}
   TerrainMaterial: {fileID: 2100000, guid: aaa9e2ad7d5abec4ea7be88124dc2a28, type: 2}
   Terrains:
