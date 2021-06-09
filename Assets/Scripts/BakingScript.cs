@@ -32,7 +32,7 @@ public class BakingScript : MonoBehaviour
     }
 
     public Texture2D Bake(Vector2 offset)
-    {
+    {   
         ImageMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", seed + offset.x);
         ImageMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", offset.y);
         RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x+1, Resolution.y+1);
