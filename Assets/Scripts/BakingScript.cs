@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class BakingScript : MonoBehaviour
@@ -20,6 +21,7 @@ public class BakingScript : MonoBehaviour
     private float border = -1000;
     private float xShift = 0;
     private float yShift = 0;
+    private bool isBallExist = false;
     public float Shift;
     private void Awake()
     {
@@ -29,7 +31,7 @@ public class BakingScript : MonoBehaviour
         {
             Spruces.Add(new List<GameObject>());
         }
-        BuildTerrain();
+        StartCoroutine(BuildTerrain());
     }
     void Start()
     {
@@ -66,10 +68,14 @@ public class BakingScript : MonoBehaviour
         if (BallTransform.position.x - border > 1010)
         {
             border += 1000;
-            BuildTerrain();
+            StartCoroutine(BuildTerrain());
         }
     }
-    private void BuildTerrain()
+    private void StartGame()
+    {
+        Ball.GetComponent<Rigidbody>().useGravity = true;
+    }
+    IEnumerator BuildTerrain()
     {
         float X = Mathf.Floor(BallTransform.position.x / 1000) * 1000;
         float Z = Mathf.Floor(BallTransform.position.z / 1000) * 1000;
@@ -90,12 +96,16 @@ public class BakingScript : MonoBehaviour
             {
                 DestroyImmediate(it, true);
             }
+            yield return null;
             Spruces[i + 1] = Spruces[i + 4];
             Spruces[i + 4] = new List<GameObject>();
             Texture2D SpruceMap = BakeSpruce();
             float[,] HeightColors = new float[Resolution.x+1, Resolution.y+1];
             for (int y = 0; y < Resolution.x+1; y++)
             {
+                if (y % 5 == 0) {
+                    yield return null; 
+                }
                 for (int p = 0; p < Resolution.y+1; p++)
                 {
                     HeightColors[p, y] = HeightMaps[i + 4].GetPixel(y, p)[0] / 10;
@@ -117,6 +127,12 @@ public class BakingScript : MonoBehaviour
             NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);           
             Terrains[i + 4] = NewTerrain;
         }
+        if (!isBallExist)
+        {
+            StartGame();
+            isBallExist = true;
+        }
+        
     }
  
 }
