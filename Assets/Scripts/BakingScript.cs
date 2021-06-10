@@ -22,7 +22,7 @@ public class BakingScript : MonoBehaviour
     private float xShift = 0;
     private float yShift = 0;
     private bool isBallExist = false;
-    private float spruceHardness = 0.9f;
+    private float spruceHardness = 0.7f;
     public float Shift;
     private void Awake()
     {
@@ -36,7 +36,7 @@ public class BakingScript : MonoBehaviour
     }
     void Start()
     {
-        BallTransform.position = new Vector3(50, 7, 500);
+        BallTransform.position = new Vector3(50, 25, 500);
     }
 
     public Texture2D Bake(Vector2 offset)
@@ -111,7 +111,7 @@ public class BakingScript : MonoBehaviour
                 }
                 for (int p = 0; p < Resolution.y + 1; p++)
                 {
-                    HeightColors[p, y] = HeightMaps[i + 4].GetPixel(y, p)[0] / 10;
+                    HeightColors[p, y] = HeightMaps[i + 4].GetPixel(y, p)[0] / 3;
                     float SpruceHeight = HeightColors[p, y] * 1000;
                     if (SpruceMap.GetPixel(y, p).r > spruceHardness)
                     {
@@ -137,9 +137,9 @@ public class BakingScript : MonoBehaviour
 
 
         }
-        if (spruceHardness > 0.25f)
+        if (spruceHardness > 0.1f)
         {
-            spruceHardness -= 0.05f;
+            spruceHardness -= 0.1f;
         }
 
     }
