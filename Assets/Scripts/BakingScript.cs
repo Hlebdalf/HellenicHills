@@ -35,13 +35,14 @@ public class BakingScript : MonoBehaviour
     }
     void Start()
     {
-        BallTransform.position = new Vector3(10, 70, 500);
+        BallTransform.position = new Vector3(50, 70, 500);
     }
 
     public Texture2D Bake(Vector2 offset)
     {
-        NoiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", seed + offset.x);
-        NoiseMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", offset.y);
+        NoiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", offset.x);
+        NoiseMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", offset.y + seed);
+        NoiseMaterial.SetFloat("Vector1_090150e04f634e6eb9f7220d01725be0", seed);
         RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x+1, Resolution.y+1);
         Graphics.Blit(null, renderTexture, NoiseMaterial);
         Texture2D texture = new Texture2D(Resolution.x+1, Resolution.y+1);
@@ -108,7 +109,7 @@ public class BakingScript : MonoBehaviour
                 }
                 for (int p = 0; p < Resolution.y+1; p++)
                 {
-                    HeightColors[p, y] = HeightMaps[i + 4].GetPixel(y, p)[0] / 10;
+                    HeightColors[p, y] = HeightMaps[i + 4].GetPixel(y, p)[0]/3;
                     float SpruceHeight = HeightColors[p, y] * 1000;
                     if (SpruceMap.GetPixel(y, p).r > 0.4f)
                     {
