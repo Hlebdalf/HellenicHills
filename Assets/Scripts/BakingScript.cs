@@ -36,7 +36,7 @@ public class BakingScript : MonoBehaviour
     }
     void Start()
     {
-        BallTransform.position = new Vector3(50, 25, 500);
+        BallTransform.position = new Vector3(50, 15, 500);
     }
 
     public Texture2D Bake(Vector2 offset)
@@ -111,7 +111,7 @@ public class BakingScript : MonoBehaviour
                 }
                 for (int p = 0; p < Resolution.y + 1; p++)
                 {
-                    HeightColors[p, y] = HeightMaps[i + 4].GetPixel(y, p)[0] / 3;
+                    HeightColors[p, y] = HeightMaps[i + 4].GetPixel(y, p)[0] / 5;
                     float SpruceHeight = HeightColors[p, y] * 1000;
                     if (SpruceMap.GetPixel(y, p).r > spruceHardness)
                     {
@@ -137,7 +137,7 @@ public class BakingScript : MonoBehaviour
 
 
         }
-        if (spruceHardness > 0.1f)
+        if (spruceHardness > 0.2f)
         {
             spruceHardness -= 0.1f;
         }
