@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SpruceGenMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: 436d1160b9db49f4baf7ef358c660912,
+  m_Shader: {fileID: -6465566751694194690, guid: 607a4d2881619ec4eb99e933d6bd4acb,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
