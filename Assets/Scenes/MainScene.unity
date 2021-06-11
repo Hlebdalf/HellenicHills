@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.15013407, g: 0.2830189, b: 0.13750447, a: 1}
+  m_AmbientSkyColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
-  m_SubtractiveShadowColor: {r: 0.2735849, g: 0.272975, b: 0.23357956, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubtractiveShadowColor: {r: 1, g: 1, b: 1, a: 1}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 6a0963e8fb48ed246a882492acfd1c48, type: 2}
   m_HaloStrength: 0
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.99267477, g: 0.0019373762, b: 0.0019373762, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -880,17 +880,17 @@ PrefabInstance:
     - target: {fileID: 2265158312693770482, guid: a118bbf73cf90d240ba261e14a02253c,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 2265158312693770482, guid: a118bbf73cf90d240ba261e14a02253c,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 2265158312693770482, guid: a118bbf73cf90d240ba261e14a02253c,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 2265158312693770482, guid: a118bbf73cf90d240ba261e14a02253c,
         type: 3}
@@ -964,17 +964,17 @@ PrefabInstance:
     - target: {fileID: 3344991882809568151, guid: 112a9994bd4959049b29730b27cc6770,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 3344991882809568151, guid: 112a9994bd4959049b29730b27cc6770,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 3344991882809568151, guid: 112a9994bd4959049b29730b27cc6770,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 3344991882809568151, guid: 112a9994bd4959049b29730b27cc6770,
         type: 3}
@@ -1084,3 +1084,28 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5662828644947471872}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7761519031195901741 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2675169830652195117, guid: 112a9994bd4959049b29730b27cc6770,
+    type: 3}
+  m_PrefabInstance: {fileID: 5662828644947471872}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7761519031195901742
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7761519031195901741}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 71b2b20bda18b9d40bd80ec9039312d1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
