@@ -12,6 +12,7 @@ public class BakingScript : MonoBehaviour
     public GameObject Ball;
     public GameObject RefSpruce;
     public Material TerrainMaterial;
+    public GameObject TestBatch;
     public GameObject[] Terrains = new GameObject[6];
     public TerrainData[] Data = new TerrainData[6];
     public Texture2D[] HeightMaps = new Texture2D[6];
@@ -118,10 +119,11 @@ public class BakingScript : MonoBehaviour
                         GameObject Spruce = Instantiate(RefSpruce);
                         Spruce.GetComponent<Transform>().position = new Vector3(X + y * Shift + 1000, SpruceHeight, Z + i * 1000 + p * Shift);
                         Spruces[i + 4].Add(Spruce);
+                        
                     }
                 }
             }
-
+            StaticBatchingUtility.Combine(Spruces[i+4].ToArray(), TestBatch);
             GameObject NewTerrain = Terrain.CreateTerrainGameObject(Data[i + 4]);
             NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x + 1;
             NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
@@ -130,6 +132,7 @@ public class BakingScript : MonoBehaviour
             Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
             NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);
             Terrains[i + 4] = NewTerrain;
+            //StaticBatchingUtility.Combine(Spruces[i + 4].ToArray()[0]);
         }
         if (!isBallExist)
         {
