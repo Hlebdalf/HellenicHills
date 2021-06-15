@@ -138,7 +138,7 @@ public class BakingScript : MonoBehaviour
             NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x + 1;
             NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
             NewTerrain.GetComponent<Terrain>().materialTemplate = TerrainMaterial;
-            NewTerrain.GetComponent<Terrain>().heightmapPixelError = 30;
+            NewTerrain.GetComponent<Terrain>().heightmapPixelError = 300;
             Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
             NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);
             Terrains[i + 4] = NewTerrain;

@@ -798,7 +798,7 @@ MonoBehaviour:
   Ball: {fileID: 9139824934087559194}
   RefSpruce: {fileID: 4378474174328775399, guid: 1c3c2da56bb05d44a81036203d5dcef5,
     type: 3}
-  RefCharger: {fileID: 31703630592290979, guid: fc3094ee135d7394a888060dacfbfe4d,
+  RefCharger: {fileID: 31703630592290979, guid: dc1755308e80c034c86df4ec4516491a,
     type: 3}
   TerrainMaterial: {fileID: 2100000, guid: ecfb449f91e65024e9a6532b7336b87c, type: 2}
   TestBatch: {fileID: 9205798125717912111}
@@ -865,7 +865,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1644744607}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b43b601e7b75ee41b616afbb7eddcf9, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ad6867f454ac0547a202e22dd6b6bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fuel: 1000
@@ -1575,7 +1575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   g: 20
   angle: 45
-  TurnSpeed: 40
+  TurnSpeed: 30
 --- !u!135 &9139824934087559196
 SphereCollider:
   m_ObjectHideFlags: 0
