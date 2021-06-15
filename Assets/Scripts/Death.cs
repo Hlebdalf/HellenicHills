@@ -11,16 +11,22 @@ public class Death : MonoBehaviour
     public GameObject Ball;
     public GameObject Ball_up;
     public GameObject ReloadButton;
+    public Text scoreRecordText;
 
     private void Start()
     {    
         fuelBar.maxValue = fuel;
     }
 
+    private void Awake()
+    {
+        scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString();
+    }
     public void GameOver()
     {
         Ball.GetComponent<Rigidbody>().isKinematic = true;
         Ball_up.GetComponent<Animator>().enabled = false;
+        PlayerPrefs.Save();   
         ReloadButton.SetActive(true);
     }
     public void GameStart()
