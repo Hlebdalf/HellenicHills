@@ -10,6 +10,7 @@ public class Death : MonoBehaviour
     public Slider fuelBar;
     public GameObject Ball;
     public GameObject Ball_up;
+    public GameObject ReloadButton;
 
     private void Start()
     {    
@@ -20,6 +21,7 @@ public class Death : MonoBehaviour
     {
         Ball.GetComponent<Rigidbody>().isKinematic = true;
         Ball_up.GetComponent<Animator>().enabled = false;
+        ReloadButton.SetActive(true);
     }
     public void GameStart()
     {
