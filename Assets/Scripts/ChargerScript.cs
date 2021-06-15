@@ -9,7 +9,8 @@ public class ChargerScript : MonoBehaviour
     {      
         if (other.name == "Machine_ball")
         {
-            death.fuel = 1000;
+            death.StartCharge();
+            gameObject.GetComponent<BoxCollider>().enabled = false;
         }
     }
 }

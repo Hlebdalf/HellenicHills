@@ -12,6 +12,7 @@ public class BakingScript : MonoBehaviour
     public GameObject Ball;
     public GameObject RefSpruce;
     public GameObject RefCharger;
+    public float pixelError = 30;
     public Material TerrainMaterial;
     public GameObject TestBatch;
     public GameObject[] Terrains = new GameObject[6];
@@ -118,7 +119,7 @@ public class BakingScript : MonoBehaviour
                     float SpruceHeight = HeightColors[p, y] * 500;
                     if (SpruceMap.GetPixel(y, p).r > spruceHardness)
                     {
-                        if (Random.Range(-10.0f, 10.0f) > 9.5f)
+                        if (Random.Range(-10.0f, 10.0f) > 9.2f)
                         {
                             GameObject Charger = Instantiate(RefCharger);
                             Charger.GetComponent<Transform>().position = new Vector3(X + y * Shift + 1000, SpruceHeight, Z + i * 1000 + p * Shift);
@@ -138,7 +139,7 @@ public class BakingScript : MonoBehaviour
             NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x + 1;
             NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
             NewTerrain.GetComponent<Terrain>().materialTemplate = TerrainMaterial;
-            NewTerrain.GetComponent<Terrain>().heightmapPixelError = 300;
+            NewTerrain.GetComponent<Terrain>().heightmapPixelError = pixelError;
             Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
             NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);
             Terrains[i + 4] = NewTerrain;

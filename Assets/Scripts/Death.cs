@@ -20,12 +20,15 @@ public class Death : MonoBehaviour
     {
         Ball.GetComponent<Rigidbody>().isKinematic = true;
         Ball_up.GetComponent<Animator>().enabled = false;
-
-        Debug.Log("Kek");
     }
     public void GameStart()
     {
         StartCoroutine(FuelConsumption());
+    }
+    public void StartCharge()
+    {
+        Ball.GetComponent<Rigidbody>().isKinematic = true;
+        StartCoroutine(ChargeCoroutine()); 
     }
     public IEnumerator FuelConsumption()
     {
@@ -36,6 +39,13 @@ public class Death : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         GameOver();
-        yield break;
+
+    }
+
+    public IEnumerator ChargeCoroutine()
+    {
+        yield return new WaitForSeconds(2);
+        fuel = 1000;
+        Ball.GetComponent<Rigidbody>().isKinematic = false;
     }
 }
