@@ -78,7 +78,6 @@ public class BakingScript : MonoBehaviour
     }
     private void StartGame()
     {
-        Ball.GetComponent<Rigidbody>().isKinematic = false;
         gameObject.GetComponent<Death>().GameStart();
     }
     IEnumerator BuildTerrain()
