@@ -679,7 +679,7 @@
     "m_ShaderOutputName": "Offset",
     "m_StageCapability": 3,
     "m_Value": {
-        "x": 0.0,
+        "x": -1.0,
         "y": 0.0
     },
     "m_DefaultValue": {
@@ -1590,8 +1590,8 @@
             "b": 0.0,
             "a": 0.0
         },
-        "ctime0": 578,
-        "ctime1": 3662,
+        "ctime0": 4048,
+        "ctime1": 18890,
         "ctime2": 0,
         "ctime3": 0,
         "ctime4": 0,
@@ -2000,7 +2000,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"0677d21761b6a914f98df7c84ee20288\",\"type\":3}}",
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"d4a44f3e344f30944bb42311dd27a424\",\"type\":3}}",
         "m_Guid": ""
     },
     "m_Modifiable": true,
