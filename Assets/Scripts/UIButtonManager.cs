@@ -21,4 +21,9 @@ public class UIButtonManager : MonoBehaviour
         MenuUI.SetActive(false);
         Ball.GetComponent<Rigidbody>().isKinematic = false;
     }
+
+    public void MenuUIActive()
+    {
+        MenuUI.SetActive(true);
+    }
 }

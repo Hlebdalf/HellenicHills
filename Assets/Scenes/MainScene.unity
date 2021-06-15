@@ -220,7 +220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &304449047
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1339,6 +1339,7 @@ MonoBehaviour:
   FilePath: Assets/Textures/MaterialImage
   seed: 0
   Ball: {fileID: 9139824934087559194}
+  canvas: {fileID: 1715893971}
   RefSpruce: {fileID: 4378474174328775399, guid: 1c3c2da56bb05d44a81036203d5dcef5,
     type: 3}
   RefCharger: {fileID: 31703630592290979, guid: dc1755308e80c034c86df4ec4516491a,

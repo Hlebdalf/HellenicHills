@@ -10,6 +10,7 @@ public class BakingScript : MonoBehaviour
     public string FilePath = "Assets/Textures/MaterialImage";
     public float seed;
     public GameObject Ball;
+    public UIButtonManager canvas;
     public GameObject RefSpruce;
     public GameObject RefCharger;
     public float pixelError = 30;
@@ -40,6 +41,7 @@ public class BakingScript : MonoBehaviour
     void Start()
     {
         BallTransform.position = new Vector3(50, 75, 500);
+        
     }
 
     public Texture2D Bake(Vector2 offset)
@@ -79,6 +81,7 @@ public class BakingScript : MonoBehaviour
     private void StartGame()
     {
         gameObject.GetComponent<Death>().GameStart();
+        canvas.MenuUIActive();
     }
     IEnumerator BuildTerrain()
     {
@@ -147,8 +150,6 @@ public class BakingScript : MonoBehaviour
         {
             StartGame();
             isBallExist = true;
-
-
         }
         if (spruceHardness > 0.2f)
         {
