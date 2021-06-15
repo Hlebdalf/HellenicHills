@@ -28,7 +28,8 @@ public class Death : MonoBehaviour
     public void StartCharge()
     {
         Ball.GetComponent<Rigidbody>().isKinematic = true;
-        StartCoroutine(ChargeCoroutine()); 
+        StopAllCoroutines();
+        StartCoroutine(ChargeCoroutine());
     }
     public IEnumerator FuelConsumption()
     {
@@ -47,5 +48,6 @@ public class Death : MonoBehaviour
         yield return new WaitForSeconds(2);
         fuel = 1000;
         Ball.GetComponent<Rigidbody>().isKinematic = false;
+        StartCoroutine(FuelConsumption());
     }
 }
