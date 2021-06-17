@@ -9,6 +9,7 @@ public class UIButtonManager : MonoBehaviour
     public GameObject ReloadButton;
     public GameObject MenuUI;
     public GameObject InGameUI;
+    public GameObject myCamera;
     public void ReloadScene()
     {
         ReloadButton.SetActive(false);
@@ -20,6 +21,7 @@ public class UIButtonManager : MonoBehaviour
         InGameUI.SetActive(true);
         MenuUI.SetActive(false);
         Ball.GetComponent<Rigidbody>().isKinematic = false;
+        myCamera.GetComponent<Death>().GameStart();
     }
 
     public void MenuUIActive()

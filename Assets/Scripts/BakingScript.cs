@@ -80,7 +80,7 @@ public class BakingScript : MonoBehaviour
     }
     private void StartGame()
     {
-        gameObject.GetComponent<Death>().GameStart();
+        
         canvas.MenuUIActive();
     }
     IEnumerator BuildTerrain()
