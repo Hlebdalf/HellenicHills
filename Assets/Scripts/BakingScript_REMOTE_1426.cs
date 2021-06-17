@@ -12,6 +12,8 @@ public class BakingScript : MonoBehaviour
     public GameObject Ball;
     public UIButtonManager canvas;
     public GameObject RefSpruce;
+    public GameObject RefCharger;
+    public float pixelError = 30;
     public Material TerrainMaterial;
     public GameObject TestBatch;
     public GameObject[] Terrains = new GameObject[6];
