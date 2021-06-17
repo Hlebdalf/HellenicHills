@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8322568430500832036
+--- !u!1 &2955489763589608395
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,56 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8322568430500832032}
-  - component: {fileID: 8322568430500832033}
-  - component: {fileID: 8322568430500832038}
-  - component: {fileID: 8322568430500832039}
-  m_Layer: 0
-  m_Name: Spruce
+  - component: {fileID: 7435730582480017540}
+  - component: {fileID: 7902976762512768521}
+  - component: {fileID: 6937519120617731092}
+  - component: {fileID: 6475561662276033411}
+  - component: {fileID: 7721793292163987249}
+  m_Layer: 3
+  m_Name: Charger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8322568430500832032
+--- !u!4 &7435730582480017540
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8322568430500832036}
+  m_GameObject: {fileID: 2955489763589608395}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 60.3, z: 10}
+  m_LocalScale: {x: 13, y: 100, z: 13}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8322568430500832033
+--- !u!33 &7902976762512768521
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD:Assets/PreFubs/Spruce.prefab
-  m_GameObject: {fileID: 8322568430500832036}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &8322568430500832038
-||||||| 0b15bef:Assets/PreFubs/Charger.prefab
-  m_GameObject: {fileID: 31703630592290979}
-  m_Mesh: {fileID: -2432090755550338912, guid: 23c49f855ea0b5b43bd6edfbd67727e3, type: 3}
---- !u!23 &5274740928431691644
-=======
-  m_GameObject: {fileID: 31703630592290979}
+  m_GameObject: {fileID: 2955489763589608395}
   m_Mesh: {fileID: -2432090755550338912, guid: 4024d7ed145512f4b9b9ebdf6ea22812, type: 3}
---- !u!23 &5274740928431691644
->>>>>>> develop:Assets/PreFubs/Charger.prefab
+--- !u!23 &6937519120617731092
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8322568430500832036}
+  m_GameObject: {fileID: 2955489763589608395}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 1
@@ -70,13 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-<<<<<<< HEAD:Assets/PreFubs/Spruce.prefab
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-||||||| 0b15bef:Assets/PreFubs/Charger.prefab
-  - {fileID: 2100000, guid: f39cd3e8a95dfb94884333f374a78025, type: 2}
-=======
   - {fileID: 2100000, guid: 1a203348ea64d3d4faea7bf2f9e86720, type: 2}
->>>>>>> develop:Assets/PreFubs/Charger.prefab
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,46 +83,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8322568430500832039
+--- !u!65 &6475561662276033411
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8322568430500832036}
+  m_GameObject: {fileID: 2955489763589608395}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2.06, y: 2.08, z: 2.1}
   m_Center: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD:Assets/PreFubs/Spruce.prefab
-||||||| 0b15bef:Assets/PreFubs/Charger.prefab
---- !u!114 &4782244569329259609
+--- !u!114 &7721793292163987249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 31703630592290979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d0021dc4fc1ae1488d138726ca624ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  death: {fileID: 0}
-=======
---- !u!114 &4782244569329259609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 31703630592290979}
+  m_GameObject: {fileID: 2955489763589608395}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0b172c9af389594ab7bada4905f277c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   death: {fileID: 0}
->>>>>>> develop:Assets/PreFubs/Charger.prefab

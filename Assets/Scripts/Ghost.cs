@@ -1,15 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ghost : MonoBehaviour
 {
     public GameObject target;
-<<<<<<< HEAD
-    void Update()
-    {
-        gameObject.transform.position = target.transform.position;
-=======
     public Text scoresText;
     
     public int scores;
@@ -36,6 +32,5 @@ public class Ghost : MonoBehaviour
             PlayerPrefs.SetInt("scoreRecord", 0);
         }
         //DEBUG TOOL
->>>>>>> develop
     }
 }
