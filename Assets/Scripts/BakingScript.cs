@@ -7,7 +7,6 @@ public class BakingScript : MonoBehaviour
     public Vector2Int Resolution = new Vector2Int(0, 0);
     public Material NoiseMaterial;
     public Material SpruceMaterial;
-    public string FilePath = "Assets/Textures/MaterialImage";
     public float seed;
     public GameObject Ball;
     public GameObject RefCharger;
@@ -15,23 +14,22 @@ public class BakingScript : MonoBehaviour
     public GameObject RefSpruce;
     public Material TerrainMaterial;
     public GameObject TestBatch;
-    public GameObject[] Terrains = new GameObject[6];
-    public TerrainData[] Data = new TerrainData[6];
-    public Texture2D[] HeightMaps = new Texture2D[6];
-    private TerrainData[] SwitchData = new TerrainData[3];
-    private List<List<GameObject>> Spruces = new List<List<GameObject>>(6);
+    public GameObject[] Terrains = new GameObject[2];
+    public TerrainData[] Data = new TerrainData[2];
+    public Texture2D[] HeightMaps = new Texture2D[2];
+    private List<List<GameObject>> Spruces = new List<List<GameObject>>(2);
     private Transform BallTransform;
-    private float border = -1000;
-    private float xShift = 0;
-    private float yShift = 0;
+    public float border = 0;
     private bool isBallExist = false;
     private float spruceHardness = 0.7f;
+
     public float Shift;
     private void Awake()
     {
         BallTransform = Ball.GetComponent<Transform>();
+        Ball.GetComponent<Transform>().position = new Vector3(-1, 0, Resolution.y);
         seed = Random.Range(-10000f, 10000f);
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 2; i++)
         {
             Spruces.Add(new List<GameObject>());
         }
@@ -39,8 +37,7 @@ public class BakingScript : MonoBehaviour
     }
     void Start()
     {
-        BallTransform.position = new Vector3(50, 75, 500);
-        
+        BallTransform.position = new Vector3(Resolution.y / 10, 75, Resolution.x / 2);
     }
 
     public Texture2D Bake(Vector2 offset)
@@ -71,80 +68,77 @@ public class BakingScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (BallTransform.position.x - border > 1010)
+        if (BallTransform.position.x - border > 0)
         {
-            border += 1000;
+            border += Resolution.y;
             StartCoroutine(BuildTerrain());
         }
     }
     private void StartGame()
     {
-        
         canvas.MenuUIActive();
     }
     IEnumerator BuildTerrain()
     {
-        float X = Mathf.Floor(BallTransform.position.x / 1000) * 1000;
-        float Z = Mathf.Floor(BallTransform.position.z / 1000) * 1000;
-        xShift = Z / (Resolution.x + 1);
-        yShift += Shift;
-        for (int i = -1; i < 2; i++)
+        float X = Mathf.Floor(BallTransform.position.x / Resolution.y);
+        float Z = Mathf.Floor(BallTransform.position.z / Resolution.y);
+        print(Z);
+        DestroyImmediate(Terrains[0], true);
+        //DestroyImmediate(HeightMaps[0], true);
+        Terrains[0] = Terrains[1];
+        HeightMaps[0] = HeightMaps[1];
+        Data[2] = Data[0];
+        Data[0] = Data[1];
+        Data[1] = Data[2];
+        HeightMaps[1] = Bake(new Vector2(X, Z));
+        foreach (GameObject it in Spruces[0])
         {
-            xShift += Shift;
-            DestroyImmediate(Terrains[i + 1], true);
-            DestroyImmediate(HeightMaps[i + 1], true);
-            Terrains[i + 1] = Terrains[i + 4];
-            HeightMaps[i + 1] = HeightMaps[i + 4];
-            SwitchData[i + 1] = Data[i + 1];
-            Data[i + 1] = Data[i + 4];
-            Data[i + 4] = SwitchData[i + 1];
-            HeightMaps[i + 4] = Bake(new Vector2(X - yShift, Z + i * 1000 - xShift));
-            foreach (GameObject it in Spruces[i + 1])
+            DestroyImmediate(it, true);
+        }
+        yield return null;
+        Spruces[0] = Spruces[1];
+        Spruces[1] = new List<GameObject>();
+        Texture2D SpruceMap = BakeSpruce();
+        float[,] HeightColors = new float[Resolution.x + 1, Resolution.y + 1];
+        for (int y = 0; y < Resolution.y + 1; y++)
+        {
+            if (y % 5 == 0)
             {
-                DestroyImmediate(it, true);
+                yield return null;
             }
-            yield return null;
-            Spruces[i + 1] = Spruces[i + 4];
-            Spruces[i + 4] = new List<GameObject>();
-            Texture2D SpruceMap = BakeSpruce();
-            float[,] HeightColors = new float[Resolution.x + 1, Resolution.y + 1];
-            for (int y = 0; y < Resolution.y + 1; y++)
+            for (int p = 0; p < Resolution.x + 1; p++)
             {
-                if (y % 5 == 0)
+                HeightColors[p, y] = HeightMaps[1].GetPixel(y, p)[0];
+                float SpruceHeight = HeightColors[p, y];
+                if (SpruceMap.GetPixel(y, p).r > spruceHardness)
                 {
-                    yield return null;
-                }
-                for (int p = 0; p < Resolution.x + 1; p++)
-                {
-                    HeightColors[p, y] = HeightMaps[i + 4].GetPixel(y, p)[0] / 5;
-                    float SpruceHeight = HeightColors[p, y] * 500;
-                    if (SpruceMap.GetPixel(y, p).r > spruceHardness)
+                    if (Random.Range(-10.0f, 10.0f) > 9.2f)
                     {
-                        if (Random.Range(-10.0f, 10.0f) > 9.2f)
-                        {
-                            GameObject Charger = Instantiate(RefCharger);
-                            Charger.GetComponent<Transform>().position = new Vector3(X + y * Shift + 1000, SpruceHeight, Z + i * 1000 + p * Shift);
-                            Spruces[i + 4].Add(Charger);
-                            Charger.GetComponent<ChargerScript>().death = gameObject.GetComponent<Death>();
-                        }
-                        else {
-                            GameObject Spruce = Instantiate(RefSpruce);
-                            Spruce.GetComponent<Transform>().position = new Vector3(X + y * Shift + 1000, SpruceHeight, Z + i * 1000 + p * Shift);
-                            Spruces[i + 4].Add(Spruce);
-                        }
+                        GameObject Charger = Instantiate(RefCharger);
+                        Charger.GetComponent<Transform>().position = new Vector3(X + y * Shift + 1000, SpruceHeight, Z + y * Shift);
+                        Spruces[1].Add(Charger);
+                        Charger.GetComponent<ChargerScript>().death = gameObject.GetComponent<Death>();
+                    }
+                    else
+                    {
+                        GameObject Spruce = Instantiate(RefSpruce);
+                        Spruce.GetComponent<Transform>().position = new Vector3(X + y * Shift + 1000, SpruceHeight, Z + y * Shift);
+                        Spruces[1].Add(Spruce);
                     }
                 }
             }
-            StaticBatchingUtility.Combine(Spruces[i+4].ToArray(), TestBatch);
-            GameObject NewTerrain = Terrain.CreateTerrainGameObject(Data[i + 4]);
-            NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x + 1;
-            NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
-            NewTerrain.GetComponent<Terrain>().materialTemplate = TerrainMaterial;
-            NewTerrain.GetComponent<Terrain>().heightmapPixelError = 30;
-            Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
-            NewTerrainTransform.position = new Vector3(X + 1000, 0, Z + 1000 * i);
-            Terrains[i + 4] = NewTerrain;
         }
+        StaticBatchingUtility.Combine(Spruces[1].ToArray(), TestBatch);
+        GameObject NewTerrain = Terrain.CreateTerrainGameObject(Data[1]);
+        NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x + 1;
+        NewTerrain.GetComponent<Terrain>().terrainData.size = new Vector3(Resolution.y, NewTerrain.GetComponent<Terrain>().terrainData.size.y, Resolution.x);
+        NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
+        NewTerrain.GetComponent<Terrain>().materialTemplate = TerrainMaterial;
+        NewTerrain.GetComponent<Terrain>().heightmapPixelError = 30;
+        Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
+        NewTerrainTransform.position = new Vector3(X * Resolution.y + Resolution.y, 0, Z * Resolution.y - Resolution.y);
+        Terrains[1] = NewTerrain;
+
         if (!isBallExist)
         {
             StartGame();
@@ -154,7 +148,7 @@ public class BakingScript : MonoBehaviour
         {
             spruceHardness -= 0.1f;
         }
-
+        yield break;
     }
 }
 

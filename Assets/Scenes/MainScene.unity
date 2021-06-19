@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 1, g: 1, b: 1, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
@@ -1803,7 +1803,6 @@ MonoBehaviour:
   Resolution: {x: 512, y: 512}
   NoiseMaterial: {fileID: 2100000, guid: b2aa1795c21033e4b88f9729babc35b2, type: 2}
   SpruceMaterial: {fileID: 2100000, guid: 35561467b8caf4345b23a96100f197a0, type: 2}
-  FilePath: Assets/Textures/MaterialImage
   seed: 0
   Ball: {fileID: 520590068}
   RefCharger: {fileID: 2955489763589608395, guid: 80d00fb4f75d7c14cba97eb8ace592e7,
@@ -1815,22 +1814,11 @@ MonoBehaviour:
   Terrains:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   Data:
   - {fileID: 15600000, guid: 618728ea977baef4f992a2348ebb4242, type: 2}
   - {fileID: 15600000, guid: d1351a8867e405040a1fb33ce42a0b33, type: 2}
-  - {fileID: 15600000, guid: ec90bd442b29496468a06d4f639dd1ef, type: 2}
   - {fileID: 15600000, guid: 33b409ca1938c344491af14b87780486, type: 2}
-  - {fileID: 15600000, guid: 15b5c9fbafd3f754c83e9dc4529acb90, type: 2}
-  - {fileID: 15600000, guid: 0d14af1833175dc43bea392e09dab638, type: 2}
   HeightMaps:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   Shift: 1.953125
