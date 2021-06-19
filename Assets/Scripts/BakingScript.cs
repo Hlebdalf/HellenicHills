@@ -37,6 +37,7 @@ public class BakingScript : MonoBehaviour
             Spruces.Add(new List<GameObject>());
         }
         StartCoroutine(BuildTerrain());
+        gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Depth;
     }
     void Start()
     {
@@ -79,8 +80,7 @@ public class BakingScript : MonoBehaviour
     }
     /*private void Update()
     {
-        //gameObject.GetComponent<Camera>().clearFlags.;
-       // CameraClearFlags.Color;
+       
     }*/
     private void StartGame()
     {
@@ -126,7 +126,7 @@ public class BakingScript : MonoBehaviour
                         if (Random.Range(-10.0f, 10.0f) > 9.2f)
                         {
                             GameObject Charger = Instantiate(RefCharger);
-                            Charger.GetComponent<Transform>().position = new Vector3(X * Resolution.y + p + Resolution.y, SpruceHeight, i * Z * Resolution.y + y - Resolution.y);
+                            Charger.GetComponent<Transform>().position = new Vector3(X * Resolution.y + p + Resolution.y, SpruceHeight, i * Resolution.y + y + Resolution.y * Z - 2*Resolution.y);
                             Spruces[1].Add(Charger);
                             Charger.GetComponent<ChargerScript>().death = gameObject.GetComponent<Death>();
                             ChargerBatcher.Add(Charger);
@@ -134,7 +134,7 @@ public class BakingScript : MonoBehaviour
                         else
                         {
                             GameObject Spruce = Instantiate(RefSpruce);
-                            Spruce.GetComponent<Transform>().position = new Vector3(X * Resolution.y + p + Resolution.y, SpruceHeight, i * Z * Resolution.y + y - Resolution.y);
+                            Spruce.GetComponent<Transform>().position = new Vector3(X * Resolution.y + p + Resolution.y, SpruceHeight, i * Resolution.y + y + Resolution.y * Z - 2 * Resolution.y);
                             Spruces[1].Add(Spruce);
                             SpruceBatcher.Add(Spruce);
                         }
