@@ -33,7 +33,7 @@ public class BakingScript : MonoBehaviour
     {
         xShift = Shift;
         BallTransform = Ball.GetComponent<Transform>();
-        Ball.GetComponent<Transform>().position = new Vector3(-1, 0, Resolution.y);
+        Ball.GetComponent<Transform>().position = new Vector3(-1, 5000, Resolution.y);
         seed = Random.Range(-10000f, 10000f);
         for (int i = 0; i < 2; i++)
         {
