@@ -25,7 +25,7 @@ public class Death : MonoBehaviour
     public void GameOver()
     {
         Ball.GetComponent<Rigidbody>().isKinematic = true;
-        Ball_up.GetComponent<Animator>().enabled = false;
+        Ball_up.GetComponent<UpAnimation>().enabled = false;
         PlayerPrefs.Save();   
         ReloadButton.SetActive(true);
     }

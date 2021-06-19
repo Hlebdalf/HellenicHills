@@ -375,8 +375,8 @@ GameObject:
   m_Component:
   - component: {fileID: 304449047}
   - component: {fileID: 304449049}
-  - component: {fileID: 304449048}
   - component: {fileID: 304449050}
+  - component: {fileID: 304449048}
   m_Layer: 5
   m_Name: MenuUI
   m_TagString: Untagged
@@ -425,8 +425,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -809,25 +809,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 297443854}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &757683344
-Animator:
-  serializedVersion: 3
+--- !u!114 &757683344
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 757683343}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b7fe9fd04cffb5247b11943dc348d50d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f12a50251e468440898037c60a3bcaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &757683347 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4997574951397688309, guid: 968868a72419b964492a0513e5fc3d0e,
@@ -1110,7 +1103,7 @@ PrefabInstance:
     - target: {fileID: 7938313923740204570, guid: 048a2eb0524b15b46b6a60ac6337ccff,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7938313923740204570, guid: 048a2eb0524b15b46b6a60ac6337ccff,
         type: 3}
@@ -1237,8 +1230,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1233718047}
   - component: {fileID: 1233718049}
-  - component: {fileID: 1233718048}
   - component: {fileID: 1233718050}
+  - component: {fileID: 1233718048}
   m_Layer: 5
   m_Name: Right
   m_TagString: Untagged
@@ -1278,15 +1271,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.514151, b: 0.514151, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1755,7 +1748,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 333
   field of view: 120
   orthographic: 0
   orthographic size: 5
@@ -2097,8 +2090,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1984243051}
   - component: {fileID: 1984243053}
-  - component: {fileID: 1984243052}
   - component: {fileID: 1984243054}
+  - component: {fileID: 1984243052}
   m_Layer: 5
   m_Name: Left
   m_TagString: Untagged
@@ -2138,15 +2131,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7173591, g: 1, b: 0.7028302, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
