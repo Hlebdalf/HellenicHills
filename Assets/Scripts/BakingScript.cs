@@ -108,13 +108,13 @@ public class BakingScript : MonoBehaviour
             Spruces[i + 4] = new List<GameObject>();
             Texture2D SpruceMap = BakeSpruce();
             float[,] HeightColors = new float[Resolution.x + 1, Resolution.y + 1];
-            for (int y = 0; y < Resolution.x + 1; y++)
+            for (int y = 0; y < Resolution.y + 1; y++)
             {
                 if (y % 5 == 0)
                 {
                     yield return null;
                 }
-                for (int p = 0; p < Resolution.y + 1; p++)
+                for (int p = 0; p < Resolution.x + 1; p++)
                 {
                     HeightColors[p, y] = HeightMaps[i + 4].GetPixel(y, p)[0] / 5;
                     float SpruceHeight = HeightColors[p, y] * 500;
