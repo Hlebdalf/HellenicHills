@@ -13,11 +13,14 @@ public class BakingScript : MonoBehaviour
     public UIButtonManager canvas;
     public GameObject RefSpruce;
     public Material TerrainMaterial;
-    public GameObject TestBatch;
+    public GameObject SpruceRoot;
+    public GameObject ChargerRoot;
     public GameObject[] Terrains = new GameObject[2];
     public TerrainData[] Data = new TerrainData[2];
     public Texture2D[] HeightMaps = new Texture2D[2];
     private List<List<GameObject>> Spruces = new List<List<GameObject>>(2);
+    private List<GameObject> ChargerBatcher = new List<GameObject>();
+    private List<GameObject> SpruceBatcher = new List<GameObject>();
     private Transform BallTransform;
     public float border = 0;
     private bool isBallExist = false;
@@ -42,14 +45,14 @@ public class BakingScript : MonoBehaviour
 
     public Texture2D Bake(Vector2 offset)
     {
-        NoiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", offset.x);
+        NoiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", offset.x / 3);////
         NoiseMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", offset.y + seed);
         NoiseMaterial.SetFloat("Vector1_090150e04f634e6eb9f7220d01725be0", seed);
-        RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x + 1, Resolution.y + 1);
+        RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.y + 1, Resolution.y + 1);///
         Graphics.Blit(null, renderTexture, NoiseMaterial);
-        Texture2D texture = new Texture2D(Resolution.x + 1, Resolution.y + 1);
+        Texture2D texture = new Texture2D(Resolution.y + 1, Resolution.y + 1);///
         RenderTexture.active = renderTexture;
-        texture.ReadPixels(new Rect(Vector2.zero, new Vector2Int(Resolution.x + 1, Resolution.y + 1)), 0, 0);
+        texture.ReadPixels(new Rect(Vector2.zero, new Vector2Int(Resolution.y + 1, Resolution.y + 1)), 0, 0);///
         RenderTexture.active = null;
         RenderTexture.ReleaseTemporary(renderTexture);
         return texture;
@@ -82,9 +85,10 @@ public class BakingScript : MonoBehaviour
     {
         float X = Mathf.Floor(BallTransform.position.x / Resolution.y);
         float Z = Mathf.Floor(BallTransform.position.z / Resolution.y);
-        print(Z);
         DestroyImmediate(Terrains[0], true);
-        //DestroyImmediate(HeightMaps[0], true);
+        DestroyImmediate(HeightMaps[0], true);
+        SpruceBatcher.Clear();
+        ChargerBatcher.Clear();
         Terrains[0] = Terrains[1];
         HeightMaps[0] = HeightMaps[1];
         Data[2] = Data[0];
@@ -99,40 +103,46 @@ public class BakingScript : MonoBehaviour
         Spruces[0] = Spruces[1];
         Spruces[1] = new List<GameObject>();
         Texture2D SpruceMap = BakeSpruce();
-        float[,] HeightColors = new float[Resolution.x + 1, Resolution.y + 1];
-        for (int y = 0; y < Resolution.y + 1; y++)
+        float[,] HeightColors = new float[Resolution.y + 1, Resolution.y + 1]; /////
+        for (int p = 0; p < Resolution.y + 1; p++)
         {
-            if (y % 5 == 0)
+            if (p % 5 == 0)
             {
                 yield return null;
             }
-            for (int p = 0; p < Resolution.x + 1; p++)
+            for (int y = 0; y < Resolution.y + 1; y++) ///
             {
-                HeightColors[p, y] = HeightMaps[1].GetPixel(y, p)[0];
-                float SpruceHeight = HeightColors[p, y];
-                if (SpruceMap.GetPixel(y, p).r > spruceHardness)
+                HeightColors[p, y] = HeightMaps[1].GetPixel(p, y)[0];
+                float SpruceHeight = HeightColors[p, y] + 20;
+                for (int i = 1; i < 4; i++)
                 {
-                    if (Random.Range(-10.0f, 10.0f) > 9.2f)
+                    if (SpruceMap.GetPixel(i * y, p).r > spruceHardness)
                     {
-                        GameObject Charger = Instantiate(RefCharger);
-                        Charger.GetComponent<Transform>().position = new Vector3(X + y * Shift + 1000, SpruceHeight, Z + y * Shift);
-                        Spruces[1].Add(Charger);
-                        Charger.GetComponent<ChargerScript>().death = gameObject.GetComponent<Death>();
-                    }
-                    else
-                    {
-                        GameObject Spruce = Instantiate(RefSpruce);
-                        Spruce.GetComponent<Transform>().position = new Vector3(X + y * Shift + 1000, SpruceHeight, Z + y * Shift);
-                        Spruces[1].Add(Spruce);
+                        if (Random.Range(-10.0f, 10.0f) > 9.2f)
+                        {
+                            GameObject Charger = Instantiate(RefCharger);
+                            Charger.GetComponent<Transform>().position = new Vector3(X * Resolution.y + p + Resolution.y, SpruceHeight, i * Z * Resolution.y + y - Resolution.y);
+                            Spruces[1].Add(Charger);
+                            Charger.GetComponent<ChargerScript>().death = gameObject.GetComponent<Death>();
+                            ChargerBatcher.Add(Charger);
+                        }
+                        else
+                        {
+                            GameObject Spruce = Instantiate(RefSpruce);
+                            Spruce.GetComponent<Transform>().position = new Vector3(X * Resolution.y + p + Resolution.y, SpruceHeight, i * Z * Resolution.y + y - Resolution.y);
+                            Spruces[1].Add(Spruce);
+                            SpruceBatcher.Add(Spruce);
+                        }
                     }
                 }
             }
         }
-        StaticBatchingUtility.Combine(Spruces[1].ToArray(), TestBatch);
+        StaticBatchingUtility.Combine(SpruceBatcher.ToArray(), SpruceRoot);
+        StaticBatchingUtility.Combine(ChargerBatcher.ToArray(), ChargerRoot);
         GameObject NewTerrain = Terrain.CreateTerrainGameObject(Data[1]);
-        NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x + 1;
-        NewTerrain.GetComponent<Terrain>().terrainData.size = new Vector3(Resolution.y, NewTerrain.GetComponent<Terrain>().terrainData.size.y, Resolution.x);
+        NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.y + 1; /////
         NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
+        NewTerrain.GetComponent<Terrain>().terrainData.size = new Vector3(Resolution.y, NewTerrain.GetComponent<Terrain>().terrainData.size.y, Resolution.x);
         NewTerrain.GetComponent<Terrain>().materialTemplate = TerrainMaterial;
         NewTerrain.GetComponent<Terrain>().heightmapPixelError = 30;
         Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
