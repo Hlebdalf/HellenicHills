@@ -77,6 +77,11 @@ public class BakingScript : MonoBehaviour
             StartCoroutine(BuildTerrain());
         }
     }
+    /*private void Update()
+    {
+        //gameObject.GetComponent<Camera>().clearFlags.;
+       // CameraClearFlags.Color;
+    }*/
     private void StartGame()
     {
         canvas.MenuUIActive();
