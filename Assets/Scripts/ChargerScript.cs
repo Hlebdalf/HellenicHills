@@ -27,9 +27,12 @@ public class ChargerScript : MonoBehaviour
     }
     IEnumerator MarkerPosition()
     {
-        while (gameObject.GetComponent<Transform>().position.x > ball.GetComponent<Transform>().position.x)
+        while (gameObject.GetComponent<Transform>().position.x > ball.GetComponent<Transform>().position.x + 40)
         {
-            selfMarker.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(transform.position);
+            selfMarker.GetComponent<Image>().color = new Color(0,1,1,1-(gameObject.GetComponent<Transform>().position.x - ball.GetComponent<Transform>().position.x) / 800);
+            RectTransform nowTransfporm = selfMarker.GetComponent<RectTransform>();
+            nowTransfporm.position = new Vector3(Camera.main.WorldToScreenPoint(transform.position).x, Screen.height - 120, 1);
+            selfMarker.GetComponent<RectTransform>().position = nowTransfporm.position;
             yield return new WaitForEndOfFrame();
         }
         Destroy(selfMarker);

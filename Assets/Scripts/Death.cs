@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class Death : MonoBehaviour
 {
-    public int fuel = 1000;
-    public int consumption = 2;
+    public float fuel = 1000;
+    public float consumption = 2;
     public Slider fuelBar;
     public GameObject Ball;
     public GameObject Ball_up;
