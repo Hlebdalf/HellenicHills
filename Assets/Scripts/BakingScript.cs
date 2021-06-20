@@ -24,7 +24,7 @@ public class BakingScript : MonoBehaviour
     private List<GameObject> SpruceBatcher = new List<GameObject>();
     private Transform BallTransform;
     public float border = 0;
-    public float koeff = 328;
+    public float koeff;
     private bool isBallExist = false;
     private float spruceHardness = 0.9f;
 
@@ -96,7 +96,7 @@ public class BakingScript : MonoBehaviour
         Data[2] = Data[0];
         Data[0] = Data[1];
         Data[1] = Data[2];
-        HeightMaps[1] = Bake(new Vector2(Z * koeff, X * koeff - xShift));
+        HeightMaps[1] = Bake(new Vector2(Z * koeff, X * koeff));
         xShift += Shift;
         foreach (GameObject it in Spruces[0])
         {
@@ -115,7 +115,7 @@ public class BakingScript : MonoBehaviour
             }
             for (int y = 0; y < Resolution.y + 1; y++)
             {
-                HeightColors[p, y] = HeightMaps[1].GetPixel(p, y)[0]*1.2f;
+                HeightColors[p, y] = HeightMaps[1].GetPixel(p, y)[0];
                 float SpruceHeight = HeightColors[p, y] * 40 + 30;
                 for (int i = 1; i < 4; i++)
                 {
@@ -152,7 +152,7 @@ public class BakingScript : MonoBehaviour
         NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
         NewTerrain.GetComponent<Terrain>().terrainData.size = new Vector3(Resolution.y, NewTerrain.GetComponent<Terrain>().terrainData.size.y, Resolution.x);
         NewTerrain.GetComponent<Terrain>().materialTemplate = TerrainMaterial;
-        NewTerrain.GetComponent<Terrain>().heightmapPixelError = 30;
+        NewTerrain.GetComponent<Terrain>().heightmapPixelError = 50;
         Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
         NewTerrainTransform.position = new Vector3(X * Resolution.y + Resolution.y, 0, Z * Resolution.y - Resolution.y);
         Terrains[1] = NewTerrain;
