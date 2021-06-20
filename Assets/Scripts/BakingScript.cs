@@ -14,6 +14,7 @@ public class BakingScript : MonoBehaviour
     public GameObject RefSpruce;
     public Material TerrainMaterial;
     public GameObject SpruceRoot;
+    public GameObject ChargerMarker;
     public GameObject ChargerRoot;
     public GameObject[] Terrains = new GameObject[2];
     public TerrainData[] Data = new TerrainData[2];
@@ -25,7 +26,7 @@ public class BakingScript : MonoBehaviour
     public float border = 0;
     public float koeff = 328;
     private bool isBallExist = false;
-    private float spruceHardness = 0.7f;
+    private float spruceHardness = 0.9f;
 
     public float Shift;
     private float xShift;
@@ -120,12 +121,17 @@ public class BakingScript : MonoBehaviour
                 {
                     if (SpruceMap.GetPixel(i * y, p).r > spruceHardness)
                     {
-                        if (Random.Range(-10.0f, 10.0f) > 9.2f)
+                        if (Random.Range(-10.0f, 10.0f) > 9.8 - spruceHardness)
                         {
                             GameObject Charger = Instantiate(RefCharger);
                             Charger.GetComponent<Transform>().position = new Vector3(X * Resolution.y + p + Resolution.y, SpruceHeight, i * Resolution.y + y + Resolution.y * Z - 2 * Resolution.y);
                             Spruces[1].Add(Charger);
                             Charger.GetComponent<ChargerScript>().death = gameObject.GetComponent<Death>();
+                            Charger.GetComponent<ChargerScript>().refMarker = ChargerMarker;
+                            Charger.GetComponent<ChargerScript>().canvas = canvas.gameObject;
+                            Charger.GetComponent<ChargerScript>().ball = Ball;
+                            Charger.GetComponent<ChargerScript>().StartGame();
+
                             ChargerBatcher.Add(Charger);
                         }
                         else
@@ -158,7 +164,7 @@ public class BakingScript : MonoBehaviour
         }
         if (spruceHardness > 0.2f)
         {
-            spruceHardness -= 0.1f;
+            spruceHardness -= 0.03f;
         }
         yield break;
     }
