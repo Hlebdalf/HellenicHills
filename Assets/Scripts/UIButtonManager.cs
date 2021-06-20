@@ -10,6 +10,7 @@ public class UIButtonManager : MonoBehaviour
     public GameObject MenuUI;
     public GameObject InGameUI;
     public GameObject myCamera;
+    
     public void ReloadScene()
     {
         ReloadButton.SetActive(false);

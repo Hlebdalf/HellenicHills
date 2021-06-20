@@ -14,6 +14,7 @@ public class BakingScript : MonoBehaviour
     public GameObject RefSpruce;
     public Material TerrainMaterial;
     public GameObject SpruceRoot;
+    public GameObject ChargerMarker;
     public GameObject ChargerRoot;
     public GameObject[] Terrains = new GameObject[2];
     public TerrainData[] Data = new TerrainData[2];
@@ -126,6 +127,11 @@ public class BakingScript : MonoBehaviour
                             Charger.GetComponent<Transform>().position = new Vector3(X * Resolution.y + p + Resolution.y, SpruceHeight, i * Resolution.y + y + Resolution.y * Z - 2 * Resolution.y);
                             Spruces[1].Add(Charger);
                             Charger.GetComponent<ChargerScript>().death = gameObject.GetComponent<Death>();
+                            Charger.GetComponent<ChargerScript>().refMarker = ChargerMarker;
+                            Charger.GetComponent<ChargerScript>().canvas = canvas.gameObject;
+                            Charger.GetComponent<ChargerScript>().ball = Ball;
+                            Charger.GetComponent<ChargerScript>().StartGame();
+
                             ChargerBatcher.Add(Charger);
                         }
                         else
