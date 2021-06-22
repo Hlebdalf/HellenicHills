@@ -26,7 +26,8 @@ public class BakingScript : MonoBehaviour
     public float border = 0;
     public float koeff;
     private bool isBallExist = false;
-    private float spruceHardness = 0.6f;
+    private float spruceHardness = 0.85f;
+    private float ChargerChance = 9.1f;
 
     public float Shift;
     private float xShift;
@@ -139,8 +140,6 @@ public class BakingScript : MonoBehaviour
                 HeightColors[p, y] = HeightMaps[1].GetPixel(p, y)[0];
             }
         }
-
-        //StaticBatchingUtility.Combine(ChargerBatcher.ToArray(), ChargerRoot);
         GameObject NewTerrain = Terrain.CreateTerrainGameObject(Data[1]);
         NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.y + 1;
         NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
@@ -153,21 +152,41 @@ public class BakingScript : MonoBehaviour
         yield return null;
         for (int x = 0; x < Resolution.x / 2; x++)
         {
+            if (x % 10 == 0)
+            {
+                yield return null;
+            }
             for (int y = 0; y < Resolution.y / 2; y++)
             {
                 if (SpruceMap.GetPixel(x, y).r > spruceHardness)
-                {
-                    GameObject Spruce = Instantiate(RefSpruce);
-                    Vector3 FieldObjPos = RayPos(new Vector3((X+1) * Resolution.y + y * 2, 100, (Z - 1) * Resolution.x + x * 2));
-                    Spruce.GetComponent<Transform>().position = FieldObjPos;
-                    Spruces[1].Add(Spruce);
-                    SpruceBatcher.Add(Spruce);
-                }
+                    if (Random.Range(-10.0f, 10.0f) < ChargerChance)
+                    {
+                        {
+                            GameObject Spruce = Instantiate(RefSpruce);
+                            Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z - 1) * Resolution.x + x * 2));
+                            Spruce.GetComponent<Transform>().position = FieldObjPos;
+                            Spruces[1].Add(Spruce);
+                            SpruceBatcher.Add(Spruce);
+                        }
+                    }
+                    else
+                    {
+                        GameObject Charger = Instantiate(RefCharger);
+                        Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z - 1) * Resolution.x + x * 2));
+                        Charger.GetComponent<Transform>().position = FieldObjPos;
+                        Spruces[1].Add(Charger);
+                        ChargerBatcher.Add(Charger);
+                        Charger.GetComponent<ChargerScript>().death = gameObject.GetComponent<Death>();
+                        Charger.GetComponent<ChargerScript>().refMarker = ChargerMarker;
+                        Charger.GetComponent<ChargerScript>().canvas = canvas.gameObject;
+                        Charger.GetComponent<ChargerScript>().ball = Ball;
+                        Charger.GetComponent<ChargerScript>().StartGame();
+                    }
             }
         }
 
         StaticBatchingUtility.Combine(SpruceBatcher.ToArray(), SpruceRoot);
-
+        StaticBatchingUtility.Combine(ChargerBatcher.ToArray(), ChargerRoot);
         if (!isBallExist)
         {
             StartGame();
@@ -181,30 +200,3 @@ public class BakingScript : MonoBehaviour
     }
 }
 
-/*float SpruceHeight = HeightColors[p, y] * 40 + 30;
-for (int i = 1; i < 4; i++)
-{
-    if (SpruceMap.GetPixel(i * y, p).r > spruceHardness)
-    {
-        if (Random.Range(-10.0f, 10.0f) > 9.8 - spruceHardness)
-        {
-            GameObject Charger = Instantiate(RefCharger);
-            Charger.GetComponent<Transform>().position = new Vector3(X * Resolution.y + p + Resolution.y, SpruceHeight, i * Resolution.y + y + Resolution.y * Z - 2 * Resolution.y);
-            Spruces[1].Add(Charger);
-            Charger.GetComponent<ChargerScript>().death = gameObject.GetComponent<Death>();
-            Charger.GetComponent<ChargerScript>().refMarker = ChargerMarker;
-            Charger.GetComponent<ChargerScript>().canvas = canvas.gameObject;
-            Charger.GetComponent<ChargerScript>().ball = Ball;
-            Charger.GetComponent<ChargerScript>().StartGame();
-
-            ChargerBatcher.Add(Charger);
-        }
-        else
-        {
-            GameObject Spruce = Instantiate(RefSpruce);
-            Spruce.GetComponent<Transform>().position = new Vector3(X * Resolution.y + p + Resolution.y, SpruceHeight, i * Resolution.y + y + Resolution.y * Z - 2 * Resolution.y);
-            Spruces[1].Add(Spruce);
-            SpruceBatcher.Add(Spruce);
-        }
-    }
-}*/
