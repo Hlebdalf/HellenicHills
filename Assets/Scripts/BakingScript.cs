@@ -89,7 +89,12 @@ public class BakingScript : MonoBehaviour
             if (hit.collider.gameObject.name == "Terrain")
             {
                 self = hit.point;
+
             }
+            else Debug.LogError("NOT TERRAIN");
+        }
+        else {
+            Debug.LogWarning("Missing");
         }
         return self;
     }
@@ -132,7 +137,6 @@ public class BakingScript : MonoBehaviour
             for (int y = 0; y < Resolution.y + 1; y++)
             {
                 HeightColors[p, y] = HeightMaps[1].GetPixel(p, y)[0];
-
             }
         }
 
@@ -146,6 +150,7 @@ public class BakingScript : MonoBehaviour
         Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
         NewTerrainTransform.position = new Vector3((X + 1) * Resolution.y, 0, (Z - 1) * Resolution.y);
         Terrains[1] = NewTerrain;
+        yield return null;
         for (int x = 0; x < Resolution.x / 2; x++)
         {
             for (int y = 0; y < Resolution.y / 2; y++)
@@ -153,7 +158,7 @@ public class BakingScript : MonoBehaviour
                 if (SpruceMap.GetPixel(x, y).r > spruceHardness)
                 {
                     GameObject Spruce = Instantiate(RefSpruce);
-                    Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z - 1) * Resolution.x + x * 2));
+                    Vector3 FieldObjPos = RayPos(new Vector3((X+1) * Resolution.y + y * 2, 100, (Z - 1) * Resolution.x + x * 2));
                     Spruce.GetComponent<Transform>().position = FieldObjPos;
                     Spruces[1].Add(Spruce);
                     SpruceBatcher.Add(Spruce);
