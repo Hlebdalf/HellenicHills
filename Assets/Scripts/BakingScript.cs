@@ -7,26 +7,35 @@ public class BakingScript : MonoBehaviour
     public Vector2Int Resolution = new Vector2Int(0, 0);
     public Material NoiseMaterial;
     public Material SpruceMaterial;
-    public float seed;
+    public Material TerrainMaterial;
+    public UIButtonManager canvas;
     public GameObject Ball;
     public GameObject RefCharger;
-    public UIButtonManager canvas;
-    public GameObject RefSpruce;
-    public Material TerrainMaterial;
-    public GameObject SpruceRoot;
-    public GameObject ChargerMarker;
     public GameObject ChargerRoot;
+    public GameObject RefSpruce;
+    public GameObject SpruceRoot;
+    public GameObject RefParts;
+    public GameObject PartsRoot;
+    public GameObject RefMission;
+    public GameObject MissionRoot;
+    public GameObject Marker;
     public GameObject[] Terrains = new GameObject[2];
     public TerrainData[] Data = new TerrainData[2];
     public Texture2D[] HeightMaps = new Texture2D[2];
     private List<List<GameObject>> Spruces = new List<List<GameObject>>(2);
     private List<GameObject> ChargerBatcher = new List<GameObject>();
     private List<GameObject> SpruceBatcher = new List<GameObject>();
+    private List<GameObject> PartsBatcher = new List<GameObject>();
+    private List<GameObject> MissionBatcher = new List<GameObject>();
     private Transform BallTransform;
     public float border = 0;
+    public float seed;
     public float koeff;
     private bool isBallExist = false;
-    private float spruceHardness = 0.9f;
+    private float spruceHardness = 0.6f;
+    private float ChargerChance = 95;
+    private float PartsChance = 94.5f;
+    private float MissionChance = 93;
 
     public float Shift;
     private float xShift;
@@ -42,6 +51,14 @@ public class BakingScript : MonoBehaviour
         }
         StartCoroutine(BuildTerrain());
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Depth;
+    }
+
+    private void FieldObjInit(GameObject target)
+    {
+        target.GetComponent<FieldObjMarker>().refMarker = Marker;
+        target.GetComponent<FieldObjMarker>().canvas = canvas.gameObject;
+        target.GetComponent<FieldObjMarker>().ball = Ball;
+        target.GetComponent<FieldObjMarker>().StartGame();
     }
 
     public Texture2D Bake(Vector2 offset)
@@ -60,11 +77,11 @@ public class BakingScript : MonoBehaviour
     }
     public Texture2D BakeSpruce()
     {
-        RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x, Resolution.y);
+        RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x / 2, Resolution.y / 2);
         Graphics.Blit(null, renderTexture, SpruceMaterial);
-        Texture2D texture = new Texture2D(Resolution.x, Resolution.y);
+        Texture2D texture = new Texture2D(Resolution.x / 2, Resolution.y / 2);
         RenderTexture.active = renderTexture;
-        texture.ReadPixels(new Rect(Vector2.zero, new Vector2Int(Resolution.x, Resolution.y)), 0, 0);
+        texture.ReadPixels(new Rect(Vector2.zero, new Vector2Int(Resolution.x / 2, Resolution.y / 2)), 0, 0);
         RenderTexture.active = null;
         RenderTexture.ReleaseTemporary(renderTexture);
         return texture;
@@ -78,6 +95,28 @@ public class BakingScript : MonoBehaviour
             StartCoroutine(BuildTerrain());
         }
     }
+
+    private Vector3 RayPos(Vector3 self)
+    {
+        RaycastHit hit;
+        Ray ray = new Ray(self, new Vector3(0, -300, 0));
+        Physics.Raycast(ray, out hit);
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject.name == "Terrain")
+            {
+                self = hit.point;
+
+            }
+            else Debug.LogError("NOT TERRAIN");
+        }
+        else
+        {
+            Debug.LogWarning("Missing");
+        }
+        return self;
+    }
+
     private void StartGame()
     {
         BallTransform.position = new Vector3(Resolution.y / 10, 75, Resolution.x / 2);
@@ -91,6 +130,8 @@ public class BakingScript : MonoBehaviour
         DestroyImmediate(HeightMaps[0], true);
         SpruceBatcher.Clear();
         ChargerBatcher.Clear();
+        MissionBatcher.Clear();
+        PartsBatcher.Clear();
         Terrains[0] = Terrains[1];
         HeightMaps[0] = HeightMaps[1];
         Data[2] = Data[0];
@@ -116,37 +157,8 @@ public class BakingScript : MonoBehaviour
             for (int y = 0; y < Resolution.y + 1; y++)
             {
                 HeightColors[p, y] = HeightMaps[1].GetPixel(p, y)[0];
-                float SpruceHeight = HeightColors[p, y] * 40 + 30;
-                for (int i = 1; i < 4; i++)
-                {
-                    if (SpruceMap.GetPixel(i * y, p).r > spruceHardness)
-                    {
-                        if (Random.Range(-10.0f, 10.0f) > 9.8 - spruceHardness)
-                        {
-                            GameObject Charger = Instantiate(RefCharger);
-                            Charger.GetComponent<Transform>().position = new Vector3(X * Resolution.y + p + Resolution.y, SpruceHeight, i * Resolution.y + y + Resolution.y * Z - 2 * Resolution.y);
-                            Spruces[1].Add(Charger);
-                            Charger.GetComponent<ChargerScript>().death = gameObject.GetComponent<Death>();
-                            Charger.GetComponent<ChargerScript>().refMarker = ChargerMarker;
-                            Charger.GetComponent<ChargerScript>().canvas = canvas.gameObject;
-                            Charger.GetComponent<ChargerScript>().ball = Ball;
-                            Charger.GetComponent<ChargerScript>().StartGame();
-
-                            ChargerBatcher.Add(Charger);
-                        }
-                        else
-                        {
-                            GameObject Spruce = Instantiate(RefSpruce);
-                            Spruce.GetComponent<Transform>().position = new Vector3(X * Resolution.y + p + Resolution.y, SpruceHeight, i * Resolution.y + y + Resolution.y * Z - 2 * Resolution.y);
-                            Spruces[1].Add(Spruce);
-                            SpruceBatcher.Add(Spruce);
-                        }
-                    }
-                }
             }
         }
-        StaticBatchingUtility.Combine(SpruceBatcher.ToArray(), SpruceRoot);
-        StaticBatchingUtility.Combine(ChargerBatcher.ToArray(), ChargerRoot);
         GameObject NewTerrain = Terrain.CreateTerrainGameObject(Data[1]);
         NewTerrain.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.y + 1;
         NewTerrain.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
@@ -154,9 +166,71 @@ public class BakingScript : MonoBehaviour
         NewTerrain.GetComponent<Terrain>().materialTemplate = TerrainMaterial;
         NewTerrain.GetComponent<Terrain>().heightmapPixelError = 50;
         Transform NewTerrainTransform = NewTerrain.GetComponent<Transform>();
-        NewTerrainTransform.position = new Vector3(X * Resolution.y + Resolution.y, 0, Z * Resolution.y - Resolution.y);
+        NewTerrainTransform.position = new Vector3((X + 1) * Resolution.y, 0, (Z - 1) * Resolution.y);
         Terrains[1] = NewTerrain;
+        yield return null;
+        for (int x = 0; x < Resolution.x / 2; x++)
+        {
+            if (x % 10 == 0)
+            {
+                yield return null;
+            }
+            for (int y = 0; y < Resolution.y / 2; y++)
+            {
+                if (SpruceMap.GetPixel(x, y).r > spruceHardness)
+                {
+                    float coin = Random.Range(0f, 100.0f);
+                    if (coin > ChargerChance)
+                    {
+                        GameObject Charger = Instantiate(RefCharger);
+                        Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
+                        Charger.GetComponent<Transform>().position = FieldObjPos;
+                        Spruces[1].Add(Charger);
+                        ChargerBatcher.Add(Charger);
+                        Charger.GetComponent<ChargerScript>().death = gameObject.GetComponent<Death>();
+                        Charger.GetComponent<FieldObjMarker>().color = new Color(0, 1, 1);
+                        FieldObjInit(Charger);
 
+                    }
+                    else if(coin > PartsChance)
+                    {
+                        GameObject Parts = Instantiate(RefParts);
+                        Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
+                        Parts.GetComponent<Transform>().position = FieldObjPos;
+                        Spruces[1].Add(Parts);
+                        PartsBatcher.Add(Parts);
+                        Parts.GetComponent<FieldObjMarker>().color = new Color(1, 1, 1);
+                        FieldObjInit(Parts);
+                    }
+                    else if(coin > MissionChance)
+                    {
+                        GameObject Mission = Instantiate(RefMission);
+                        Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
+                        Mission.GetComponent<Transform>().position = FieldObjPos;
+                        Spruces[1].Add(Mission);
+                        MissionBatcher.Add(Mission);
+                        Mission.GetComponent<FieldObjMarker>().color = new Color(2.56173f, 2.56173f, 0);
+                        FieldObjInit(Mission);
+                    }
+
+                    else
+                    {
+
+                        GameObject Spruce = Instantiate(RefSpruce);
+                        Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
+                        Spruce.GetComponent<Transform>().position = FieldObjPos;
+                        Spruces[1].Add(Spruce);
+                        SpruceBatcher.Add(Spruce);
+
+                    }
+                }
+            }
+        }
+
+        StaticBatchingUtility.Combine(SpruceBatcher.ToArray(), SpruceRoot);
+        StaticBatchingUtility.Combine(ChargerBatcher.ToArray(), ChargerRoot);
+        StaticBatchingUtility.Combine(PartsBatcher.ToArray(), PartsRoot);
+        StaticBatchingUtility.Combine(MissionBatcher.ToArray(), MissionRoot);
         if (!isBallExist)
         {
             StartGame();
