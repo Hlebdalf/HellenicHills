@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ChargerScript : MonoBehaviour
+
+public class FieldObjScript : MonoBehaviour
 {
     public Death death;
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Machine_ball")
         {
-            death.StartCharge();
+            death.FieldObjEvent(name);
             gameObject.GetComponent<BoxCollider>().enabled = false;
         }
     }

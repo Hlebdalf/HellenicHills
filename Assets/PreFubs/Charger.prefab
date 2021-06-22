@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7902976762512768521}
   - component: {fileID: 6937519120617731092}
   - component: {fileID: 6475561662276033411}
-  - component: {fileID: 7721793292163987249}
   - component: {fileID: -4530895786832002641}
+  - component: {fileID: -1466454058370010802}
   m_Layer: 3
   m_Name: Charger
   m_TagString: Untagged
@@ -97,19 +97,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.06, y: 2.08, z: 2.1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7721793292163987249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2955489763589608395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b172c9af389594ab7bada4905f277c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  death: {fileID: 0}
 --- !u!114 &-4530895786832002641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,3 +114,15 @@ MonoBehaviour:
   refMarker: {fileID: 0}
   canvas: {fileID: 0}
   ball: {fileID: 0}
+--- !u!114 &-1466454058370010802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2955489763589608395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6fe99ee5321b449b2dcd6078d86620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

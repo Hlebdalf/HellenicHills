@@ -33,11 +33,24 @@ public class Death : MonoBehaviour
     {
         StartCoroutine(FuelConsumption());
     }
-    public void StartCharge()
+    public void FieldObjEvent(string type)
     {
-        Ball.GetComponent<Rigidbody>().isKinematic = true;
-        StopAllCoroutines();
-        StartCoroutine(ChargeCoroutine());
+        switch (type) {
+            case "Charger(Clone)":
+                Ball.GetComponent<Rigidbody>().isKinematic = true;
+                StopAllCoroutines();
+                StartCoroutine(ChargeCoroutine());
+                break;
+            case "Mission(Clone)":
+                print("Mission");
+                break;
+            case "Parts(Clone)":
+                print("Parts");
+                break;
+            default:
+                print(type);
+                break;
+        }
     }
     public IEnumerator FuelConsumption()
     {

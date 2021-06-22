@@ -58,6 +58,7 @@ public class BakingScript : MonoBehaviour
         target.GetComponent<FieldObjMarker>().refMarker = Marker;
         target.GetComponent<FieldObjMarker>().canvas = canvas.gameObject;
         target.GetComponent<FieldObjMarker>().ball = Ball;
+        target.GetComponent<FieldObjScript>().death = gameObject.GetComponent<Death>();
         target.GetComponent<FieldObjMarker>().StartGame();
     }
 
@@ -186,8 +187,7 @@ public class BakingScript : MonoBehaviour
                         Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
                         Charger.GetComponent<Transform>().position = FieldObjPos;
                         Spruces[1].Add(Charger);
-                        ChargerBatcher.Add(Charger);
-                        Charger.GetComponent<ChargerScript>().death = gameObject.GetComponent<Death>();
+                        ChargerBatcher.Add(Charger);         
                         Charger.GetComponent<FieldObjMarker>().color = new Color(0, 1, 1);
                         FieldObjInit(Charger);
 
