@@ -14,7 +14,7 @@ public class FieldObjMarker : MonoBehaviour
     public void StartGame()
     {
         selfMarker = Instantiate(refMarker);
-        selfMarker.GetComponent<Transform>().SetParent(canvas.GetComponent<Transform>());
+        selfMarker.GetComponent<Transform>().SetParent(canvas.GetComponent<Transform>().GetChild(0).transform);
         selfMarker.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(transform.position);
         StartCoroutine(MarkerPosition());
     }

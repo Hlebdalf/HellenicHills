@@ -34,8 +34,8 @@ public class BakingScript : MonoBehaviour
     private bool isBallExist = false;
     private float spruceHardness = 0.6f;
     private float ChargerChance = 95;
-    private float PartsChance = 94.5f;
-    private float MissionChance = 93;
+    private float PartsChance = 94.5f;//94.5
+    private float MissionChance = 93;//93
 
     public float Shift;
     private float xShift;

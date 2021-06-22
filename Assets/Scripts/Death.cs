@@ -12,6 +12,10 @@ public class Death : MonoBehaviour
     public GameObject Ball_up;
     public GameObject ReloadButton;
     public Text scoreRecordText;
+    public Text partsAllText;
+    public Text partsNowText;
+    private int partsNow=0;
+    private int partsAll;
 
     private void Start()
     {    
@@ -20,12 +24,18 @@ public class Death : MonoBehaviour
 
     private void Awake()
     {
-        scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString();
+        scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString(); 
+        partsAll = PlayerPrefs.GetInt("partsAll");
+        partsNow = partsAll;
+        partsAllText.text = partsAll.ToString();
+        partsNowText.text = partsNow.ToString();
     }
     public void GameOver()
     {
         Ball.GetComponent<Rigidbody>().isKinematic = true;
         Ball_up.GetComponent<UpAnimation>().enabled = false;
+        partsAll += partsNow;
+        PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();   
         ReloadButton.SetActive(true);
     }
@@ -33,24 +43,34 @@ public class Death : MonoBehaviour
     {
         StartCoroutine(FuelConsumption());
     }
+
     public void FieldObjEvent(string type)
     {
-        switch (type) {
+        Ball.GetComponent<Rigidbody>().isKinematic = true;
+        StopAllCoroutines();
+        switch (type) {  
             case "Charger(Clone)":
-                Ball.GetComponent<Rigidbody>().isKinematic = true;
-                StopAllCoroutines();
                 StartCoroutine(ChargeCoroutine());
                 break;
             case "Mission(Clone)":
                 print("Mission");
+                Ball.GetComponent<Rigidbody>().isKinematic = false;
                 break;
             case "Parts(Clone)":
-                print("Parts");
+                StartCoroutine(PartsCollectCoroutine());
                 break;
             default:
                 print(type);
                 break;
         }
+    }
+    public IEnumerator PartsCollectCoroutine()
+    {
+        yield return new WaitForSeconds(2);
+        partsNow += (int)Random.Range(0, 10.0f);
+        partsNowText.text = partsNow.ToString();
+        Ball.GetComponent<Rigidbody>().isKinematic = false;
+        StartCoroutine(FuelConsumption());
     }
     public IEnumerator FuelConsumption()
     {
