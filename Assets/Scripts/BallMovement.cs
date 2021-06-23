@@ -4,50 +4,60 @@ using UnityEngine;
 
 
 public class BallMovement : MonoBehaviour
-{   
-    public float g = 10;
-    public float angle = 45;
-    public float TurnSpeed = 1;
-    private float forceY;
-    private float forceX;
+{
+    public float turnForce = 1;
+    public float forwardForce = 10;
+    public float InertiaDivider = 2;
+    public float TurnForceDevider = 4;
+    public float TurnSpeedRoof = 50;
+    public float ForwardSpeedRoof = 100;
     private Rigidbody rb;
     private bool moovingRight = false;
     private bool moovingLeft = false;
     void Start()
     {
-        angle = 180 / Mathf.PI * angle;
-        forceY = -Mathf.Sin(angle) * g;
-        forceX = -Mathf.Cos(angle) * g;
         rb = gameObject.GetComponent<Rigidbody>();
-        Physics.gravity = new Vector3(forceX, forceY, 0);    }
+        StartCoroutine(ForwardCoroutine());
+    }
 
     public void StartMoveRight()
     {
         moovingRight = true;
-        StartCoroutine(RightGrowCoroutine());  
+        StartCoroutine(RightGrowCoroutine());
     }
     public void EndMoveRight()
     {
-        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         moovingRight = false;
     }
     public void StartMoveLeft()
     {
         moovingLeft = true;
-        StartCoroutine(LeftGrowCoroutine());   
+        StartCoroutine(LeftGrowCoroutine());
     }
     public void EndMoveLeft()
     {
         moovingLeft = false;
-        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 0);
     }
 
     IEnumerator LeftGrowCoroutine()
     {
         while (moovingLeft)
         {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, TurnSpeed);
-            yield return new WaitForFixedUpdate();
+            if (rb.velocity.z > TurnSpeedRoof)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, TurnSpeedRoof);
+            }
+            else
+            {
+                if (rb.velocity.z < 0)
+                {
+                    Vector3 velocityDevider = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z / InertiaDivider);
+                    rb.velocity = velocityDevider;
+                }
+                rb.AddForce(new Vector3(0, 0, turnForce));
+            }
+            // yield return new WaitForFixedUpdate();
+            yield return new WaitForSeconds(0.0083f);
         }
     }
 
@@ -55,7 +65,37 @@ public class BallMovement : MonoBehaviour
     {
         while (moovingRight)
         {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -TurnSpeed);
+            if (rb.velocity.z < -TurnSpeedRoof)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -TurnSpeedRoof);
+            }
+            else
+            {
+                if (rb.velocity.z > 0)
+                {
+                    Vector3 velocityDevider = new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z / InertiaDivider);
+                    rb.velocity = velocityDevider;
+                }
+                rb.AddForce(new Vector3(0, 0, -turnForce));
+            }
+            //yield return new WaitForFixedUpdate();
+            yield return new WaitForSeconds(0.0083f);
+        }
+    }
+
+    IEnumerator ForwardCoroutine()
+    {
+        while (true)
+
+        {
+            if (rb.velocity.x > ForwardSpeedRoof)
+            {
+                rb.velocity = new Vector3(ForwardSpeedRoof, rb.velocity.y, rb.velocity.z);
+            }
+            else
+            {
+                rb.AddForce(new Vector3(forwardForce, 0, 0));
+            }
             yield return new WaitForFixedUpdate();
         }
     }

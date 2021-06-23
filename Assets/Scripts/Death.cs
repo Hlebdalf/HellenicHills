@@ -55,6 +55,7 @@ public class Death : MonoBehaviour
             case "Mission(Clone)":
                 print("Mission");
                 Ball.GetComponent<Rigidbody>().isKinematic = false;
+                StartCoroutine(FuelConsumption());
                 break;
             case "Parts(Clone)":
                 StartCoroutine(PartsCollectCoroutine());
