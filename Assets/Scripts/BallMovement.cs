@@ -5,50 +5,21 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
-    public float TurnForce = 1;
-    public float ForwardForce = 10;
+    public float turnForce = 1;
+    public float forwardForce = 10;
     public float InertiaDivider = 2;
     public float TurnForceDevider = 4;
     public float TurnSpeedRoof = 50;
     public float ForwardSpeedRoof = 100;
-    private float turnForce;
-    private float forwardForce;
     private Rigidbody rb;
     private bool moovingRight = false;
     private bool moovingLeft = false;
     void Start()
     {
-        forwardForce = 0;
-        turnForce = 0;
         rb = gameObject.GetComponent<Rigidbody>();
+        StartCoroutine(ForwardCoroutine());
     }
-    private void FixedUpdate()
-    {
-        if (rb.velocity.x > ForwardSpeedRoof)
-        {
-            rb.velocity = new Vector3(ForwardSpeedRoof, rb.velocity.y, rb.velocity.z);
-        }
-        else
-        {
-            rb.AddForce(new Vector3(forwardForce, 0, 0));
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.name == "Terrain")
-        {
-            forwardForce = ForwardForce;
-            turnForce = TurnForce;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.name == "Terrain")
-        {
-            forwardForce = 0;
-            turnForce = TurnForce / TurnForceDevider;
-        }
-    }
+
     public void StartMoveRight()
     {
         moovingRight = true;
@@ -85,7 +56,8 @@ public class BallMovement : MonoBehaviour
                 }
                 rb.AddForce(new Vector3(0, 0, turnForce));
             }
-            yield return new WaitForFixedUpdate();
+            // yield return new WaitForFixedUpdate();
+            yield return new WaitForSeconds(0.0083f);
         }
     }
 
@@ -105,6 +77,24 @@ public class BallMovement : MonoBehaviour
                     rb.velocity = velocityDevider;
                 }
                 rb.AddForce(new Vector3(0, 0, -turnForce));
+            }
+            //yield return new WaitForFixedUpdate();
+            yield return new WaitForSeconds(0.0083f);
+        }
+    }
+
+    IEnumerator ForwardCoroutine()
+    {
+        while (true)
+
+        {
+            if (rb.velocity.x > ForwardSpeedRoof)
+            {
+                rb.velocity = new Vector3(ForwardSpeedRoof, rb.velocity.y, rb.velocity.z);
+            }
+            else
+            {
+                rb.AddForce(new Vector3(forwardForce, 0, 0));
             }
             yield return new WaitForFixedUpdate();
         }

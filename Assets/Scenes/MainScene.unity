@@ -743,12 +743,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceae9b0f4d8eab347b079cbc98ad0edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TurnForce: 3000
-  ForwardForce: 3000
-  InertiaDivider: 1.07
+  turnForce: 200
+  forwardForce: 75
+  InertiaDivider: 1
   TurnForceDevider: 2.5
-  TurnSpeedRoof: 40
-  ForwardSpeedRoof: 100
+  TurnSpeedRoof: 30
+  ForwardSpeedRoof: 60
 --- !u!135 &520590073
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -758,7 +758,7 @@ SphereCollider:
   m_GameObject: {fileID: 520590068}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 1.21
   m_Center: {x: 0, y: 0, z: 0}
@@ -770,9 +770,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520590068}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 10
   m_Drag: 0
-  m_AngularDrag: 0.03
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
