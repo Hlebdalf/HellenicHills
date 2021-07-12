@@ -41,6 +41,7 @@ public class BakingScript : MonoBehaviour
     private float xShift;
     private void Awake()
     {
+        gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Color;
         xShift = Shift;
         BallTransform = Ball.GetComponent<Transform>();
         Ball.GetComponent<Transform>().position = new Vector3(-1, 5000, Resolution.y);
@@ -51,6 +52,7 @@ public class BakingScript : MonoBehaviour
         }
         StartCoroutine(BuildTerrain());
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Depth;
+        gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
     }
 
     private void FieldObjInit(GameObject target)

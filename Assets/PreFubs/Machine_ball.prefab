@@ -94,3 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c8dda34ba3c724fa5ae9a80034eaa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  death: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  refMarker: {fileID: 0}
+  canvas: {fileID: 0}
+  ball: {fileID: 0}
