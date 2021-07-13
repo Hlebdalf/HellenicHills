@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class BakingScript : MonoBehaviour
 {
+    public Mesh[] decorations = new Mesh[3];
     public Vector2Int Resolution = new Vector2Int(0, 0);
     public Material NoiseMaterial;
     public Material SpruceMaterial;
@@ -217,10 +218,25 @@ public class BakingScript : MonoBehaviour
 
                     else
                     {
-
+                        float coin2 = Random.Range(0f, 6.0f);
                         GameObject Spruce = Instantiate(RefSpruce);
+                        if (coin2 < 2)
+                        {
+                            Spruce.GetComponent<MeshFilter>().mesh = decorations[0];
+                        }
+                        else if (coin2 < 4) 
+                        {
+                            Spruce.GetComponent<MeshFilter>().mesh = decorations[1];
+                        }
+                        else
+                        {
+                            Spruce.GetComponent<MeshFilter>().mesh = decorations[2];
+                        }
+                        Spruce.GetComponent<MeshCollider>().sharedMesh = Spruce.GetComponent<MeshFilter>().mesh;
                         Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
                         Spruce.GetComponent<Transform>().position = FieldObjPos;
+                        Spruce.transform.Rotate(0, coin2 * 60,0);
+                        Spruce.transform.localScale = new Vector3(15, coin2 + 15, 15);
                         Spruces[1].Add(Spruce);
                         SpruceBatcher.Add(Spruce);
 
