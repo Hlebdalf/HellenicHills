@@ -112,7 +112,8 @@ public class BakingScript : MonoBehaviour
                 self = hit.point;
 
             }
-            else Debug.LogError("NOT TERRAIN");
+            
+            else return new Vector3(8967.2027987f, 0, 0); 
         }
         else
         {
@@ -183,63 +184,63 @@ public class BakingScript : MonoBehaviour
             {
                 if (SpruceMap.GetPixel(x, y).r > spruceHardness)
                 {
-                    float coin = Random.Range(0f, 100.0f);
-                    if (coin > ChargerChance)
+                    Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
+                    if (FieldObjPos.x != 8967.2027987f)
                     {
-                        GameObject Charger = Instantiate(RefCharger);
-                        Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
-                        Charger.GetComponent<Transform>().position = FieldObjPos;
-                        Spruces[1].Add(Charger);
-                        ChargerBatcher.Add(Charger);         
-                        Charger.GetComponent<FieldObjMarker>().color = new Color(0, 1, 1);
-                        FieldObjInit(Charger);
-
-                    }
-                    else if(coin > PartsChance)
-                    {
-                        GameObject Parts = Instantiate(RefParts);
-                        Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
-                        Parts.GetComponent<Transform>().position = FieldObjPos;
-                        Spruces[1].Add(Parts);
-                        PartsBatcher.Add(Parts);
-                        Parts.GetComponent<FieldObjMarker>().color = new Color(1, 1, 1);
-                        FieldObjInit(Parts);
-                    }
-                    else if(coin > MissionChance)
-                    {
-                        GameObject Mission = Instantiate(RefMission);
-                        Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
-                        Mission.GetComponent<Transform>().position = FieldObjPos;
-                        Spruces[1].Add(Mission);
-                        MissionBatcher.Add(Mission);
-                        Mission.GetComponent<FieldObjMarker>().color = new Color(2.56173f, 2.56173f, 0);
-                        FieldObjInit(Mission);
-                    }
-
-                    else
-                    {
-                        float coin2 = Random.Range(0f, 6.0f);
-                        GameObject Spruce = Instantiate(RefSpruce);
-                        if (coin2 < 2)
+                        float coin = Random.Range(0f, 100.0f);
+                        if (coin > ChargerChance)
                         {
-                            Spruce.GetComponent<MeshFilter>().mesh = decorations[0];
+                            GameObject Charger = Instantiate(RefCharger);
+                            Charger.GetComponent<Transform>().position = FieldObjPos;
+                            Spruces[1].Add(Charger);
+                            ChargerBatcher.Add(Charger);
+                            Charger.GetComponent<FieldObjMarker>().color = new Color(0, 1, 1);
+                            FieldObjInit(Charger);
+
                         }
-                        else if (coin2 < 4) 
+                        else if (coin > PartsChance)
                         {
-                            Spruce.GetComponent<MeshFilter>().mesh = decorations[1];
+                            GameObject Parts = Instantiate(RefParts);
+                            Parts.GetComponent<Transform>().position = FieldObjPos;
+                            Spruces[1].Add(Parts);
+                            PartsBatcher.Add(Parts);
+                            Parts.GetComponent<FieldObjMarker>().color = new Color(1, 1, 1);
+                            FieldObjInit(Parts);
                         }
+                        else if (coin > MissionChance)
+                        {
+                            GameObject Mission = Instantiate(RefMission);
+                            Mission.GetComponent<Transform>().position = FieldObjPos;
+                            Spruces[1].Add(Mission);
+                            MissionBatcher.Add(Mission);
+                            Mission.GetComponent<FieldObjMarker>().color = new Color(2.56173f, 2.56173f, 0);
+                            FieldObjInit(Mission);
+                        }
+
                         else
                         {
-                            Spruce.GetComponent<MeshFilter>().mesh = decorations[2];
-                        }
-                        Spruce.GetComponent<MeshCollider>().sharedMesh = Spruce.GetComponent<MeshFilter>().mesh;
-                        Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
-                        Spruce.GetComponent<Transform>().position = FieldObjPos;
-                        Spruce.transform.Rotate(0, coin2 * 60,0);
-                        Spruce.transform.localScale = new Vector3(15, coin2 + 15, 15);
-                        Spruces[1].Add(Spruce);
-                        SpruceBatcher.Add(Spruce);
+                            float coin2 = Random.Range(0f, 6.0f);
+                            GameObject Spruce = Instantiate(RefSpruce);
+                            if (coin2 < 2)
+                            {
+                                Spruce.GetComponent<MeshFilter>().mesh = decorations[0];
+                            }
+                            else if (coin2 < 4)
+                            {
+                                Spruce.GetComponent<MeshFilter>().mesh = decorations[1];
+                            }
+                            else
+                            {
+                                Spruce.GetComponent<MeshFilter>().mesh = decorations[2];
+                            }
+                            Spruce.GetComponent<MeshCollider>().sharedMesh = Spruce.GetComponent<MeshFilter>().mesh;
+                            Spruce.GetComponent<Transform>().position = FieldObjPos;
+                            Spruce.transform.Rotate(0, coin2 * 60, 0);
+                            Spruce.transform.localScale = new Vector3(15, coin2 + 15, 15);
+                            Spruces[1].Add(Spruce);
+                            SpruceBatcher.Add(Spruce);
 
+                        }
                     }
                 }
             }
