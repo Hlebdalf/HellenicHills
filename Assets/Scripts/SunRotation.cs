@@ -4,52 +4,57 @@ using UnityEngine;
 
 public class SunRotation : MonoBehaviour
 {
-    public GameObject BallLight;
+    public GameObject ball;
+    public GameObject AngleCube;
     public float speed;
     public int rate = 30;
     private int myRate;
     private Color backGround;
-    private GameObject light;
-    private bool upOrdown = false;
+    private GameObject sun;
+    private GameObject moon;
+    private Light moonLight;
+    private Light sunLight;
+    private Light ballLight;
+    private float angle;
+
     private void Start()
     {
-        light = transform.GetChild(0).gameObject;
+        sun = transform.GetChild(0).gameObject;
+        moon = transform.GetChild(1).gameObject;
+        sunLight = sun.GetComponent<Light>();
+        moonLight = moon.GetComponent<Light>();
+        ballLight = ball.GetComponent<Light>();
         myRate = rate;
         StartCoroutine(RotatorCoroutine());
     }
 
-    private void SunUpDown (bool cond)
-    {
-        if (cond)
-        {
-            light.GetComponent<Light>().intensity = 0;
-            myRate = 2 * rate;
-            BallLight.SetActive(true);
-        }
-        else
-        {
-            light.GetComponent<Light>().intensity = (transform.rotation.x + 1) / 2;
-            myRate = rate;
-            BallLight.SetActive(false);
-        }
-    }
+
     private IEnumerator RotatorCoroutine()
     {
         while (true)
         {
-            backGround = new Color((transform.rotation.x + 1) / 2, (transform.rotation.x + 1) / 2, (transform.rotation.x + 1) / 2);
-            if ((transform.rotation.x + 1) / 2 < 0.5f)
+            angle = Quaternion.Angle(transform.rotation, AngleCube.transform.rotation) / 180;
+            if (angle < 0.5f)
             {
-                SunUpDown(true);
+                sun.SetActive(false);
+                moon.SetActive(true);
+                ball.SetActive(true);
+                moonLight.intensity = (1 - angle)/4;
+                ballLight.intensity = (1 - angle - 0.5f)*2;
+                
             }
             else
             {
-                SunUpDown(false);
+                ball.SetActive(false);
+                sun.SetActive(true);
+                moon.SetActive(false);
+                sunLight.intensity = angle/1.2f;
             }
+            backGround = new Color(angle,angle,angle);
             transform.Rotate(speed, 0, 0);
             Camera.main.backgroundColor = backGround;
             RenderSettings.fogColor = backGround;
-            RenderSettings.ambientSkyColor = (new Color(0.3f, 0.3f, 0.3f) +backGround)/2;
+            RenderSettings.ambientSkyColor = backGround;
             yield return new WaitForSeconds(1 / myRate);
         }
     }
