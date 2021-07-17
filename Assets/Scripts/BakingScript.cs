@@ -197,7 +197,7 @@ public class BakingScript : MonoBehaviour
                     Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
                     if (FieldObjPos.x != 8967.2027987f)
                     {
-                        float coin = Random.Range(0f, 100.0f);
+                        float coin = Random.Range(-100.0f, 100.0f);
                         if (coin > ChargerChance)
                         {
                             GameObject Charger = Instantiate(RefCharger);

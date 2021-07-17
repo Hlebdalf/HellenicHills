@@ -1239,12 +1239,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceae9b0f4d8eab347b079cbc98ad0edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnForce: 250
-  forwardForce: 75
+  turnForce: 400
+  forwardForce: 150
   InertiaDivider: 1
   TurnForceDevider: 2.5
   TurnSpeedRoof: 30
-  ForwardSpeedRoof: 60
+  ForwardSpeedRoof: 30
 --- !u!114 &520590070
 MonoBehaviour:
   m_ObjectHideFlags: 0
