@@ -15,7 +15,7 @@ public class Death : MonoBehaviour
     public Text partsAllText;
     public Text partsNowText;
     private int partsNow=0;
-    private int partsAll;
+    private int partsAll = 0;
 
     private void Start()
     {    
@@ -23,7 +23,7 @@ public class Death : MonoBehaviour
     }
 
     private void Awake()
-    {
+    {   
         scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString(); 
         partsAll = PlayerPrefs.GetInt("partsAll");
         partsNow = partsAll;
@@ -34,7 +34,7 @@ public class Death : MonoBehaviour
     {
         Ball.GetComponent<Rigidbody>().isKinematic = true;
         Ball_up.GetComponent<UpAnimation>().enabled = false;
-        partsAll += partsNow;
+        partsAll = partsNow;
         PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();   
         ReloadButton.SetActive(true);
