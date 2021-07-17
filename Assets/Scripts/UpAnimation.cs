@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class UpAnimation : MonoBehaviour
 {
+    public float speed = 2;
     void FixedUpdate()
     {
-        transform.Rotate(0, 2, 0);
+        transform.Rotate(0, speed, 0);
     }
     
 }
