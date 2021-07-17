@@ -11,7 +11,14 @@ public class FieldObjScript : MonoBehaviour
         if (other.name == "Machine_ball")
         {
             death.FieldObjEvent(name);
-            gameObject.GetComponent<BoxCollider>().enabled = false;
+            if (gameObject.GetComponent<CapsuleCollider>() != null)
+            {
+                gameObject.GetComponent<CapsuleCollider>().enabled = false;
+            }
+            else
+            {
+                gameObject.GetComponent<BoxCollider>().enabled = false;
+            }
         }
     }
 
