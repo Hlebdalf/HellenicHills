@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class BakingScript : MonoBehaviour
 {
-    public Mesh[] decorations = new Mesh[3];
+    public GameObject[] stones = new GameObject[3];
     public Vector2Int Resolution = new Vector2Int(0, 0);
     public Material NoiseMaterial;
     public Material SpruceMaterial;
@@ -133,10 +133,6 @@ public class BakingScript : MonoBehaviour
         float Z = Mathf.Floor(BallTransform.position.z / Resolution.y);
         DestroyImmediate(Terrains[0], true);
         DestroyImmediate(HeightMaps[0], true);
-        SpruceBatcher.Clear();
-        ChargerBatcher.Clear();
-        MissionBatcher.Clear();
-        PartsBatcher.Clear();
         Terrains[0] = Terrains[1];
         HeightMaps[0] = HeightMaps[1];
         Data[2] = Data[0];
@@ -146,9 +142,23 @@ public class BakingScript : MonoBehaviour
         xShift += Shift;
         foreach (GameObject it in Spruces[0])
         {
+            /*DestroyImmediate(it.GetComponent<MeshFilter>().mesh, true);*/
+           // Debug.Log(it.name);
             DestroyImmediate(it, true);
         }
-        yield return null;
+        /*DestroyImmediate(SpruceRoot.GetComponent<MeshFilter>().mesh,true);
+        DestroyImmediate(SpruceRoot, true);
+        DestroyImmediate(ChargerRoot.GetComponent<MeshFilter>().mesh, true);
+        DestroyImmediate(ChargerRoot, true);
+        DestroyImmediate(MissionRoot.GetComponent<MeshFilter>().mesh, true);
+        DestroyImmediate(MissionRoot, true);
+        DestroyImmediate(PartsRoot.GetComponent<MeshFilter>().mesh, true);
+        DestroyImmediate(PartsRoot, true);*/
+        /*SpruceRoot = Instantiate(RefSpruce);
+        PartsRoot = Instantiate(RefParts);
+        ChargerRoot = Instantiate(RefCharger);
+        MissionRoot = Instantiate(RefMission);*/
+        Spruces[0].Clear();
         Spruces[0] = Spruces[1];
         Spruces[1] = new List<GameObject>();
         Texture2D SpruceMap = BakeSpruce();
@@ -193,7 +203,7 @@ public class BakingScript : MonoBehaviour
                             GameObject Charger = Instantiate(RefCharger);
                             Charger.GetComponent<Transform>().position = FieldObjPos;
                             Spruces[1].Add(Charger);
-                            ChargerBatcher.Add(Charger);
+                            //ChargerBatcher.Add(Charger);
                             Charger.GetComponent<FieldObjMarker>().color = new Color(0, 1, 1);
                             FieldObjInit(Charger);
 
@@ -203,7 +213,7 @@ public class BakingScript : MonoBehaviour
                             GameObject Parts = Instantiate(RefParts);
                             Parts.GetComponent<Transform>().position = FieldObjPos;
                             Spruces[1].Add(Parts);
-                            PartsBatcher.Add(Parts);
+                            //PartsBatcher.Add(Parts);
                             Parts.GetComponent<FieldObjMarker>().color = new Color(1, 1, 1);
                             FieldObjInit(Parts);
                         }
@@ -212,7 +222,7 @@ public class BakingScript : MonoBehaviour
                             GameObject Mission = Instantiate(RefMission);
                             Mission.GetComponent<Transform>().position = FieldObjPos;
                             Spruces[1].Add(Mission);
-                            MissionBatcher.Add(Mission);
+                            //MissionBatcher.Add(Mission);
                             Mission.GetComponent<FieldObjMarker>().color = new Color(2.56173f, 2.56173f, 0);
                             FieldObjInit(Mission);
                         }
@@ -220,25 +230,25 @@ public class BakingScript : MonoBehaviour
                         else
                         {
                             float coin2 = Random.Range(0f, 6.0f);
-                            GameObject Spruce = Instantiate(RefSpruce);
+                            GameObject Spruce;
                             if (coin2 < 2)
                             {
-                                Spruce.GetComponent<MeshFilter>().mesh = decorations[0];
+                                Spruce = Instantiate(stones[0]);
                             }
                             else if (coin2 < 4)
                             {
-                                Spruce.GetComponent<MeshFilter>().mesh = decorations[1];
+                                Spruce = Instantiate(stones[1]);
                             }
                             else
                             {
-                                Spruce.GetComponent<MeshFilter>().mesh = decorations[2];
+                                Spruce = Instantiate(stones[2]);
                             }
-                            Spruce.GetComponent<MeshCollider>().sharedMesh = Spruce.GetComponent<MeshFilter>().mesh;
+                            //Spruce.GetComponent<MeshCollider>().sharedMesh = Spruce.GetComponent<MeshFilter>().mesh;
                             Spruce.GetComponent<Transform>().position = FieldObjPos;
                             Spruce.transform.Rotate(0, coin2 * 60, 0);
                             Spruce.transform.localScale = new Vector3(15, coin2 + 15, 15);
                             Spruces[1].Add(Spruce);
-                            SpruceBatcher.Add(Spruce);
+                            //SpruceBatcher.Add(Spruce);
 
                         }
                     }
@@ -246,10 +256,14 @@ public class BakingScript : MonoBehaviour
             }
         }
 
-        StaticBatchingUtility.Combine(SpruceBatcher.ToArray(), SpruceRoot);
+        /*StaticBatchingUtility.Combine(SpruceBatcher.ToArray(), SpruceRoot);
         StaticBatchingUtility.Combine(ChargerBatcher.ToArray(), ChargerRoot);
         StaticBatchingUtility.Combine(PartsBatcher.ToArray(), PartsRoot);
-        StaticBatchingUtility.Combine(MissionBatcher.ToArray(), MissionRoot);
+        StaticBatchingUtility.Combine(MissionBatcher.ToArray(), MissionRoot);*/
+        SpruceBatcher.Clear();
+        ChargerBatcher.Clear();
+        MissionBatcher.Clear();
+        PartsBatcher.Clear();
         if (!isBallExist)
         {
             StartGame();

@@ -2714,10 +2714,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e4c1f781d8a2444861d261d9adce42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decorations:
-  - {fileID: -2432090755550338912, guid: 883ba52cfb1366642885f8b4ef1be8ac, type: 3}
-  - {fileID: -2432090755550338912, guid: ba3015406a2c65a4aad1848483d8fff0, type: 3}
-  - {fileID: -2432090755550338912, guid: 15fbe70a1382a534ca16c1754f193453, type: 3}
+  stones:
+  - {fileID: 1236246926369437958, guid: 766508447632bf54d887c0a6c8e9fe15, type: 3}
+  - {fileID: 3609714440499509491, guid: ec33223b149ce1248b5e5cf2a697066b, type: 3}
+  - {fileID: 7885671007231112101, guid: e0246a1164aedf445be19e9534f90778, type: 3}
   Resolution: {x: 3072, y: 1024}
   NoiseMaterial: {fileID: 2100000, guid: b2aa1795c21033e4b88f9729babc35b2, type: 2}
   SpruceMaterial: {fileID: 2100000, guid: 35561467b8caf4345b23a96100f197a0, type: 2}
@@ -2795,7 +2795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fuel: 1000
-  consumption: 1.9
+  consumption: 0
   fuelBar: {fileID: 1475741659}
   Ball: {fileID: 520590068}
   Ball_up: {fileID: 757683343}
