@@ -6,6 +6,7 @@ public class MachineSlant : MonoBehaviour
 {
     public GameObject ball;
     public GameObject machineUp;
+    public GameObject particle;
     private Rigidbody rb;
     private int mp = 1;
     private float angle = 0;
@@ -25,6 +26,7 @@ public class MachineSlant : MonoBehaviour
         angle = Vector3.Angle(right, new Vector3(rb.velocity.x, 0, rb.velocity.z))*mp;
         delta = angle - preangle;
         transform.rotation = Quaternion.Euler(0, angle, rb.velocity.magnitude/3);
+        particle.transform.rotation = Quaternion.Euler(0, angle, 0);
         machineUp.transform.Rotate(0, -delta, 0);
         preangle = angle;
     }

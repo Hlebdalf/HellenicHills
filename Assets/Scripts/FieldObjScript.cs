@@ -8,7 +8,7 @@ public class FieldObjScript : MonoBehaviour
     public Death death;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Machine_ball")
+        if (other.name == "Machine_ball" && !other.isTrigger)
         {
             death.FieldObjEvent(name);
             if (gameObject.GetComponent<CapsuleCollider>() != null)
