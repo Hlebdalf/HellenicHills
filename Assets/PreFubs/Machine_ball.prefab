@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7938313923740204570}
   - component: {fileID: 5115421945993643856}
   - component: {fileID: 8635682011649106884}
+  - component: {fileID: 7315205644696907600}
   m_Layer: 0
   m_Name: Machine_ball
   m_TagString: Untagged
@@ -52,8 +53,8 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
@@ -81,3 +82,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7315205644696907600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197008665325628705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c8dda34ba3c724fa5ae9a80034eaa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  death: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  refMarker: {fileID: 0}
+  canvas: {fileID: 0}
+  ball: {fileID: 0}

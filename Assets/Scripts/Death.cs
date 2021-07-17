@@ -5,13 +5,17 @@ using UnityEngine.UI;
 
 public class Death : MonoBehaviour
 {
-    public int fuel = 1000;
-    public int consumption = 2;
+    public float fuel = 1000;
+    public float consumption = 2;
     public Slider fuelBar;
     public GameObject Ball;
     public GameObject Ball_up;
     public GameObject ReloadButton;
     public Text scoreRecordText;
+    public Text partsAllText;
+    public Text partsNowText;
+    private int partsNow=0;
+    private int partsAll = 0;
 
     private void Start()
     {    
@@ -19,13 +23,19 @@ public class Death : MonoBehaviour
     }
 
     private void Awake()
-    {
-        scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString();
+    {   
+        scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString(); 
+        partsAll = PlayerPrefs.GetInt("partsAll");
+        partsNow = partsAll;
+        partsAllText.text = partsAll.ToString();
+        partsNowText.text = partsNow.ToString();
     }
     public void GameOver()
     {
         Ball.GetComponent<Rigidbody>().isKinematic = true;
-        Ball_up.GetComponent<Animator>().enabled = false;
+        Ball_up.GetComponent<UpAnimation>().enabled = false;
+        partsAll = partsNow;
+        PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();   
         ReloadButton.SetActive(true);
     }
@@ -33,11 +43,35 @@ public class Death : MonoBehaviour
     {
         StartCoroutine(FuelConsumption());
     }
-    public void StartCharge()
+
+    public void FieldObjEvent(string type)
     {
         Ball.GetComponent<Rigidbody>().isKinematic = true;
         StopAllCoroutines();
-        StartCoroutine(ChargeCoroutine());
+        switch (type) {  
+            case "Charger(Clone)":
+                StartCoroutine(ChargeCoroutine());
+                break;
+            case "Mission(Clone)":
+                print("Mission");
+                Ball.GetComponent<Rigidbody>().isKinematic = false;
+                StartCoroutine(FuelConsumption());
+                break;
+            case "Parts(Clone)":
+                StartCoroutine(PartsCollectCoroutine());
+                break;
+            default:
+                print(type);
+                break;
+        }
+    }
+    public IEnumerator PartsCollectCoroutine()
+    {
+        yield return new WaitForSeconds(2);
+        partsNow += (int)Random.Range(0, 10.0f);
+        partsNowText.text = partsNow.ToString();
+        Ball.GetComponent<Rigidbody>().isKinematic = false;
+        StartCoroutine(FuelConsumption());
     }
     public IEnumerator FuelConsumption()
     {
