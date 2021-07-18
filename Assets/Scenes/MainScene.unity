@@ -1908,11 +1908,11 @@ MonoBehaviour:
   m_Content: {fileID: 1949287961}
   m_Horizontal: 1
   m_Vertical: 0
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
-  m_Inertia: 1
+  m_Inertia: 0
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 32
+  m_ScrollSensitivity: 1
   m_Viewport: {fileID: 481669432}
   m_HorizontalScrollbar: {fileID: 2086989138}
   m_VerticalScrollbar: {fileID: 0}
@@ -9335,7 +9335,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.013100806, y: -1911.5}
+  m_AnchoredPosition: {x: -0.000057697296, y: -1911.5}
   m_SizeDelta: {x: -1.4770343, y: 1920}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &1978698533
@@ -9784,8 +9784,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 513990894}
   m_HandleRect: {fileID: 513990893}
   m_Direction: 0
-  m_Value: -0.0000030569838
-  m_Size: 0.20025176
+  m_Value: 0
+  m_Size: 0.1989044
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9855,8 +9855,9 @@ MonoBehaviour:
   steps: 5
   treshold: 0.001
   speed: 0.00099
+  sensivity: 1
+  content: {fileID: 1949287960}
   target: 0.5
-  val: 0
 --- !u!1 &31703630876308763
 GameObject:
   m_ObjectHideFlags: 0

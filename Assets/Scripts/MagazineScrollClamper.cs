@@ -8,20 +8,30 @@ public class MagazineScrollClamper : MonoBehaviour
     public int steps = 5;
     public float treshold = 0.05f;
     public float speed;
+    public float sensivity;
+    public GameObject content;
     private Scrollbar sb;
     [SerializeField]
     private float target = 0.5f;
-    [SerializeField]
-    private float val;
+    private float prePos;
+    private RectTransform contTrans;
+
+
+    private int passer = 0;
 
     void Start()
     {
         steps -= 1;
         sb = GetComponent<Scrollbar>();
-        
+        contTrans = content.GetComponent<RectTransform>();
+        prePos = contTrans.position.x;
 
     }
-
+    private void Update()
+    {
+        contTrans.position = new Vector3((contTrans.position.x-prePos)*sensivity+prePos, contTrans.position.y, contTrans.position.z);
+        prePos = contTrans.position.x;
+    }
     public void Follow(bool isFolow)
     {
         if (isFolow)
@@ -31,10 +41,10 @@ public class MagazineScrollClamper : MonoBehaviour
         else StopCoroutine(ToTarget());
     }
 
+    
     public void ChangeValue()
     {
         target = Mathf.Round(sb.value * steps) * 1 / (float)steps;
-
     }
 
     IEnumerator ToTarget()
@@ -44,8 +54,8 @@ public class MagazineScrollClamper : MonoBehaviour
 
             if (target > sb.value) sb.value += speed;
             else sb.value -= speed;
-            yield return new WaitForSeconds(1 / 60);
+            yield return new WaitForFixedUpdate();
         }
-        val = sb.value;
+
     }
 }
