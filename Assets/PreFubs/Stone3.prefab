@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7885671007231112101}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -789.32837, y: 3242.8909, z: 3201.806}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7918446769914978612}
@@ -112,7 +112,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.021752099
+  - screenRelativeHeight: 0.040579543
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 732734354618613056}
@@ -135,6 +135,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Stone3LP
+      objectReference: {fileID: 0}
+    - target: {fileID: 5336219392737007097, guid: 2426ae532e760bc47beaf2185cce8f90,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.040579543
       objectReference: {fileID: 0}
     - target: {fileID: 6051881593279268903, guid: 2426ae532e760bc47beaf2185cce8f90,
         type: 3}

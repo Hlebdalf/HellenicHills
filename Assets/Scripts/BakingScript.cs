@@ -100,26 +100,25 @@ public class BakingScript : MonoBehaviour
         }
     }
 
-    private Vector3 RayPos(Vector3 self)
+    private void FieldObjPlacer(GameObject self)
     {
         RaycastHit hit;
-        Ray ray = new Ray(self, new Vector3(0, -300, 0));
+        Ray ray = new Ray(self.transform.position, new Vector3(0, -300, 0));
         Physics.Raycast(ray, out hit);
         if (hit.collider != null)
         {
             if (hit.collider.gameObject.name == "Terrain")
             {
-                self = hit.point;
+                self.transform.position = hit.point;
 
             }
-            
-            else return new Vector3(8967.2027987f, 0, 0); 
+
+            else DestroyImmediate(self, true);
         }
         else
         {
-            Debug.LogWarning("Missing");
+            DestroyImmediate(self, true);
         }
-        return self;
     }
 
     private void StartGame()
@@ -143,7 +142,7 @@ public class BakingScript : MonoBehaviour
         foreach (GameObject it in Spruces[0])
         {
             /*DestroyImmediate(it.GetComponent<MeshFilter>().mesh, true);*/
-           // Debug.Log(it.name);
+            // Debug.Log(it.name);
             DestroyImmediate(it, true);
         }
         /*DestroyImmediate(SpruceRoot.GetComponent<MeshFilter>().mesh,true);
@@ -194,64 +193,65 @@ public class BakingScript : MonoBehaviour
             {
                 if (SpruceMap.GetPixel(x, y).r > spruceHardness)
                 {
-                    Vector3 FieldObjPos = RayPos(new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2));
-                    if (FieldObjPos.x != 8967.2027987f)
+                    Vector3 FieldObjPos = new Vector3((X + 1) * Resolution.y + y * 2, 100, (Z + 2) * Resolution.y - x * 2);
+
+                    float coin = Random.Range(-100.0f, 100.0f);
+                    if (coin > ChargerChance)
                     {
-                        float coin = Random.Range(-100.0f, 100.0f);
-                        if (coin > ChargerChance)
-                        {
-                            GameObject Charger = Instantiate(RefCharger);
-                            Charger.GetComponent<Transform>().position = FieldObjPos;
-                            Spruces[1].Add(Charger);
-                            //ChargerBatcher.Add(Charger);
-                            Charger.GetComponent<FieldObjMarker>().color = new Color(0, 1, 1);
-                            FieldObjInit(Charger);
+                        GameObject Charger = Instantiate(RefCharger);
+                        Charger.GetComponent<Transform>().position = FieldObjPos;
+                        Spruces[1].Add(Charger);
+                        //ChargerBatcher.Add(Charger);
+                        Charger.GetComponent<FieldObjMarker>().color = new Color(0, 1, 1);
+                        FieldObjInit(Charger);
+                        FieldObjPlacer(Charger);
 
-                        }
-                        else if (coin > PartsChance)
-                        {
-                            GameObject Parts = Instantiate(RefParts);
-                            Parts.GetComponent<Transform>().position = FieldObjPos;
-                            Spruces[1].Add(Parts);
-                            //PartsBatcher.Add(Parts);
-                            Parts.GetComponent<FieldObjMarker>().color = new Color(1, 1, 1);
-                            FieldObjInit(Parts);
-                        }
-                        else if (coin > MissionChance)
-                        {
-                            GameObject Mission = Instantiate(RefMission);
-                            Mission.GetComponent<Transform>().position = FieldObjPos;
-                            Spruces[1].Add(Mission);
-                            //MissionBatcher.Add(Mission);
-                            Mission.GetComponent<FieldObjMarker>().color = new Color(2.56173f, 2.56173f, 0);
-                            FieldObjInit(Mission);
-                        }
+                    }
+                    else if (coin > PartsChance)
+                    {
+                        GameObject Parts = Instantiate(RefParts);
+                        Parts.GetComponent<Transform>().position = FieldObjPos;
+                        Spruces[1].Add(Parts);
+                        //PartsBatcher.Add(Parts);
+                        Parts.GetComponent<FieldObjMarker>().color = new Color(1, 1, 1);
+                        FieldObjInit(Parts);
+                        FieldObjPlacer(Parts);
+                    }
+                    else if (coin > MissionChance)
+                    {
+                        GameObject Mission = Instantiate(RefMission);
+                        Mission.GetComponent<Transform>().position = FieldObjPos;
+                        Spruces[1].Add(Mission);
+                        //MissionBatcher.Add(Mission);
+                        Mission.GetComponent<FieldObjMarker>().color = new Color(2.56173f, 2.56173f, 0);
+                        FieldObjInit(Mission);
+                        FieldObjPlacer(Mission);
+                    }
 
+                    else
+                    {
+                        float coin2 = Random.Range(0f, 6.0f);
+                        GameObject Spruce;
+                        if (coin2 < 2)
+                        {
+                            Spruce = Instantiate(stones[0]);
+                        }
+                        else if (coin2 < 4)
+                        {
+                            Spruce = Instantiate(stones[1]);
+                        }
                         else
                         {
-                            float coin2 = Random.Range(0f, 6.0f);
-                            GameObject Spruce;
-                            if (coin2 < 2)
-                            {
-                                Spruce = Instantiate(stones[0]);
-                            }
-                            else if (coin2 < 4)
-                            {
-                                Spruce = Instantiate(stones[1]);
-                            }
-                            else
-                            {
-                                Spruce = Instantiate(stones[2]);
-                            }
-                            //Spruce.GetComponent<MeshCollider>().sharedMesh = Spruce.GetComponent<MeshFilter>().mesh;
-                            Spruce.GetComponent<Transform>().position = FieldObjPos;
-                            Spruce.transform.Rotate(0, coin2 * 60, 0);
-                            Spruce.transform.localScale = new Vector3(15, coin2 + 15, 15);
-                            Spruces[1].Add(Spruce);
-                            //SpruceBatcher.Add(Spruce);
-
+                            Spruce = Instantiate(stones[2]);
                         }
+                        //Spruce.GetComponent<MeshCollider>().sharedMesh = Spruce.GetComponent<MeshFilter>().mesh;
+                        Spruce.GetComponent<Transform>().position = FieldObjPos;
+                        Spruce.transform.Rotate(0, coin2 * 60, 0);
+                        Spruce.transform.localScale = new Vector3(15, coin2 + 15, 15);
+                        Spruces[1].Add(Spruce);
+                        FieldObjPlacer(Spruce);
                     }
+
                 }
             }
         }
