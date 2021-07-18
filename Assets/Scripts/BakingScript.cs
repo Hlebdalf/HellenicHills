@@ -269,10 +269,10 @@ public class BakingScript : MonoBehaviour
             StartGame();
             isBallExist = true;
         }
-        if (spruceHardness > 0.2f)
+        /*if (spruceHardness > 0.2f)
         {
-            spruceHardness -= 0.03f;
-        }
+            spruceHardness -= 0.03f; //RETURN LATER
+        }*/
         yield break;
     }
 }
