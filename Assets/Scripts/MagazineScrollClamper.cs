@@ -27,11 +27,11 @@ public class MagazineScrollClamper : MonoBehaviour
         prePos = contTrans.position.x;
 
     }
-    private void Update()
+    /*private void Update()
     {
-        contTrans.position = new Vector3((contTrans.position.x-prePos)*sensivity+prePos, contTrans.position.y, contTrans.position.z);
-        prePos = contTrans.position.x;
-    }
+        contTrans.position = new Vector3((contTrans.position.x - prePos) * sensivity + prePos, contTrans.position.y, contTrans.position.z);
+        prePos = contTrans.position.x; //RETURN LATER
+    }*/
     public void Follow(bool isFolow)
     {
         if (isFolow)
