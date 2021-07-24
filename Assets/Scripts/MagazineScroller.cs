@@ -42,5 +42,23 @@ public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandle
         prex = 0;
         nowx = 0;
         deltax = 0;
+        StartCoroutine(Rounder());
+    }
+
+    IEnumerator Rounder()
+    {
+        float target = Targeter();
+        while(Mathf.Abs(rt.position.x - target) > 2)
+        {
+            rt.position = new Vector3(rt.position.x - (rt.position.x - target)/2, rt.position.y, rt.position.z);
+            yield return new WaitForFixedUpdate();
+        }
+        
+    }
+
+    private float Targeter()
+    {
+        float target = Mathf.Round(rt.position.x / Screen.width) * Screen.width;
+        return target;
     }
 }
