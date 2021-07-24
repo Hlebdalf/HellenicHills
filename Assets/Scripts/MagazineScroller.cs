@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
+    public float sens;
     private RectTransform rt;
     private float nowx = 0, prex = 0, deltax = 0;
     private int childCNT;
@@ -23,7 +24,7 @@ public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandle
     public void OnDrag(PointerEventData eventData)
     {
         nowx = eventData.pointerCurrentRaycast.screenPosition.x;
-        deltax = nowx - prex;
+        deltax = (nowx - prex)*sens;
         rt.position = new Vector3(rt.position.x + deltax, rt.position.y, rt.position.z);
         prex = nowx;
         if (rt.position.x > 0)
