@@ -17,7 +17,6 @@ public class MagazineScrollClamper : MonoBehaviour
     private RectTransform contTrans;
 
 
-    private int passer = 0;
 
     void Start()
     {
