@@ -10,6 +10,8 @@ public class UIButtonManager : MonoBehaviour
     public GameObject MenuUI;
     public GameObject InGameUI;
     public GameObject myCamera;
+    public GameObject Magazine;
+    public GameObject Stats;
     
     public void ReloadScene()
     {
@@ -28,5 +30,17 @@ public class UIButtonManager : MonoBehaviour
     public void MenuUIActive()
     {
         MenuUI.SetActive(true);
+    }
+    public void MagazineSetActive()
+    {
+        Magazine.SetActive(true);
+        Stats.SetActive(false);
+        Camera.main.GetComponent<Animator>().Play("Forward");
+    }
+    public void MagazineSetDisactive()
+    {
+        Camera.main.GetComponent<Animator>().Play("Back");
+        Magazine.SetActive(false);
+        Stats.SetActive(true);
     }
 }
