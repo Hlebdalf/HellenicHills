@@ -12,6 +12,7 @@ public class UIButtonManager : MonoBehaviour
     public GameObject myCamera;
     public GameObject Magazine;
     public GameObject Stats;
+    public GameObject Content;
     
     public void ReloadScene()
     {
@@ -36,11 +37,18 @@ public class UIButtonManager : MonoBehaviour
         Magazine.SetActive(true);
         Stats.SetActive(false);
         Camera.main.GetComponent<Animator>().Play("Forward");
+        StartCoroutine(ChoiseActive());
     }
     public void MagazineSetDisactive()
     {
+        Content.GetComponent<MagazineScroller>().ModelSwitcher();
         Camera.main.GetComponent<Animator>().Play("Back");
         Magazine.SetActive(false);
         Stats.SetActive(true);
+    }
+    IEnumerator ChoiseActive()
+    {
+        yield return new WaitForSeconds(1);
+        Content.GetComponent<MagazineScroller>().ChoiseActive();
     }
 }

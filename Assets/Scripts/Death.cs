@@ -33,7 +33,6 @@ public class Death : MonoBehaviour
     public void GameOver()
     {
         Ball.GetComponent<Rigidbody>().isKinematic = true;
-        Ball_up.GetComponent<UpAnimation>().enabled = false;
         partsAll = partsNow;
         PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();   
