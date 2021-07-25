@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UIButtonManager : MonoBehaviour
@@ -34,6 +35,7 @@ public class UIButtonManager : MonoBehaviour
     }
     public void MagazineSetActive()
     {
+        MenuUI.GetComponent<TouchToPlay>().enabled = false;
         Magazine.SetActive(true);
         Stats.SetActive(false);
         Camera.main.GetComponent<Animator>().Play("Forward");
@@ -41,6 +43,8 @@ public class UIButtonManager : MonoBehaviour
     }
     public void MagazineSetDisactive()
     {
+        MenuUI.GetComponent<TouchToPlay>().enabled = true;
+        Content.GetComponent<Image>().raycastTarget = false;
         Content.GetComponent<MagazineScroller>().ModelSwitcher();
         Camera.main.GetComponent<Animator>().Play("Back");
         Magazine.SetActive(false);
@@ -50,5 +54,6 @@ public class UIButtonManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         Content.GetComponent<MagazineScroller>().ChoiseActive();
+        Content.GetComponent<Image>().raycastTarget = true;
     }
 }

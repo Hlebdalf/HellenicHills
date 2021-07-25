@@ -8,7 +8,6 @@ public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandle
 {
     public GameObject balls;
     public GameObject ups;
-    //public GameObject ball;
     public float sens;
     private RectTransform rt;
     private float nowx = 0, prex = 0, deltax = 0;
@@ -58,6 +57,7 @@ public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandle
     public void SaveModelType(string type)
     {
         modelType = int.Parse(type);
+
         PlayerPrefs.SetInt("modelType",modelType);
         PlayerPrefs.Save();
     }
@@ -84,9 +84,11 @@ public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandle
         for (int i =0; i < childCNT; i++)
         {
             if (i == modelType) continue;
-            Destroy(ups.transform.GetChild(i).gameObject);
-            Destroy(balls.transform.GetChild(i).gameObject);
+            ups.transform.GetChild(i).gameObject.SetActive(false);
+            balls.transform.GetChild(i).gameObject.SetActive(false);
         }
+        ups.transform.localPosition = new Vector3(-modelType * 5, 0, modelType * 5);
+        balls.transform.localPosition = new Vector3(-modelType * 5, 0, modelType * 5);
     }
 
     public void ChoiseActive()
