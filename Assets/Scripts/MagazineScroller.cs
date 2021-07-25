@@ -13,7 +13,7 @@ public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandle
     void Start()
     {
         rt = gameObject.GetComponent<RectTransform>();
-        childCNT = transform.GetChildCount();
+        childCNT = transform.childCount;
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
