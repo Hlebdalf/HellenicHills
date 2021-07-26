@@ -14,6 +14,7 @@ public class UIButtonManager : MonoBehaviour
     public GameObject Magazine;
     public GameObject Stats;
     public GameObject Content;
+    public GameObject PartsAll;
     
     public void ReloadScene()
     {
@@ -32,6 +33,7 @@ public class UIButtonManager : MonoBehaviour
     public void MenuUIActive()
     {
         MenuUI.SetActive(true);
+        PartsAll.SetActive(true);
     }
     public void MagazineSetActive()
     {

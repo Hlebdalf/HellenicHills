@@ -5,14 +5,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
-{
+{   
+    public GameObject parts;
     public GameObject balls;
     public GameObject ups;
     public float sens;
     private RectTransform rt;
     private float nowx = 0, prex = 0, deltax = 0;
     private int childCNT;
-    private int modelType;
+    public static int modelType;
     void Awake()
     {
         modelType = PlayerPrefs.GetInt("modelType");
@@ -22,6 +23,7 @@ public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandle
         rt = gameObject.GetComponent<RectTransform>();
         rt.transform.position = new Vector3(-modelType*1080 , rt.position.y, rt.position.z);
         childCNT = transform.childCount;
+       // parts.GetComponent<Text>().text = Death.partsAll.ToString();
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
