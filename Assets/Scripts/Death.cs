@@ -13,9 +13,7 @@ public class Death : MonoBehaviour
     public GameObject ReloadButton;
     public Text scoreRecordText;
     public Text partsAllText;
-    public Text partsNowText;
-    private int partsNow=0;
-    private int partsAll = 0;
+    public int partsAll = 0; //
 
     private void Start()
     {    
@@ -26,15 +24,11 @@ public class Death : MonoBehaviour
     {   
         scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString(); 
         partsAll = PlayerPrefs.GetInt("partsAll");
-        partsNow = partsAll;
         partsAllText.text = partsAll.ToString();
-        partsNowText.text = partsNow.ToString();
     }
     public void GameOver()
     {
         Ball.GetComponent<Rigidbody>().isKinematic = true;
-        Ball_up.GetComponent<UpAnimation>().enabled = false;
-        partsAll = partsNow;
         PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();   
         ReloadButton.SetActive(true);
@@ -68,8 +62,8 @@ public class Death : MonoBehaviour
     public IEnumerator PartsCollectCoroutine()
     {
         yield return new WaitForSeconds(2);
-        partsNow += (int)Random.Range(0, 10.0f);
-        partsNowText.text = partsNow.ToString();
+        partsAll += (int)Random.Range(0, 10.0f);
+        partsAllText.text = partsAll.ToString();
         Ball.GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
     }
@@ -91,5 +85,33 @@ public class Death : MonoBehaviour
         fuel = 1000;
         Ball.GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
+    }
+
+    public void SaveParts()
+    {
+        partsAllText.text = partsAll.ToString();
+        PlayerPrefs.SetInt("partsAll", partsAll);
+        PlayerPrefs.Save();
+    }
+
+    void Update()
+    {
+        //DEBUG TOOL
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            partsAll = 1000;
+            partsAllText.text = partsAll.ToString();
+            PlayerPrefs.SetInt("partsAll", partsAll);
+            PlayerPrefs.Save();
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            partsAll = 0;
+            partsAllText.text = partsAll.ToString();
+            PlayerPrefs.SetInt("partsAll", partsAll);
+            PlayerPrefs.Save();
+        }
+        //DEBUG TOOL
     }
 }
