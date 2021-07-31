@@ -1510,7 +1510,7 @@
     "m_StageCapability": 3,
     "m_Value": {
         "x": 1.0,
-        "y": 0.3333333134651184
+        "y": 1.0
     },
     "m_DefaultValue": {
         "x": 0.0,

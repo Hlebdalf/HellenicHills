@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 1, g: 1, b: 1, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
@@ -7568,42 +7568,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e4c1f781d8a2444861d261d9adce42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stones:
-  - {fileID: 1236246926369437958, guid: 766508447632bf54d887c0a6c8e9fe15, type: 3}
-  - {fileID: 3609714440499509491, guid: ec33223b149ce1248b5e5cf2a697066b, type: 3}
-  - {fileID: 7885671007231112101, guid: e0246a1164aedf445be19e9534f90778, type: 3}
-  Resolution: {x: 3072, y: 1024}
+  Resolution: {x: 512, y: 512}
   NoiseMaterial: {fileID: 2100000, guid: b2aa1795c21033e4b88f9729babc35b2, type: 2}
   SpruceMaterial: {fileID: 2100000, guid: 35561467b8caf4345b23a96100f197a0, type: 2}
-  TerrainMaterial: {fileID: 2100000, guid: 10e57744ae66d5d47bb7b08b6d5e0abd, type: 2}
   canvas: {fileID: 1715893971}
   Ball: {fileID: 1197008666310753517}
-  RefCharger: {fileID: 479397672839673902, guid: 80d00fb4f75d7c14cba97eb8ace592e7,
-    type: 3}
-  ChargerRoot: {fileID: 8164078558614427669}
-  RefSpruce: {fileID: 31703630592290979, guid: 929c89beead82314194e866561f88686, type: 3}
-  SpruceRoot: {fileID: 31703630876308763}
-  RefParts: {fileID: 9044077929980752440, guid: 490efe37efd89b14884dd43b7136366d,
-    type: 3}
-  PartsRoot: {fileID: 882205965794688126}
-  RefMission: {fileID: 8139631588996809389, guid: 05f043785b4674d4a9dfed5fc61f9fe1,
-    type: 3}
-  MissionRoot: {fileID: 3477570004639904466}
   Marker: {fileID: 6975995392212277469, guid: 12c563d3d42b9ae4d849612c0327ccac, type: 3}
-  Terrains:
-  - {fileID: 0}
-  - {fileID: 0}
-  Data:
-  - {fileID: 15600000, guid: 618728ea977baef4f992a2348ebb4242, type: 2}
-  - {fileID: 15600000, guid: d1351a8867e405040a1fb33ce42a0b33, type: 2}
-  - {fileID: 15600000, guid: 33b409ca1938c344491af14b87780486, type: 2}
+  RefTerrain: {fileID: 2635045585860016742, guid: 0dc7b1ce5a79ce54ba6979a137701d60,
+    type: 3}
   HeightMaps:
   - {fileID: 0}
   - {fileID: 0}
-  border: 0
-  seed: 0
-  koeff: 333
-  Shift: 0
+  Seed: 0
 --- !u!114 &1644744612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15207,7 +15183,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3616783784765043945}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -137, y: 500, z: 0}
+  m_LocalPosition: {x: 0, y: 70, z: 0}
   m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_Children:
   - {fileID: 5311084498591346867}
@@ -15540,7 +15516,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197008666310753517}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -137, y: 500, z: 0}
+  m_LocalPosition: {x: 0, y: 70, z: 0}
   m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_Children:
   - {fileID: 234191631}
