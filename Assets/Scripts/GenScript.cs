@@ -16,12 +16,14 @@ public class GenScript : MonoBehaviour
     private Vector2Int nowPos, prePos = new Vector2Int(0, 0);
     private Vector2Int[] buzyCells = new Vector2Int[8];
     private GameObject[] buzyTerrains = new GameObject[8];
+    private Dictionary<Vector2Int, GameObject> terrains = new Dictionary<Vector2Int, GameObject>();
+
     private void Awake()
     {
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Color;
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Depth;
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
-        Ball.transform.position = new Vector3(-1, 5000, Resolution.y);
+        Ball.transform.position = new Vector3(1, 70, Resolution.y);
         Seed = Random.Range(-10000f, 10000f);
         StartCoroutine(BuildTerrain());
     }
@@ -77,40 +79,40 @@ public class GenScript : MonoBehaviour
     }
     private Vector2Int[] GetNeighbours(Vector2Int pos)
     {
-        Vector2Int[] result = new Vector2Int[5];
-        result[0] = new Vector2Int(pos.x, pos.y - 1);
-        result[1] = new Vector2Int(pos.x, pos.y + 1);
-        result[2] = new Vector2Int(pos.x + 1, pos.y);
-        result[3] = new Vector2Int(pos.x + 1, pos.y - 1);
-        result[4] = new Vector2Int(pos.x + 1, pos.y + 1);
-        return result;
+        Vector2Int[] allNbhs = new Vector2Int[5];
+        List<Vector2Int> result = new List<Vector2Int>();
+        allNbhs[0] = new Vector2Int(pos.x, pos.y - 1);
+        allNbhs[1] = new Vector2Int(pos.x, pos.y + 1);
+        allNbhs[2] = new Vector2Int(pos.x + 1, pos.y);
+        allNbhs[3] = new Vector2Int(pos.x + 1, pos.y - 1);
+        allNbhs[4] = new Vector2Int(pos.x + 1, pos.y + 1);
+
+        for (int i =0; i< 5; i++)
+        {
+            if (!terrains.ContainsKey(allNbhs[i]))
+            {
+                result.Add(allNbhs[i]);
+                Debug.Log("s");
+            }
+        }
+        return result.ToArray();
     }
 
     private void RestructBuzyObjects(Vector2Int bc, GameObject terrain)
     {
-        if()
+        //if()
     }
 
     private void SpawnTerrains()
     {
-        Vector2Int[] allNeighbours = GetNeighbours(nowPos);
-        for (int i = 0; i < 5; i++)
+        Vector2Int[] neighbours = GetNeighbours(nowPos);
+        foreach(Vector2Int nb in neighbours)
         {
-            Vector2Int nb = allNeighbours[i];
-            foreach (Vector2Int bc in buzyCells)
-            {
-                if (nb == bc) allNeighbours[i].x = -1; // -1 means that this cell is not suitable, because -1 is not reached for x
-            }
+            GameObject newTerrain = Instantiate(RefTerrain);
+            newTerrain.transform.position = new Vector3((nb.x) * Resolution.y, 0, (nb.y) * Resolution.y);
+            terrains.Add(nb, newTerrain);
         }
-        foreach (Vector2Int nb in allNeighbours)
-        {
-            if (nb.x != -1)
-            {
-                GameObject newTerrain = Instantiate(RefTerrain);
-                newTerrain.transform.position = new Vector3((nb.x) * Resolution.y, 0, (nb.y) * Resolution.y);
-                RestructBuzyObjects(nb, newTerrain);
-            }
-        }
+        
     }
 
     private void StartGame()
