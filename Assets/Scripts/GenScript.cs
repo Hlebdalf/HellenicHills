@@ -19,6 +19,7 @@ public class GenScript : MonoBehaviour
     private Vector2Int nowPos, prePos = new Vector2Int(0, 0);
     private Dictionary<Vector2Int, GameObject> terrains = new Dictionary<Vector2Int, GameObject>();
     private int dataID = 0;
+    private bool isStarted = false;
 
     private void Awake()
     {
@@ -39,20 +40,6 @@ public class GenScript : MonoBehaviour
         target.GetComponent<FieldObjMarker>().StartGame();
     }
 
-    public Texture2D BakeTerrain(Vector2 offset)
-    {
-        NoiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", offset.x + Seed);
-        NoiseMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", offset.y);
-        NoiseMaterial.SetFloat("Vector1_090150e04f634e6eb9f7220d01725be0", Seed);
-        RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.y + 1, Resolution.y + 1);
-        Graphics.Blit(null, renderTexture, NoiseMaterial);
-        Texture2D texture = new Texture2D(Resolution.y + 1, Resolution.y + 1);
-        RenderTexture.active = renderTexture;
-        texture.ReadPixels(new Rect(Vector2.zero, new Vector2Int(Resolution.y + 1, Resolution.y + 1)), 0, 0);
-        RenderTexture.active = null;
-        RenderTexture.ReleaseTemporary(renderTexture);
-        return texture;
-    }
     public Texture2D BakeFO()
     {
         RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x / 2, Resolution.y / 2);
@@ -83,13 +70,13 @@ public class GenScript : MonoBehaviour
     {
         Vector2Int[] allNbhs = new Vector2Int[6];
         List<Vector2Int> result = new List<Vector2Int>();
-        allNbhs[0] = new Vector2Int(pos.x, pos.y - 1);
-        allNbhs[1] = new Vector2Int(pos.x, pos.y + 1);
-        allNbhs[2] = new Vector2Int(pos.x + 1, pos.y);
-        allNbhs[3] = new Vector2Int(pos.x + 1, pos.y - 1);
-        allNbhs[4] = new Vector2Int(pos.x + 1, pos.y + 1);
-        allNbhs[5] = new Vector2Int(pos.x, pos.y);
-
+        allNbhs[0] = new Vector2Int(pos.x, pos.y);
+        allNbhs[1] = new Vector2Int(pos.x, pos.y - 1);
+        allNbhs[2] = new Vector2Int(pos.x, pos.y + 1);
+        allNbhs[3] = new Vector2Int(pos.x + 1, pos.y);
+        allNbhs[4] = new Vector2Int(pos.x + 1, pos.y - 1);
+        allNbhs[5] = new Vector2Int(pos.x + 1, pos.y + 1);
+        
         for (int i = 0; i < 6; i++)
         {
             if (!terrains.ContainsKey(allNbhs[i]))
@@ -119,7 +106,7 @@ public class GenScript : MonoBehaviour
         foreach (Vector2Int nb in neighbours)
         {
             GameObject newTerrain = Terrain.CreateTerrainGameObject(datas[dataID]);
-            newTerrain.AddComponent(typeof (TerrainInit));     
+            newTerrain.AddComponent(typeof(TerrainInit));
             newTerrain.transform.position = new Vector3((nb.x) * Resolution.y, 0, (nb.y) * Resolution.y);
             newTerrain.GetComponent<TerrainInit>().InitTerrain(NoiseMaterial, SpruceMaterial, materials[dataID], Resolution, nb, Seed);
             terrains.Add(nb, newTerrain);
@@ -136,7 +123,6 @@ public class GenScript : MonoBehaviour
     {
         while (true)
         {
-
             nowPos = new Vector2Int((int)Mathf.Floor(Ball.transform.position.x / Resolution.y), (int)Mathf.Floor(Ball.transform.position.z / Resolution.y));
             if (nowPos != prePos)
             {
@@ -145,6 +131,11 @@ public class GenScript : MonoBehaviour
                 DestroyOldTerrains();
             }
             yield return new WaitForSeconds(2);
+            if(!isStarted && dataID > 4)
+            {
+                isStarted = true;
+                StartGame();
+            }
         }
     }
 }

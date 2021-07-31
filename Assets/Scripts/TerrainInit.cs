@@ -7,7 +7,7 @@ public class TerrainInit : MonoBehaviour
     public void InitTerrain(Material noiseMaterial, Material spruceMaterial, Material refMaterial, Vector2Int Resolution, Vector2Int offset, float seed)
     {
         
-        noiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", offset.x);
+        noiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", offset.x + seed);
         noiseMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", offset.y);
         RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.y + 1, Resolution.y + 1);
         Graphics.Blit(null, renderTexture, noiseMaterial);
@@ -17,20 +17,18 @@ public class TerrainInit : MonoBehaviour
         RenderTexture.active = null;
         RenderTexture.ReleaseTemporary(renderTexture);
         texture.Apply();
-        refMaterial.mainTexture = texture;
+        //refMaterial.mainTexture = texture;
         gameObject.GetComponent<Terrain>().materialTemplate = refMaterial;
         float[,] HeightColors = new float[Resolution.y + 1, Resolution.y + 1];
         for (int p = 0; p < Resolution.y + 1; p++)
         {
             for (int y = 0; y < Resolution.y + 1; y++)
             {
-                HeightColors[p, y] = texture.GetPixel(y, p)[0];
-                //HeightColors[p, y]  = 0;
+                HeightColors[p, y] = texture.GetPixel(y, p).a;
             }
         }
         gameObject.GetComponent<Terrain>().terrainData.size = new Vector3(512, 50, 512);
         gameObject.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
-        //gameObject.GetComponent<Terrain>().terrainData.size = new Vector3(gameObject.GetComponent<Terrain>().terrainData.size.x, 50, gameObject.GetComponent<Terrain>().terrainData.size.z);
     }
 
 
