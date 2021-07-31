@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GenScript : MonoBehaviour
 {
@@ -14,8 +15,6 @@ public class GenScript : MonoBehaviour
     public Texture2D[] HeightMaps = new Texture2D[2];
     public float Seed;
     private Vector2Int nowPos, prePos = new Vector2Int(0, 0);
-    private Vector2Int[] buzyCells = new Vector2Int[8];
-    private GameObject[] buzyTerrains = new GameObject[8];
     private Dictionary<Vector2Int, GameObject> terrains = new Dictionary<Vector2Int, GameObject>();
 
     private void Awake()
@@ -79,40 +78,48 @@ public class GenScript : MonoBehaviour
     }
     private Vector2Int[] GetNeighbours(Vector2Int pos)
     {
-        Vector2Int[] allNbhs = new Vector2Int[5];
+        Vector2Int[] allNbhs = new Vector2Int[6];
         List<Vector2Int> result = new List<Vector2Int>();
         allNbhs[0] = new Vector2Int(pos.x, pos.y - 1);
         allNbhs[1] = new Vector2Int(pos.x, pos.y + 1);
         allNbhs[2] = new Vector2Int(pos.x + 1, pos.y);
         allNbhs[3] = new Vector2Int(pos.x + 1, pos.y - 1);
         allNbhs[4] = new Vector2Int(pos.x + 1, pos.y + 1);
+        allNbhs[5] = new Vector2Int(pos.x, pos.y);
 
-        for (int i =0; i< 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             if (!terrains.ContainsKey(allNbhs[i]))
             {
                 result.Add(allNbhs[i]);
-                Debug.Log("s");
             }
         }
         return result.ToArray();
     }
 
-    private void RestructBuzyObjects(Vector2Int bc, GameObject terrain)
+    private void DestroyOldTerrains()
     {
-        //if()
+        List<Vector2Int> keys = terrains.Keys.ToList();
+        foreach (Vector2Int pos in keys)
+        {
+            if (terrains[pos].transform.position.x < Ball.transform.position.x - Resolution.y - 30)
+            {
+                Destroy(terrains[pos]);
+                terrains.Remove(pos);
+            }
+        }
     }
 
     private void SpawnTerrains()
     {
         Vector2Int[] neighbours = GetNeighbours(nowPos);
-        foreach(Vector2Int nb in neighbours)
+        foreach (Vector2Int nb in neighbours)
         {
             GameObject newTerrain = Instantiate(RefTerrain);
             newTerrain.transform.position = new Vector3((nb.x) * Resolution.y, 0, (nb.y) * Resolution.y);
             terrains.Add(nb, newTerrain);
         }
-        
+
     }
 
     private void StartGame()
@@ -128,6 +135,8 @@ public class GenScript : MonoBehaviour
             if (nowPos != prePos)
             {
                 SpawnTerrains();
+                yield return null;
+                DestroyOldTerrains();
             }
             yield return new WaitForSeconds(2);
         }
