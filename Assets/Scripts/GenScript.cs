@@ -102,7 +102,7 @@ public class GenScript : MonoBehaviour
         List<Vector2Int> keys = terrains.Keys.ToList();
         foreach (Vector2Int pos in keys)
         {
-            if (terrains[pos].transform.position.x < Ball.transform.position.x - Resolution.y - 30)
+            if (terrains[pos].transform.position.x < Ball.transform.position.x - Resolution.y - 10)
             {
                 Destroy(terrains[pos]);
                 terrains.Remove(pos);
@@ -117,6 +117,7 @@ public class GenScript : MonoBehaviour
         {
             GameObject newTerrain = Instantiate(RefTerrain);
             newTerrain.transform.position = new Vector3((nb.x) * Resolution.y, 0, (nb.y) * Resolution.y);
+            newTerrain.GetComponent<Terrain>().materialTemplate = NoiseMaterial;
             terrains.Add(nb, newTerrain);
         }
 
