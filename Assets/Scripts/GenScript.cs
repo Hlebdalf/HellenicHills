@@ -8,14 +8,17 @@ public class GenScript : MonoBehaviour
     public Vector2Int Resolution = new Vector2Int(0, 0);
     public Material NoiseMaterial;
     public Material SpruceMaterial;
+    public Material RefMaterial;
     public UIButtonManager canvas;
+    public TerrainData[] datas = new TerrainData[8];
+    public Material[] materials = new Material[8];
     public GameObject Ball;
     public GameObject Marker;
-    public GameObject RefTerrain;
     public Texture2D[] HeightMaps = new Texture2D[2];
     public float Seed;
     private Vector2Int nowPos, prePos = new Vector2Int(0, 0);
     private Dictionary<Vector2Int, GameObject> terrains = new Dictionary<Vector2Int, GameObject>();
+    private int dataID = 0;
 
     private void Awake()
     {
@@ -100,12 +103,12 @@ public class GenScript : MonoBehaviour
     private void DestroyOldTerrains()
     {
         List<Vector2Int> keys = terrains.Keys.ToList();
-        foreach (Vector2Int pos in keys)
+        for (int i = 0; i < keys.Count; i++)
         {
-            if (terrains[pos].transform.position.x < Ball.transform.position.x - Resolution.y - 10)
+            if (terrains[keys[i]].transform.position.x < Ball.transform.position.x - Resolution.y - 10)
             {
-                Destroy(terrains[pos]);
-                terrains.Remove(pos);
+                Destroy(terrains[keys[i]]);
+                terrains.Remove(keys[i]);
             }
         }
     }
@@ -115,10 +118,12 @@ public class GenScript : MonoBehaviour
         Vector2Int[] neighbours = GetNeighbours(nowPos);
         foreach (Vector2Int nb in neighbours)
         {
-            GameObject newTerrain = Instantiate(RefTerrain);
+            GameObject newTerrain = Terrain.CreateTerrainGameObject(datas[dataID]);
+            newTerrain.AddComponent(typeof (TerrainInit));     
             newTerrain.transform.position = new Vector3((nb.x) * Resolution.y, 0, (nb.y) * Resolution.y);
-            newTerrain.GetComponent<Terrain>().materialTemplate = NoiseMaterial;
+            newTerrain.GetComponent<TerrainInit>().InitTerrain(NoiseMaterial, SpruceMaterial, materials[dataID], Resolution, nb, Seed);
             terrains.Add(nb, newTerrain);
+            dataID = (dataID + 1) % 8;
         }
 
     }
