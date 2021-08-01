@@ -16,7 +16,6 @@ public class TerrainInit : MonoBehaviour
         RenderTexture.active = null;
         RenderTexture.ReleaseTemporary(renderTexture);
         texture.Apply();
-        //refMaterial.mainTexture = texture;
         gameObject.GetComponent<Terrain>().materialTemplate = refMaterial;
         float[,] HeightColors = new float[Resolution.y + 1, Resolution.y + 1];
         for (int p = 0; p < Resolution.y + 1; p++)

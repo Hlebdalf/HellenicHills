@@ -110,7 +110,7 @@ public class GenScript : MonoBehaviour
             newTerrain.AddComponent(typeof(TerrainInit)); 
             newTerrain.GetComponent<TerrainInit>().InitTerrain(NoiseMaterial, SpruceMaterial, materials[dataID], Resolution, nb, Seed,koeff);
             terrains.Add(nb, newTerrain);
-            dataID = (dataID + 1) % 8;
+            dataID = (dataID + 1) % 12;
         }
 
     }
