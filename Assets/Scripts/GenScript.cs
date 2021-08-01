@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class GenScript : MonoBehaviour
-{
+{   
     public Vector2Int Resolution = new Vector2Int(0, 0);
     public int koeff = 1;
     public Material NoiseMaterial;
@@ -15,6 +15,7 @@ public class GenScript : MonoBehaviour
     public Material[] materials = new Material[8];
     public GameObject Ball;
     public GameObject Marker;
+    public GameObject TestCube;
     public Texture2D[] HeightMaps = new Texture2D[2];
     public float Seed;
     private Vector2Int nowPos, prePos = new Vector2Int(0, 0);
@@ -108,7 +109,7 @@ public class GenScript : MonoBehaviour
         {
             GameObject newTerrain = Terrain.CreateTerrainGameObject(datas[dataID]);
             newTerrain.AddComponent(typeof(TerrainInit)); 
-            newTerrain.GetComponent<TerrainInit>().InitTerrain(NoiseMaterial, SpruceMaterial, materials[dataID], Resolution, nb, Seed,koeff);
+            newTerrain.GetComponent<TerrainInit>().InitTerrain(NoiseMaterial, SpruceMaterial, materials[dataID], Resolution, nb, Seed,koeff, TestCube);
             terrains.Add(nb, newTerrain);
             dataID = (dataID + 1) % 12;
         }
