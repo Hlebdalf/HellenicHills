@@ -48,7 +48,6 @@ public class TerrainInit : MonoBehaviour
                 {
                     GameObject FO = Instantiate(refFO);
                     float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x / (float)Resolution.x ,y / (float)Resolution.y);
-                    Debug.Log(x / (float)Resolution.x);
                     FO.transform.position = transform.position + new Vector3(x * koeff, height, y * koeff);
                 }
             }
