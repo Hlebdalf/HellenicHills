@@ -6,6 +6,7 @@ using System.Linq;
 public class GenScript : MonoBehaviour
 {
     public Vector2Int Resolution = new Vector2Int(0, 0);
+    public int koeff = 1;
     public Material NoiseMaterial;
     public Material SpruceMaterial;
     public Material RefMaterial;
@@ -106,9 +107,8 @@ public class GenScript : MonoBehaviour
         foreach (Vector2Int nb in neighbours)
         {
             GameObject newTerrain = Terrain.CreateTerrainGameObject(datas[dataID]);
-            newTerrain.AddComponent(typeof(TerrainInit));
-            newTerrain.transform.position = new Vector3((nb.x) * Resolution.y, 0, (nb.y) * Resolution.y);
-            newTerrain.GetComponent<TerrainInit>().InitTerrain(NoiseMaterial, SpruceMaterial, materials[dataID], Resolution, nb, Seed);
+            newTerrain.AddComponent(typeof(TerrainInit)); 
+            newTerrain.GetComponent<TerrainInit>().InitTerrain(NoiseMaterial, SpruceMaterial, materials[dataID], Resolution, nb, Seed,koeff);
             terrains.Add(nb, newTerrain);
             dataID = (dataID + 1) % 8;
         }
