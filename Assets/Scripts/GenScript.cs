@@ -93,7 +93,7 @@ public class GenScript : MonoBehaviour
         List<Vector2Int> keys = terrains.Keys.ToList();
         for (int i = 0; i < keys.Count; i++)
         {
-            if (terrains[keys[i]].transform.position.x < Ball.transform.position.x - Resolution.y - 10)
+            if (terrains[keys[i]].transform.position.x < Ball.transform.position.x - Resolution.y * koeff - 10)
             {
                 Destroy(terrains[keys[i]]);
                 terrains.Remove(keys[i]);

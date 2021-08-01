@@ -16,7 +16,7 @@ public class TerrainInit : MonoBehaviour
         RenderTexture.active = null;
         RenderTexture.ReleaseTemporary(renderTexture);
         texture.Apply();
-        refMaterial.mainTexture = texture;
+        //refMaterial.mainTexture = texture;
         gameObject.GetComponent<Terrain>().materialTemplate = refMaterial;
         float[,] HeightColors = new float[Resolution.y + 1, Resolution.y + 1];
         for (int p = 0; p < Resolution.y + 1; p++)
@@ -30,7 +30,9 @@ public class TerrainInit : MonoBehaviour
         gameObject.transform.position = new Vector3((offset.x) * Resolution.y * koeff, 0, (offset.y) * Resolution.y * koeff);
         gameObject.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x+1;
         gameObject.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
-        gameObject.GetComponent<Terrain>().terrainData.size = new Vector3(Resolution.x * koeff, 50, Resolution.x * koeff);
+        gameObject.GetComponent<Terrain>().heightmapPixelError = 30;
+        gameObject.GetComponent<Terrain>().terrainData.size = new Vector3(Resolution.x * koeff, 100, Resolution.x * koeff);
+        gameObject.GetComponent<Terrain>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
     }
 
 

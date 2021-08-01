@@ -7568,7 +7568,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e4c1f781d8a2444861d261d9adce42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Resolution: {x: 256, y: 256}
+  Resolution: {x: 512, y: 512}
+  koeff: 1
   NoiseMaterial: {fileID: 2100000, guid: b2aa1795c21033e4b88f9729babc35b2, type: 2}
   SpruceMaterial: {fileID: 2100000, guid: 35561467b8caf4345b23a96100f197a0, type: 2}
   RefMaterial: {fileID: 2100000, guid: 10e57744ae66d5d47bb7b08b6d5e0abd, type: 2}
@@ -7642,7 +7643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fuel: 1000
-  consumption: 2
+  consumption: 0
   fuelBar: {fileID: 1475741659}
   Ball: {fileID: 1197008666310753517}
   Ball_up: {fileID: 4318068648676143808}
