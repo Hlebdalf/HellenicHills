@@ -15,7 +15,7 @@ public class GenScript : MonoBehaviour
     public Material[] materials = new Material[8];
     public GameObject Ball;
     public GameObject Marker;
-    public GameObject TestCube;
+    public GameObject FO;
     public Texture2D[] HeightMaps = new Texture2D[2];
     public float Seed;
     private Vector2Int nowPos, prePos = new Vector2Int(0, 0);
@@ -38,7 +38,7 @@ public class GenScript : MonoBehaviour
         target.GetComponent<FieldObjMarker>().refMarker = Marker;
         target.GetComponent<FieldObjMarker>().canvas = canvas.gameObject;
         target.GetComponent<FieldObjMarker>().ball = Ball;
-        target.GetComponent<FieldObjScript>().death = gameObject.GetComponent<Death>();
+       // target.GetComponent<FieldObjScript>().death = gameObject.GetComponent<FieldChecker>();
         target.GetComponent<FieldObjMarker>().StartGame();
     }
 
@@ -109,7 +109,7 @@ public class GenScript : MonoBehaviour
         {
             GameObject newTerrain = Terrain.CreateTerrainGameObject(datas[dataID]);
             newTerrain.AddComponent(typeof(TerrainInit)); 
-            newTerrain.GetComponent<TerrainInit>().InitTerrain(NoiseMaterial, SpruceMaterial, materials[dataID], Resolution, nb, Seed,koeff, TestCube);
+            newTerrain.GetComponent<TerrainInit>().InitTerrain(NoiseMaterial, SpruceMaterial, materials[dataID], Resolution, nb, Seed,koeff, FO);
             terrains.Add(nb, newTerrain);
             dataID = (dataID + 1) % 12;
         }
