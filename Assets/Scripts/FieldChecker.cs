@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FieldChecker : MonoBehaviour
+public class Death : MonoBehaviour
 {
     public float fuel = 1000;
     public float consumption = 2;
