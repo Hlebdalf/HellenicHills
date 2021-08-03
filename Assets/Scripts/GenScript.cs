@@ -42,32 +42,6 @@ public class GenScript : MonoBehaviour
         target.GetComponent<FieldObjMarker>().StartGame();
     }
 
-    public Texture2D BakeFO()
-    {
-        RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.x / 2, Resolution.y / 2);
-        Graphics.Blit(null, renderTexture, SpruceMaterial);
-        Texture2D texture = new Texture2D(Resolution.x / 2, Resolution.y / 2);
-        RenderTexture.active = renderTexture;
-        texture.ReadPixels(new Rect(Vector2.zero, new Vector2Int(Resolution.x / 2, Resolution.y / 2)), 0, 0);
-        RenderTexture.active = null;
-        RenderTexture.ReleaseTemporary(renderTexture);
-        return texture;
-    }
-
-
-    private void PutFO(GameObject self)
-    {
-        RaycastHit hit;
-        Ray ray = new Ray(self.transform.position, new Vector3(0, -300, 0));
-        Physics.Raycast(ray, out hit);
-        if (hit.collider != null)
-        {
-            if (hit.collider.gameObject.name == "Terrain") self.transform.position = hit.point;
-            else DestroyImmediate(self, true);
-        }
-        else DestroyImmediate(self, true);
-
-    }
     private Vector2Int[] GetNeighbours(Vector2Int pos)
     {
         Vector2Int[] allNbhs = new Vector2Int[6];

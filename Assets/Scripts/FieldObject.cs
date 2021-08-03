@@ -9,6 +9,7 @@ public class FieldObject : MonoBehaviour
     private float MissionChance = 2;
     private float PartChance = 8;
     private int type;
+    public Vector3 normal;
     void Start()
     {   
 

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Decorates : MonoBehaviour
+public class Stones : MonoBehaviour
 {
+    private Vector3 up;
     void Start()
     {
+        up = transform.up;
         float childsCNT = (float)transform.childCount;
         float coin = Random.value;
 
@@ -15,5 +17,6 @@ public class Decorates : MonoBehaviour
             if (i == target) continue;
             else Destroy(transform.GetChild(i).gameObject);
         }
+        transform.LookAt(transform.parent.parent.GetComponent<FieldObject>().normal + transform.position- up);
     }
 }
