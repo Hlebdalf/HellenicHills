@@ -105,7 +105,7 @@ public class GenScript : MonoBehaviour
                 yield return null;
                 DestroyOldTerrains();
             }
-            yield return new WaitForSeconds(2);
+            yield return new WaitForFixedUpdate();
             if (!isStarted && dataID > 4)
             {
                 isStarted = true;
