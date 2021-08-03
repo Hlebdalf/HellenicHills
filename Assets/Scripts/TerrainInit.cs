@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TerrainInit : MonoBehaviour
 {  
-    public void InitTerrain(Material noiseMaterial, Material spruceMaterial, Material refMaterial, 
+    public void InitTerrain(Material noiseMaterial, Material spruceMaterial, Material refMaterial,
         Vector2Int Resolution, Vector2Int offset, float seed, int koeff, GameObject refFO)
     {
-        noiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", offset.x);
+        noiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", offset.x + seed);
         noiseMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", offset.y + offset.y * (1 / (Resolution.y + 1)));
         RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.y + 1, Resolution.y + 1);
         Graphics.Blit(null, renderTexture, noiseMaterial);
@@ -26,15 +26,14 @@ public class TerrainInit : MonoBehaviour
                 HeightColors[p, y] = texture.GetPixel(y, p).a;
             }
         }
-        DestroyImmediate(texture,true);
-        Texture2D texture2 = new Texture2D(Resolution.y + 1, Resolution.y + 1);
+        
         gameObject.transform.position = new Vector3((offset.x) * Resolution.y * koeff, 0, (offset.y) * Resolution.y * koeff);
         gameObject.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x+1;
         gameObject.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
         gameObject.GetComponent<Terrain>().heightmapPixelError = 30;
         gameObject.GetComponent<Terrain>().terrainData.size = new Vector3(Resolution.x * koeff, 100, Resolution.x * koeff);
         gameObject.GetComponent<Terrain>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-
+        Texture2D texture2 = new Texture2D(Resolution.y + 1, Resolution.y + 1);
         Graphics.Blit(null, renderTexture, spruceMaterial);
         RenderTexture.active = renderTexture;
         texture2.ReadPixels(new Rect(Vector2.zero, new Vector2Int(Resolution.x * koeff, Resolution.y * koeff)), 0, 0);
@@ -54,7 +53,10 @@ public class TerrainInit : MonoBehaviour
                 }
             }
         }
-        DestroyImmediate(texture2, true);
+
+        gameObject.GetComponent<Terrain>().materialTemplate.mainTexture = texture;
+        //DestroyImmediate(texture2, true);
+        //DestroyImmediate(texture, true);
     }
 
 }
