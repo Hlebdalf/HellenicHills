@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class GenScript : MonoBehaviour
-{   
+{
     public Vector2Int Resolution = new Vector2Int(0, 0);
     public int koeff = 1;
     public Material NoiseMaterial;
@@ -38,7 +38,7 @@ public class GenScript : MonoBehaviour
         target.GetComponent<FieldObjMarker>().refMarker = Marker;
         target.GetComponent<FieldObjMarker>().canvas = canvas.gameObject;
         target.GetComponent<FieldObjMarker>().ball = Ball;
-       // target.GetComponent<FieldObjScript>().death = gameObject.GetComponent<FieldChecker>();
+        // target.GetComponent<FieldObjScript>().death = gameObject.GetComponent<FieldChecker>();
         target.GetComponent<FieldObjMarker>().StartGame();
     }
 
@@ -52,7 +52,7 @@ public class GenScript : MonoBehaviour
         allNbhs[3] = new Vector2Int(pos.x + 1, pos.y);
         allNbhs[4] = new Vector2Int(pos.x + 1, pos.y - 1);
         allNbhs[5] = new Vector2Int(pos.x + 1, pos.y + 1);
-        
+
         for (int i = 0; i < 6; i++)
         {
             if (!terrains.ContainsKey(allNbhs[i]))
@@ -70,7 +70,7 @@ public class GenScript : MonoBehaviour
         {
             if (terrains[keys[i]].transform.position.x < Ball.transform.position.x - Resolution.y * koeff - 10)
             {
-                Destroy(terrains[keys[i]]);
+                DestroyImmediate(terrains[keys[i]], true);
                 terrains.Remove(keys[i]);
             }
         }
@@ -82,8 +82,8 @@ public class GenScript : MonoBehaviour
         foreach (Vector2Int nb in neighbours)
         {
             GameObject newTerrain = Terrain.CreateTerrainGameObject(datas[dataID]);
-            newTerrain.AddComponent(typeof(TerrainInit)); 
-            newTerrain.GetComponent<TerrainInit>().InitTerrain(NoiseMaterial, SpruceMaterial, materials[dataID], Resolution, nb, Seed,koeff, FO);
+            newTerrain.AddComponent(typeof(TerrainInit));
+            newTerrain.GetComponent<TerrainInit>().InitTerrain(NoiseMaterial, SpruceMaterial, materials[dataID], Resolution, nb, Seed, koeff, FO);
             terrains.Add(nb, newTerrain);
             dataID = (dataID + 1) % 12;
         }
@@ -106,7 +106,7 @@ public class GenScript : MonoBehaviour
                 DestroyOldTerrains();
             }
             yield return new WaitForSeconds(2);
-            if(!isStarted && dataID > 4)
+            if (!isStarted && dataID > 4)
             {
                 isStarted = true;
                 StartGame();

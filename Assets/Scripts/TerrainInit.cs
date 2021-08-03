@@ -6,6 +6,7 @@ public class TerrainInit : MonoBehaviour
 {
     private Texture2D texture2;
     private Texture2D texture;
+    private List<GameObject> FOs = new List<GameObject>();
     public void InitTerrain(Material noiseMaterial, Material spruceMaterial, Material refMaterial,
         Vector2Int Resolution, Vector2Int offset, float seed, int koeff, GameObject refFO)
     {
@@ -52,6 +53,7 @@ public class TerrainInit : MonoBehaviour
                     float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x / (float)Resolution.x ,y / (float)Resolution.y);
                     FO.transform.position = transform.position + new Vector3(x * koeff, height, y * koeff);
                     FO.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x / (float)Resolution.x, y / (float)Resolution.y);
+                    FOs.Add(FO);
                 }
             }
         }
@@ -61,9 +63,13 @@ public class TerrainInit : MonoBehaviour
 
     void OnDestroy()
     {
-        Debug.Log('0');
         DestroyImmediate(texture2, true);
         DestroyImmediate(texture, true);
+        foreach(GameObject it in FOs)
+        {
+            DestroyImmediate(it, true);
+        }
+        FOs.Clear();
     }
 
 }
