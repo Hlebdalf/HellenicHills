@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class BuyButton : MonoBehaviour
 {
-    public Death death;
+    public FieldChecker death;
     public GameObject content;
     public int price = 0;
     public bool isBuyed;
@@ -76,4 +76,12 @@ public class BuyButton : MonoBehaviour
             }
         }
     }
+    //DEBUG TOOL
+    public void DeleteInfo()
+    {
+        isBuyed = false;
+        PlayerPrefs.SetInt(name + "button", 0);
+        PlayerPrefs.Save();
+    }
+    //DEBUG TOOL
 }

@@ -272,11 +272,11 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.25531554
+  - screenRelativeHeight: 0.13767053
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 7595648908456325826}
-  - screenRelativeHeight: 0.05004953
+  - screenRelativeHeight: 0.038499486
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 4862389592193563718}
@@ -1081,11 +1081,11 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.30173022
+  - screenRelativeHeight: 0.25320163
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3516158427060549021}
-  - screenRelativeHeight: 0.054885756
+  - screenRelativeHeight: 0.03212705
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 6901214327120077590}
@@ -1175,13 +1175,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5805760628203199836}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4365226363743215821}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!33 &7815504289358366787
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1379,11 +1379,11 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.30635193
+  - screenRelativeHeight: 0.20890966
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2995134459517730476}
-  - screenRelativeHeight: 0.068484075
+  - screenRelativeHeight: 0.042766742
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 6031748922263418027}
@@ -1567,11 +1567,11 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.18113968
+  - screenRelativeHeight: 0.12998948
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 497242363910552669}
-  - screenRelativeHeight: 0.049108543
+  - screenRelativeHeight: 0.027715357
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 5116706964568022084}
@@ -1769,11 +1769,11 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.19756533
+  - screenRelativeHeight: 0.12847953
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 1728362490535940360}
-  - screenRelativeHeight: 0.049108543
+  - screenRelativeHeight: 0.03604417
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 818469454078546673}
