@@ -165,8 +165,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -396.9999694824219,
-            "y": 443.0,
+            "x": -398.0,
+            "y": 443.9999694824219,
             "width": 208.0,
             "height": 104.0
         }
@@ -192,10 +192,16 @@
             "w": 0.0
         },
         {
+            "x": 0.020588219165802003,
+            "y": 0.020588219165802003,
+            "z": 0.020588219165802003,
+            "w": 0.03529411926865578
+        },
+        {
             "x": 0.0,
             "y": 0.0,
             "z": 0.0,
-            "w": 0.029419394209980966
+            "w": 1.0
         }
     ],
     "m_SerializableAlphaKeys": [
@@ -591,7 +597,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "CellDensity",
     "m_StageCapability": 3,
-    "m_Value": 52.099998474121097,
+    "m_Value": 74.4000015258789,
     "m_DefaultValue": 5.0,
     "m_Labels": []
 }
