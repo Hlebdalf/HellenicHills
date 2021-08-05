@@ -20,7 +20,6 @@ public class TerrainInit : MonoBehaviour
     {
         noiseMaterial = ns; spruceMaterial = sp; terrainMaterial = tr;
         Resolution = res; offset = oft; seed = sd; koeff = kf; refFO = rFO;
-        seed = 2040.638f;
         StartCoroutine(Build());
     }
     void OnDestroy()
@@ -71,7 +70,7 @@ public class TerrainInit : MonoBehaviour
         gameObject.transform.position = new Vector3((offset.x) * Resolution.y * koeff, 0, (offset.y) * Resolution.y * koeff);
         gameObject.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x + 1;
         gameObject.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
-        gameObject.GetComponent<Terrain>().heightmapPixelError = 0;
+        gameObject.GetComponent<Terrain>().heightmapPixelError = 40;
         gameObject.GetComponent<Terrain>().terrainData.size = new Vector3((Resolution.x) * koeff, 100, (Resolution.x) * koeff);
         gameObject.GetComponent<Terrain>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
