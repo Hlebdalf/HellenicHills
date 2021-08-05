@@ -19,7 +19,7 @@ public class GenScript : MonoBehaviour
     public Texture2D[] HeightMaps = new Texture2D[2];
     public float Seed;
     private Vector2Int nowPos, prePos = new Vector2Int(0, 0);
-    private Dictionary<Vector2Int, GameObject> terrains = new Dictionary<Vector2Int, GameObject>();
+    public Dictionary<Vector2Int, GameObject> terrains = new Dictionary<Vector2Int, GameObject>();
     private int dataID = 0;
     private bool isStarted = false;
 
@@ -38,7 +38,7 @@ public class GenScript : MonoBehaviour
         target.GetComponent<FieldObjMarker>().refMarker = Marker;
         target.GetComponent<FieldObjMarker>().canvas = canvas.gameObject;
         target.GetComponent<FieldObjMarker>().ball = Ball;
-        // target.GetComponent<FieldObjScript>().death = gameObject.GetComponent<FieldChecker>();
+        //target.GetComponent<FieldObjScript>().death = gameObject.GetComponent<FieldChecker>();
         target.GetComponent<FieldObjMarker>().StartGame();
     }
 
@@ -105,7 +105,7 @@ public class GenScript : MonoBehaviour
                 yield return null;
                 DestroyOldTerrains();
             }
-            yield return new WaitForSeconds(2);
+            yield return new WaitForFixedUpdate();
             if (!isStarted && dataID > 4)
             {
                 isStarted = true;

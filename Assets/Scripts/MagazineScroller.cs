@@ -23,7 +23,6 @@ public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandle
         rt = gameObject.GetComponent<RectTransform>();
         rt.transform.position = new Vector3(-modelType*1080 , rt.position.y, rt.position.z);
         childCNT = transform.childCount;
-       // parts.GetComponent<Text>().text = Death.partsAll.ToString();
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -101,4 +100,17 @@ public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandle
             balls.transform.GetChild(i).gameObject.SetActive(true);
         }
     }
+
+    //DEBUG TOOL
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).GetChild(0).gameObject.GetComponent<BuyButton>().DeleteInfo();
+            }
+        }
+    }
+    //DEBUG TOOL
 }
