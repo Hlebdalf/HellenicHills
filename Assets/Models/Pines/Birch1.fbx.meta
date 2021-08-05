@@ -3,7 +3,27 @@ guid: bd115af8e3693974dbc4d64145f4ecbe
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BirchLeafAMaterial
+    second: {fileID: 2100000, guid: 54ccec703c176c046965592255098b9d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BirchLeafBMaterial
+    second: {fileID: 2100000, guid: 71561bfa8b2d65f42add3028b1b0a7cd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WoodBirchAMaterial
+    second: {fileID: 2100000, guid: 7f0ea890a8c6b1c44a4b8a472f62a43e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WoodBirchBMaterial
+    second: {fileID: 2100000, guid: 5d3a3a9743017894ea982aa07b060dbc, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

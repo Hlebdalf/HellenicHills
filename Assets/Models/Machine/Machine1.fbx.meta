@@ -3,7 +3,37 @@ guid: 20f30804df5321c458d5c8faa4b5d920
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CameraMaterial
+    second: {fileID: 2100000, guid: c621dbaf1c8d42d41b365f5d5e63517c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CrabMaterial
+    second: {fileID: 2100000, guid: de652bb4f6f681c478523da175daaabf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FrameMatrerial
+    second: {fileID: 2100000, guid: 7911c83380c6ee046955bebad5d63a41, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LightMaterial
+    second: {fileID: 2100000, guid: c0eba5f404389044cb19ae8791f832a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MainMaterial
+    second: {fileID: 2100000, guid: 8d41dd2340114184798a2f338e182647, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TubeMaterial
+    second: {fileID: 2100000, guid: 097ae435c5608824ca810c83548d99b6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

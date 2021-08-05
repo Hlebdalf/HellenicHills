@@ -3,7 +3,32 @@ guid: 90705937895dfdb4ab490c757fa6a014
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CrabMaterial
+    second: {fileID: 2100000, guid: de652bb4f6f681c478523da175daaabf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LightMaterial
+    second: {fileID: 2100000, guid: c0eba5f404389044cb19ae8791f832a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RoofMaterial
+    second: {fileID: 2100000, guid: a308bc3a3cef8304da31da09fee2faf8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StoneMaterial
+    second: {fileID: 2100000, guid: af34c322999cd1e4191e4ef2ae176818, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TubeMaterial
+    second: {fileID: 2100000, guid: 097ae435c5608824ca810c83548d99b6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -3,7 +3,22 @@ guid: f338b5ce457e88b4e9b660277d23c624
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SacuraLeafAMaterial
+    second: {fileID: 2100000, guid: 2f55d1fdb348f0a41a30b9fc7accbb02, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SacuraLeafBMaterial
+    second: {fileID: 2100000, guid: e0d722139cd312442969171a8a2ba1a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SakuraWoodMaterial
+    second: {fileID: 2100000, guid: 01c51e1930a191344807e6b8bf1ff622, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

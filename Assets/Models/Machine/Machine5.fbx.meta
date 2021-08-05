@@ -3,7 +3,32 @@ guid: 0fd99fced98a1b545982d7d0ea016208
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CrabMaterial
+    second: {fileID: 2100000, guid: de652bb4f6f681c478523da175daaabf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GraySwordFishMaterial
+    second: {fileID: 2100000, guid: 60df914a7ab5efe46b3fc322f3220560, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HandersMaterial
+    second: {fileID: 2100000, guid: 64ee9b9d75c545143af78050f17e9677, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LightMaterial
+    second: {fileID: 2100000, guid: c0eba5f404389044cb19ae8791f832a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SwordfishMainMaterial
+    second: {fileID: 2100000, guid: 9479e165490598e49bbbc78a8a216b31, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
