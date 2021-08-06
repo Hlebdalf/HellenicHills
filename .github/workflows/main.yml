@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Unity - Test runner
+        uses: game-ci/unity-test-runner@v2.0-alpha-5
+          
 
-      - name: Run a one-line script
-        run: echo Hello, world!
