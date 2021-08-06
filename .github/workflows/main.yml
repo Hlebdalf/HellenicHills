@@ -15,5 +15,5 @@ jobs:
       - name: Unity - Test runner
         uses: game-ci/unity-test-runner@v2.0-alpha-5
         with:
-          unityVersion: 2020.3.12f1
+          unityVersion: 2019.2.11f1
 
