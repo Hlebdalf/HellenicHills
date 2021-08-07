@@ -87,7 +87,7 @@ public void GameStart()
         fuel = 1000;
         Ball.GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
-    }
+    
 
     public void SaveParts()
     {
