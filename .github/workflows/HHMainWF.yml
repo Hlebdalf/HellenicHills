@@ -39,6 +39,7 @@ jobs:
         with:
           unityVersion: 2020.3.12f1
           targetPlatform: Android
+          allowDirtyBuild: true
 
       # Output
       - uses: actions/upload-artifact@v2
