@@ -13,3 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: game-ci/unity-test-runner@v2
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      with:
+        projectPath: home/runner/work/HellinicHills/HellinicHills
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
