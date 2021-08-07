@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checkout
+      - continue-on-error: false
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
