@@ -41,11 +41,5 @@ jobs:
           targetPlatform: Android
           allowDirtyBuild: true
 
-      # Output
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Build
-          path: build
-
 
 
