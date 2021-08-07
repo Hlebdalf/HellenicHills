@@ -27,15 +27,16 @@ public class Death : MonoBehaviour
         partsAllText.text = partsAll.ToString();
     }
 
-    public void GameOver(){
+    public void GameOver()
+    {
 
-    Ball.GetComponent<Rigidbody>().isKinematic = true;
-    PlayerPrefs.SetInt("partsAll", partsAll);
-    PlayerPrefs.Save();
-    ReloadButton.SetActive(true);
-}
+        Ball.GetComponent<Rigidbody>().isKinematic = true;
+        PlayerPrefs.SetInt("partsAll", partsAll);
+        PlayerPrefs.Save();
+        ReloadButton.SetActive(true);
+    }
 
-public void GameStart()
+    public void GameStart()
     {
         StartCoroutine(FuelConsumption());
     }
@@ -44,7 +45,8 @@ public void GameStart()
     {
         Ball.GetComponent<Rigidbody>().isKinematic = true;
         StopAllCoroutines();
-        switch (type) {  
+        switch (type)
+        {
             case "Charger(Clone)":
                 StartCoroutine(ChargeCoroutine());
                 break;
@@ -61,14 +63,16 @@ public void GameStart()
                 break;
         }
     }
+
     public IEnumerator PartsCollectCoroutine()
     {
         yield return new WaitForSeconds(2);
-        partsAll += (int)Random.Range(0, 10.0f);
+        partsAll += (int) Random.Range(0, 10.0f);
         partsAllText.text = partsAll.ToString();
         Ball.GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
     }
+
     public IEnumerator FuelConsumption()
     {
         while (fuel > 1)
@@ -77,6 +81,7 @@ public void GameStart()
             fuelBar.value = fuel;
             yield return new WaitForSeconds(0.1f);
         }
+
         GameOver();
 
     }
@@ -116,4 +121,4 @@ public void GameStart()
         }
         //DEBUG TOOL
     }
-
+}
