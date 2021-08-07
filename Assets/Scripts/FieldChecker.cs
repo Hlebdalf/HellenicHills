@@ -27,7 +27,7 @@ public class Death : MonoBehaviour
         partsAllText.text = partsAll.ToString();
     }
 
-    public void GameOver()
+    public void GameOver(){
 
     Ball.GetComponent<Rigidbody>().isKinematic = true;
     PlayerPrefs.SetInt("partsAll", partsAll);
