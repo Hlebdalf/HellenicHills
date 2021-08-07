@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class GenScript : MonoBehaviour
-{
+
     public Vector2Int Resolution = new Vector2Int(0, 0);
     public int koeff = 1;
     public Material NoiseMaterial;
