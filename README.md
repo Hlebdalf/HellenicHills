@@ -1,6 +1,6 @@
 # Hellinic Hills
 #### История одинокого робота-радиопостановщика на Богом забытой планете Эллада
-![hippo](https://psv4.userapi.com/c537232/u354424676/docs/d30/3e74056a72c4/S10805-16325881_1.gif?extra=53zIxPGpUtr8XGRKAbhlsANbHyKBO_Lm11LhKgWnauWNk3KC8TCSmIpjj78-0DnElZRSIgV--O1hvWh3yPJ6g2Th4SkHizTJukGewnEDN94M96Dx9raq8FvhwF6si8xLW6yuJiaTMFROgdRoB9abBaGkbg)
+![til](./img/Gameplay.gif)
 # 💡Это...
 0. Бесконечный раннер для мобильных устройств на движке Unity.
 1. Приключение по бескрайнему динамически генерируемому миру!
