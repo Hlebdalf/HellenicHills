@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class FieldObjMarker : MonoBehaviour
 {
-    public Death death;
     public Color color;
     public GameObject refMarker;
     public GameObject canvas;
@@ -24,9 +23,9 @@ public class FieldObjMarker : MonoBehaviour
         while (gameObject.GetComponent<Transform>().position.x > ball.GetComponent<Transform>().position.x + 40)
         {
             selfMarker.GetComponent<Image>().color = new Color(color.r, color.g, color.b, 1 - (gameObject.GetComponent<Transform>().position.x - ball.GetComponent<Transform>().position.x) / 1200);
-            RectTransform nowTransfporm = selfMarker.GetComponent<RectTransform>();
-            nowTransfporm.position = new Vector3(Camera.main.WorldToScreenPoint(transform.position).x, Screen.height - 120, 1);
-            selfMarker.GetComponent<RectTransform>().position = nowTransfporm.position;
+            RectTransform nowTransform = selfMarker.GetComponent<RectTransform>();
+            nowTransform.position = new Vector3(Camera.main.WorldToScreenPoint(transform.position).x, Screen.height - 120, 1);
+            selfMarker.GetComponent<RectTransform>().position = nowTransform.position;
             yield return new WaitForEndOfFrame();
         }
         Destroy(selfMarker);
