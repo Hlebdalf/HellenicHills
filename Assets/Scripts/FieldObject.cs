@@ -27,5 +27,14 @@ public class FieldObject : MonoBehaviour
             }
             Destroy(transform.GetChild(i).gameObject);
         }
+
+        if (type != 1)
+        {
+            GetComponent<FieldObjMarker>().StartGame(transform.GetChild(type).gameObject.name);
+        }
+        else
+        {
+            GetComponent<FieldObjMarker>().enabled = false;
+        }
     }
 }
