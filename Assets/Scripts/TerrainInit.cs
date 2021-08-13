@@ -73,6 +73,7 @@ public class TerrainInit : MonoBehaviour
         gameObject.GetComponent<Terrain>().heightmapPixelError = 40;
         gameObject.GetComponent<Terrain>().terrainData.size = new Vector3((Resolution.x) * koeff, 100, (Resolution.x) * koeff);
         gameObject.GetComponent<Terrain>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        gameObject.GetComponent<Terrain>().materialTemplate.mainTexture = texture;
 
 
         texture2 = new Texture2D(Resolution.y + 1, Resolution.y + 1);
@@ -99,7 +100,7 @@ public class TerrainInit : MonoBehaviour
             }
         }
 
-        gameObject.GetComponent<Terrain>().materialTemplate.mainTexture = texture;
+        
         yield return null;
     }
 }
