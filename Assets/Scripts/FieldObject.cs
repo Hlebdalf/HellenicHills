@@ -10,7 +10,7 @@ public class FieldObject : MonoBehaviour
     private float PartChance = 8;
     private int type;
     public Vector3 normal;
-    void Start()
+    private void Start()
     {   
 
         float coin = Random.Range(0, PartChance + ChargerChance + MissionChance + DecorateChanse);
