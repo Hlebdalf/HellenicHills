@@ -23,7 +23,7 @@ public class FODamage : MonoBehaviour
             slider.value = health;
             if (health <= 0)
             {
-                GetComponent<FieldChecker>().GameOver();
+                Camera.main.GetComponent<FieldChecker>().GameOver();
             }
         }
     }
