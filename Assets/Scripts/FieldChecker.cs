@@ -43,7 +43,7 @@ public class FieldChecker : MonoBehaviour
         Ball.GetComponent<Rigidbody>().isKinematic = true;
         StopAllCoroutines();
         switch (type) {  
-            case "Charge":
+            case "Chargers":
                 StartCoroutine(ChargeCoroutine());
                 break;
             case "Mission(Clone)":
@@ -53,6 +53,9 @@ public class FieldChecker : MonoBehaviour
                 break;
             case "Parts(Clone)":
                 StartCoroutine(PartsCollectCoroutine());
+                break;
+            case "Repairs":
+                StartCoroutine(RepairCoroutine());
                 break;
             default:
                 print(type);
@@ -83,6 +86,14 @@ public class FieldChecker : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         fuel = 1000;
+        Ball.GetComponent<Rigidbody>().isKinematic = false;
+        StartCoroutine(FuelConsumption());
+    }
+    
+    public IEnumerator RepairCoroutine()
+    {
+        yield return new WaitForSeconds(2);
+        Ball.GetComponent<FODamage>().RepairMachine();
         Ball.GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
     }

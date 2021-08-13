@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 8727762317046145383}
   m_Layer: 0
   m_Name: Stone2
-  m_TagString: Untagged
+  m_TagString: Decorate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -739,7 +739,7 @@ GameObject:
   - component: {fileID: 5630055017466404581}
   m_Layer: 0
   m_Name: Pine1UHP
-  m_TagString: Untagged
+  m_TagString: Decorate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -896,6 +896,87 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 9.196442, y: 75.980896, z: 9.196442}
   m_Center: {x: 0, y: 0.10178375, z: 0}
+--- !u!1 &4761015042620839783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8044902677621858655}
+  - component: {fileID: 5068356669779383243}
+  - component: {fileID: 8588116474569403981}
+  m_Layer: 0
+  m_Name: Charger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8044902677621858655
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4761015042620839783}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_Children: []
+  m_Father: {fileID: 8915888890626707801}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &5068356669779383243
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4761015042620839783}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &8588116474569403981
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4761015042620839783}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 6308789b8e61e2e4fb299d078d845e8d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4995366700216625105
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,7 +1073,7 @@ GameObject:
   - component: {fileID: 6849172208140142184}
   m_Layer: 0
   m_Name: Birch1HP
-  m_TagString: Untagged
+  m_TagString: Decorate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1262,6 +1343,7 @@ Transform:
   - {fileID: 5915775722676791512}
   - {fileID: 336049515958542615}
   - {fileID: 8461427937182420547}
+  - {fileID: 8915888890626707801}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1290,11 +1372,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c8dda34ba3c724fa5ae9a80034eaa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0, g: 0, b: 0, a: 0}
   refMarker: {fileID: 6975995392212277469, guid: 12c563d3d42b9ae4d849612c0327ccac,
     type: 3}
-  canvas: {fileID: 0}
-  ball: {fileID: 0}
 --- !u!1 &6530666394747249440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1309,7 +1388,7 @@ GameObject:
   - component: {fileID: 307785655976716747}
   m_Layer: 0
   m_Name: SacuraHP
-  m_TagString: Untagged
+  m_TagString: Decorate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1499,7 +1578,7 @@ GameObject:
   - component: {fileID: 5944238161096730771}
   m_Layer: 0
   m_Name: Stone1
-  m_TagString: Untagged
+  m_TagString: Decorate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1686,6 +1765,64 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8093229586047598678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8915888890626707801}
+  - component: {fileID: 5865001062738202414}
+  - component: {fileID: 2828513989922357637}
+  m_Layer: 0
+  m_Name: Repairs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8915888890626707801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8093229586047598678}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 40, z: 5}
+  m_Children:
+  - {fileID: 8044902677621858655}
+  m_Father: {fileID: 7733312812180330037}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5865001062738202414
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8093229586047598678}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4146152, y: 1.52, z: 1.6152468}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2828513989922357637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8093229586047598678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d03b27aae059242be4849cc5e8f4a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8122482188632334317
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,7 +1838,7 @@ GameObject:
   - component: {fileID: 5107942473783421434}
   m_Layer: 0
   m_Name: Stone3
-  m_TagString: Untagged
+  m_TagString: Decorate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -26,6 +26,9 @@ public class FieldObjMarker : MonoBehaviour
           case "Parts":
               _color = Color.white;
               break;
+          case "Repairs":
+              _color = Color.green;
+              break;
           default:
               _color = Color.red;
               break;
@@ -41,7 +44,7 @@ public class FieldObjMarker : MonoBehaviour
     {
         while (gameObject.GetComponent<Transform>().position.x > _ball.GetComponent<Transform>().position.x + 40)
         {
-            _selfMarker.GetComponent<Image>().color = new Color(_color.r, _color.g, _color.b, 1 - (gameObject.GetComponent<Transform>().position.x - _ball.GetComponent<Transform>().position.x) / 1200);
+            _selfMarker.GetComponent<Image>().color = new Color(_color.r, _color.g, _color.b, 1 - (gameObject.GetComponent<Transform>().position.x - _ball.GetComponent<Transform>().position.x) / 512);
             RectTransform nowTransform = _selfMarker.GetComponent<RectTransform>();
             nowTransform.position = new Vector3(Camera.main.WorldToScreenPoint(transform.position).x, Screen.height - 120, 1);
             _selfMarker.GetComponent<RectTransform>().position = nowTransform.position;
