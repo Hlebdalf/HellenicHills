@@ -33,15 +33,6 @@ public class GenScript : MonoBehaviour
         StartCoroutine(BuildTerrain());
     }
 
-    private void FOInit(GameObject target)
-    {
-        target.GetComponent<FieldObjMarker>().refMarker = Marker;
-        target.GetComponent<FieldObjMarker>().canvas = canvas.gameObject;
-        target.GetComponent<FieldObjMarker>().ball = Ball;
-        //target.GetComponent<FieldObjScript>().death = gameObject.GetComponent<FieldChecker>();
-        target.GetComponent<FieldObjMarker>().StartGame();
-    }
-
     private Vector2Int[] GetNeighbours(Vector2Int pos)
     {
         Vector2Int[] allNbhs = new Vector2Int[6];

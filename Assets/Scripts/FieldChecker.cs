@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Death : MonoBehaviour
+public class FieldChecker : MonoBehaviour
 {
     public float fuel = 1000;
     public float consumption = 2;
@@ -16,26 +16,24 @@ public class Death : MonoBehaviour
     public int partsAll = 0; //
 
     private void Start()
-    {
+    {    
         fuelBar.maxValue = fuel;
     }
 
     private void Awake()
-    {
-        scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString();
+    {   
+        scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString(); 
         partsAll = PlayerPrefs.GetInt("partsAll");
         partsAllText.text = partsAll.ToString();
     }
-
-    public void GameOver(){
-
-    Ball.GetComponent<Rigidbody>().isKinematic = true;
-    PlayerPrefs.SetInt("partsAll", partsAll);
-    PlayerPrefs.Save();
-    ReloadButton.SetActive(true);
-}
-
-public void GameStart()
+    public void GameOver()
+    {
+        Ball.GetComponent<Rigidbody>().isKinematic = true;
+        PlayerPrefs.SetInt("partsAll", partsAll);
+        PlayerPrefs.Save();   
+        ReloadButton.SetActive(true);
+    }
+    public void GameStart()
     {
         StartCoroutine(FuelConsumption());
     }
@@ -45,7 +43,7 @@ public void GameStart()
         Ball.GetComponent<Rigidbody>().isKinematic = true;
         StopAllCoroutines();
         switch (type) {  
-            case "Charger(Clone)":
+            case "Chargers":
                 StartCoroutine(ChargeCoroutine());
                 break;
             case "Mission(Clone)":
@@ -55,6 +53,9 @@ public void GameStart()
                 break;
             case "Parts(Clone)":
                 StartCoroutine(PartsCollectCoroutine());
+                break;
+            case "Repairs":
+                StartCoroutine(RepairCoroutine());
                 break;
             default:
                 print(type);
@@ -85,6 +86,14 @@ public void GameStart()
     {
         yield return new WaitForSeconds(2);
         fuel = 1000;
+        Ball.GetComponent<Rigidbody>().isKinematic = false;
+        StartCoroutine(FuelConsumption());
+    }
+    
+    public IEnumerator RepairCoroutine()
+    {
+        yield return new WaitForSeconds(2);
+        Ball.GetComponent<FODamage>().RepairMachine();
         Ball.GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
     }
