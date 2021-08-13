@@ -22,7 +22,7 @@ RenderSettings:
   m_LinearFogEnd: 250
   m_AmbientSkyColor: {r: 0.74509805, g: 0.74509805, b: 0.74509805, a: 1}
   m_AmbientEquatorColor: {r: 1, g: 1, b: 1, a: 1}
-  m_AmbientGroundColor: {r: 0.20878805, g: 0.31132078, b: 0.1541919, a: 1}
+  m_AmbientGroundColor: {r: 0.09508497, g: 0.14150941, b: 0.07008721, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1124,7 +1124,6 @@ GameObject:
   m_Component:
   - component: {fileID: 248216867}
   - component: {fileID: 248216866}
-  - component: {fileID: 248216868}
   m_Layer: 0
   m_Name: SunGhost
   m_TagString: Untagged
@@ -1144,7 +1143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8dfc046f8384dc4a86ae9a06459c454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SunColor:
+  sunColor:
     serializedVersion: 2
     key0: {r: 0, g: 0, b: 0, a: 1}
     key1: {r: 0.990566, g: 0.41624385, b: 0.3504361, a: 1}
@@ -1173,7 +1172,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 6
     m_NumAlphaKeys: 2
-  FogColorUp:
+  fogColorUp:
     serializedVersion: 2
     key0: {r: 0.603, g: 0.487827, b: 0.487827, a: 1}
     key1: {r: 0.72400004, g: 0.37503204, b: 0.37503204, a: 1}
@@ -1202,7 +1201,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 5
     m_NumAlphaKeys: 2
-  FogColorDown:
+  fogColorDown:
     serializedVersion: 2
     key0: {r: 0.28235295, g: 0.25882354, b: 0.33333334, a: 1}
     key1: {r: 0, g: 0, b: 0, a: 1}
@@ -1231,7 +1230,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
-  SunStrenght:
+  sunStrenght:
     serializedVersion: 2
     key0: {r: 0, g: 0, b: 0, a: 1}
     key1: {r: 1, g: 1, b: 1, a: 1}
@@ -1260,7 +1259,36 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 6
     m_NumAlphaKeys: 2
-  GorizontColorUp:
+  moonStrenght:
+    serializedVersion: 2
+    key0: {r: 0, g: 0, b: 0, a: 1}
+    key1: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
+    key2: {r: 1, g: 1, b: 1, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 6287
+    ctime2: 59368
+    ctime3: 65535
+    ctime4: 65535
+    ctime5: 65535
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2
+  gorizontColorUp:
     serializedVersion: 2
     key0: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
     key1: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
@@ -1289,7 +1317,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 6
     m_NumAlphaKeys: 2
-  SkyColorUp:
+  skyColorUp:
     serializedVersion: 2
     key0: {r: 0.745283, g: 0.51677644, b: 0.51677644, a: 1}
     key1: {r: 0.990566, g: 0.7709594, b: 0.82102627, a: 1}
@@ -1318,7 +1346,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 6
     m_NumAlphaKeys: 2
-  GorizontColorDown:
+  gorizontColorDown:
     serializedVersion: 2
     key0: {r: 0.3679245, g: 0.3152265, b: 0.18222676, a: 1}
     key1: {r: 0, g: 0, b: 0, a: 1}
@@ -1347,7 +1375,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
-  SkyColorDown:
+  skyColorDown:
     serializedVersion: 2
     key0: {r: 0.2648948, g: 0.19624421, b: 0.3962264, a: 1}
     key1: {r: 0, g: 0, b: 0, a: 1}
@@ -1397,102 +1425,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
---- !u!82 &248216868
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 248216865}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d93f7ce00419d2d40bfb94c89cfd17fa, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &251475303
 GameObject:
   m_ObjectHideFlags: 0
@@ -2716,7 +2648,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 0.740566, g: 1, b: 0.94674397, a: 1}
-  m_Intensity: 0.45
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
