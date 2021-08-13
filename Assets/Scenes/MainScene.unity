@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 1, g: 1, b: 1, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
@@ -7879,11 +7879,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e4c1f781d8a2444861d261d9adce42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Resolution: {x: 512, y: 512}
+  resolution: {x: 512, y: 512}
   koeff: 1
-  NoiseMaterial: {fileID: 2100000, guid: b2aa1795c21033e4b88f9729babc35b2, type: 2}
-  SpruceMaterial: {fileID: 2100000, guid: 35561467b8caf4345b23a96100f197a0, type: 2}
-  RefMaterial: {fileID: 2100000, guid: 10e57744ae66d5d47bb7b08b6d5e0abd, type: 2}
+  noiseMaterial: {fileID: 2100000, guid: b2aa1795c21033e4b88f9729babc35b2, type: 2}
+  spruceMaterial: {fileID: 2100000, guid: 35561467b8caf4345b23a96100f197a0, type: 2}
+  refMaterial: {fileID: 2100000, guid: 10e57744ae66d5d47bb7b08b6d5e0abd, type: 2}
   canvas: {fileID: 1715893971}
   datas:
   - {fileID: 15600000, guid: 2e31e2f0e1daa2042a58fb92ed3089fc, type: 2}
@@ -7911,13 +7911,14 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 830bf0dd2305ab64ea66b1d0c5681ca6, type: 2}
   - {fileID: 2100000, guid: 8a76f113f9677fb449468d91e8498c3e, type: 2}
   - {fileID: 2100000, guid: 0c2d74c48425a924db6438b60343aba7, type: 2}
-  Ball: {fileID: 1197008666310753517}
-  Marker: {fileID: 6975995392212277469, guid: 12c563d3d42b9ae4d849612c0327ccac, type: 3}
-  FO: {fileID: 5848143586306154376, guid: 6ca6d99f50b6b0541ac21acd9bf7eab5, type: 3}
-  HeightMaps:
+  ball: {fileID: 1197008666310753517}
+  marker: {fileID: 6975995392212277469, guid: 12c563d3d42b9ae4d849612c0327ccac, type: 3}
+  fo: {fileID: 5848143586306154376, guid: 6ca6d99f50b6b0541ac21acd9bf7eab5, type: 3}
+  water: {fileID: 8946633704256206398, guid: 5eb73871d1a531f4c826c26de05f423b, type: 3}
+  heightMaps:
   - {fileID: 0}
   - {fileID: 0}
-  Seed: 0
+  seed: 0
 --- !u!114 &1644744612
 MonoBehaviour:
   m_ObjectHideFlags: 0
