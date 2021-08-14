@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 1, g: 1, b: 1, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
@@ -2005,7 +2005,7 @@ RectTransform:
   - {fileID: 1838101570}
   - {fileID: 1228186293}
   m_Father: {fileID: 1715893970}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6532,7 +6532,7 @@ RectTransform:
   - {fileID: 1813889814}
   - {fileID: 1669741524}
   m_Father: {fileID: 1715893970}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7795,8 +7795,6 @@ GameObject:
   - component: {fileID: 1644744613}
   - component: {fileID: 1644744614}
   - component: {fileID: 1644744615}
-  - component: {fileID: 1644744616}
-  - component: {fileID: 1644744617}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -8007,32 +8005,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ups: {fileID: 646575579}
   balls: {fileID: 234191630}
---- !u!136 &1644744616
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644744607}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1644744617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644744607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b811e3eda457bf4d81033774dea7c7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1669741523
 GameObject:
   m_ObjectHideFlags: 0
@@ -8371,9 +8343,9 @@ RectTransform:
   m_Children:
   - {fileID: 871202127}
   - {fileID: 1978698534}
+  - {fileID: 1787259353}
   - {fileID: 1321500610}
   - {fileID: 304449047}
-  - {fileID: 1787259353}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8570,11 +8542,11 @@ GameObject:
   - component: {fileID: 1787259354}
   m_Layer: 5
   m_Name: WaterPanel
-  m_TagString: Untagged
+  m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1787259353
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8587,7 +8559,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1715893970}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -8608,7 +8580,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 1, b: 0.9013953, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -14792,6 +14764,7 @@ GameObject:
   - component: {fileID: 520590069}
   - component: {fileID: 520590070}
   - component: {fileID: 1197008666310753518}
+  - component: {fileID: 1197008666310753519}
   m_Layer: 0
   m_Name: Machine_ball
   m_TagString: Ball
@@ -14814,6 +14787,20 @@ MonoBehaviour:
   health: 1000
   slider: {fileID: 1669741525}
   mp: 5
+--- !u!114 &1197008666310753519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197008666310753517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b811e3eda457bf4d81033774dea7c7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: {fileID: 1855321239}
+  panel: {fileID: 1787259352}
 --- !u!1 &1488280904427662546
 GameObject:
   m_ObjectHideFlags: 0
