@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class FieldChecker : MonoBehaviour
@@ -8,16 +9,23 @@ public class FieldChecker : MonoBehaviour
     public float fuel = 1000;
     public float consumption = 2;
     public Slider fuelBar;
-    public GameObject Ball;
-    public GameObject Ball_up;
-    public GameObject ReloadButton;
+    [FormerlySerializedAs("Ball")] public GameObject ball;
+    [FormerlySerializedAs("Ball_up")] public GameObject ballUp;
+    [FormerlySerializedAs("ReloadButton")] public GameObject reloadButton;
     public Text scoreRecordText;
     public Text partsAllText;
-    public int partsAll = 0; //
+    public int partsAll = 0; 
+    
+    public float health = 1000;
+    public Slider healthBar;
+    public float mp = 1;
+    private Rigidbody _rb;
+    
 
     private void Start()
     {    
         fuelBar.maxValue = fuel;
+        _rb = ball.GetComponent<Rigidbody>();
     }
 
     private void Awake()
@@ -28,10 +36,10 @@ public class FieldChecker : MonoBehaviour
     }
     public void GameOver()
     {
-        Ball.GetComponent<Rigidbody>().isKinematic = true;
+        ball.GetComponent<Rigidbody>().isKinematic = true;
         PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();   
-        ReloadButton.SetActive(true);
+        reloadButton.SetActive(true);
     }
     public void GameStart()
     {
@@ -39,8 +47,9 @@ public class FieldChecker : MonoBehaviour
     }
 
     public void FieldObjEvent(string type)
-    {
-        Ball.GetComponent<Rigidbody>().isKinematic = true;
+    {   
+        float damage = _rb.velocity.magnitude * mp;
+        ball.GetComponent<Rigidbody>().isKinematic = true;
         StopAllCoroutines();
         switch (type) {  
             case "Chargers":
@@ -48,7 +57,7 @@ public class FieldChecker : MonoBehaviour
                 break;
             case "Mission(Clone)":
                 print("Mission");
-                Ball.GetComponent<Rigidbody>().isKinematic = false;
+                ball.GetComponent<Rigidbody>().isKinematic = false;
                 StartCoroutine(FuelConsumption());
                 break;
             case "Parts(Clone)":
@@ -56,6 +65,15 @@ public class FieldChecker : MonoBehaviour
                 break;
             case "Repairs":
                 StartCoroutine(RepairCoroutine());
+                break;
+            case "EnterWater":
+                StartCoroutine(HealthConsumption());
+                break;
+            case "ExitWater":
+                StopCoroutine(HealthConsumption());
+                break;
+            case "Decorates":
+                DamageMachine(damage);
                 break;
             default:
                 print(type);
@@ -67,7 +85,7 @@ public class FieldChecker : MonoBehaviour
         yield return new WaitForSeconds(2);
         partsAll += (int)Random.Range(0, 10.0f);
         partsAllText.text = partsAll.ToString();
-        Ball.GetComponent<Rigidbody>().isKinematic = false;
+        ball.GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
     }
     public IEnumerator FuelConsumption()
@@ -81,20 +99,33 @@ public class FieldChecker : MonoBehaviour
         GameOver();
 
     }
+    
+    public IEnumerator HealthConsumption()
+    {   
+        _rb.isKinematic = false;
+        while (health > 1)
+        {
+            health -= consumption * mp;
+            healthBar.value = health;
+            yield return new WaitForSeconds(0.1f);
+        }
+        GameOver();
+    }
 
     public IEnumerator ChargeCoroutine()
     {
         yield return new WaitForSeconds(2);
         fuel = 1000;
-        Ball.GetComponent<Rigidbody>().isKinematic = false;
+        ball.GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
     }
     
     public IEnumerator RepairCoroutine()
     {
         yield return new WaitForSeconds(2);
-        Ball.GetComponent<FODamage>().RepairMachine();
-        Ball.GetComponent<Rigidbody>().isKinematic = false;
+        health = 1000;
+        healthBar.value = health;
+        ball.GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
     }
 
@@ -103,6 +134,16 @@ public class FieldChecker : MonoBehaviour
         partsAllText.text = partsAll.ToString();
         PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();
+    }
+
+    private void DamageMachine(float damage)
+    {
+        
+        health -= damage * mp;
+        healthBar.value = health;
+        if(health <= 0) GameOver();
+        StartCoroutine(FuelConsumption());
+        _rb.isKinematic = false;
     }
 
     void Update()

@@ -7966,12 +7966,15 @@ MonoBehaviour:
   fuel: 1000
   consumption: 2
   fuelBar: {fileID: 1475741659}
-  Ball: {fileID: 1197008666310753517}
-  Ball_up: {fileID: 4318068648676143808}
-  ReloadButton: {fileID: 902108549}
+  ball: {fileID: 1197008666310753517}
+  ballUp: {fileID: 4318068648676143808}
+  reloadButton: {fileID: 902108549}
   scoreRecordText: {fileID: 283800852}
   partsAllText: {fileID: 1978698535}
   partsAll: 0
+  health: 1000
+  healthBar: {fileID: 1669741525}
+  mp: 5
 --- !u!95 &1644744614
 Animator:
   serializedVersion: 3
@@ -14784,9 +14787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d73eed67d3227b54ca459e283dc54fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1000
-  slider: {fileID: 1669741525}
-  mp: 5
 --- !u!114 &1197008666310753519
 MonoBehaviour:
   m_ObjectHideFlags: 0

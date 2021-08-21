@@ -10,24 +10,18 @@ public class VolumeChecker : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Water"))
-        {
-            if (transform.position.y < 37)
-            {
-                volume.SetActive(true);
-                panel.SetActive(true);
-            }
-            else
-            {
-                volume.SetActive(false);
-                panel.SetActive(false);
-            }
+        {   
+            Camera.main.GetComponent<FieldChecker>().FieldObjEvent("EnterWater");
+            volume.SetActive(true);
+            panel.SetActive(true);
         }
     }
     
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Water"))
-        {
+        {   
+            Camera.main.GetComponent<FieldChecker>().FieldObjEvent("ExitWater");
             volume.SetActive(false); 
             panel.SetActive(false);
         }
