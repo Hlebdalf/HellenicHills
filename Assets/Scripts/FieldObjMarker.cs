@@ -35,7 +35,7 @@ public class FieldObjMarker : MonoBehaviour
         }
         
         _selfMarker = Instantiate(refMarker);
-        _selfMarker.GetComponent<Transform>().SetParent(_canvas.transform.GetChild(3).transform);
+        _selfMarker.GetComponent<Transform>().SetParent(_canvas.transform.GetChild(2).transform);
         _selfMarker.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(transform.position);
         StartCoroutine(MarkerPosition());
     }

@@ -7,8 +7,6 @@ TagManager:
   - MainCanvas
   - Ball
   - Decorate
-  - Water
-  - Interactive
   layers:
   - Default
   - TransparentFX
