@@ -9,7 +9,6 @@ public class FieldChecker : MonoBehaviour
     public float fuel = 1000;
     public float consumption = 2;
     public Slider fuelBar;
-    [FormerlySerializedAs("Ball")] public GameObject ball;
     [FormerlySerializedAs("Ball_up")] public GameObject ballUp;
     [FormerlySerializedAs("ReloadButton")] public GameObject reloadButton;
     public Text scoreRecordText;
@@ -25,7 +24,7 @@ public class FieldChecker : MonoBehaviour
     private void Start()
     {    
         fuelBar.maxValue = fuel;
-        _rb = ball.GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void Awake()
@@ -36,7 +35,7 @@ public class FieldChecker : MonoBehaviour
     }
     public void GameOver()
     {
-        ball.GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<Rigidbody>().isKinematic = true;
         PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();   
         reloadButton.SetActive(true);
@@ -49,18 +48,17 @@ public class FieldChecker : MonoBehaviour
     public void FieldObjEvent(string type)
     {   
         float damage = _rb.velocity.magnitude * mp;
-        ball.GetComponent<Rigidbody>().isKinematic = true;
         StopAllCoroutines();
         switch (type) {  
             case "Chargers":
                 StartCoroutine(ChargeCoroutine());
                 break;
-            case "Mission(Clone)":
+            case "Missions":
                 print("Mission");
-                ball.GetComponent<Rigidbody>().isKinematic = false;
+                GetComponent<Rigidbody>().isKinematic = false;
                 StartCoroutine(FuelConsumption());
                 break;
-            case "Parts(Clone)":
+            case "Parts":
                 StartCoroutine(PartsCollectCoroutine());
                 break;
             case "Repairs":
@@ -71,8 +69,9 @@ public class FieldChecker : MonoBehaviour
                 break;
             case "ExitWater":
                 StopCoroutine(HealthConsumption());
+                StartCoroutine(FuelConsumption());
                 break;
-            case "Decorates":
+            case "Decorate":
                 DamageMachine(damage);
                 break;
             default:
@@ -85,7 +84,7 @@ public class FieldChecker : MonoBehaviour
         yield return new WaitForSeconds(2);
         partsAll += (int)Random.Range(0, 10.0f);
         partsAllText.text = partsAll.ToString();
-        ball.GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
     }
     public IEnumerator FuelConsumption()
@@ -113,20 +112,24 @@ public class FieldChecker : MonoBehaviour
     }
 
     public IEnumerator ChargeCoroutine()
-    {
+    {   
+        _rb.isKinematic = true;
         yield return new WaitForSeconds(2);
         fuel = 1000;
-        ball.GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
+        _rb.isKinematic = false;
     }
     
     public IEnumerator RepairCoroutine()
-    {
+    {   
+        _rb.isKinematic = true;
         yield return new WaitForSeconds(2);
         health = 1000;
         healthBar.value = health;
-        ball.GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
+        _rb.isKinematic = false;
     }
 
     public void SaveParts()
@@ -145,7 +148,25 @@ public class FieldChecker : MonoBehaviour
         StartCoroutine(FuelConsumption());
         _rb.isKinematic = false;
     }
-
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.CompareTag("Decorate"))
+        {
+            FieldObjEvent("Decorate");
+        }
+        else if (other.CompareTag("Interactive"))
+        {
+            FieldObjEvent(other.name);
+            other.GetComponent<BoxCollider>().enabled =  false;
+        }
+        /*else
+        {
+            Debug.Log(other.tag);
+            Debug.Log(other.name);
+        }*/
+    }
     void Update()
     {
         //DEBUG TOOL

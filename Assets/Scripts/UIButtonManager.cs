@@ -27,7 +27,7 @@ public class UIButtonManager : MonoBehaviour
         InGameUI.SetActive(true);
         MenuUI.SetActive(false);
         Ball.GetComponent<Rigidbody>().isKinematic = false;
-        myCamera.GetComponent<FieldChecker>().GameStart();
+        Ball.GetComponent<FieldChecker>().GameStart();
     }
 
     public void MenuUIActive()
