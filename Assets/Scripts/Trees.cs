@@ -6,6 +6,10 @@ public class Trees : MonoBehaviour
 {
     void Start()
     {
+        if (transform.position.y < 32)
+        {
+            Destroy(transform.parent.parent.gameObject);
+        }
         float childsCNT = (float)transform.childCount;
         float coin = Random.value;
         
@@ -17,5 +21,19 @@ public class Trees : MonoBehaviour
         }
         if (target != 0) transform.Rotate(0, coin * 360, 0);
         transform.localScale = new Vector3(coin/2, coin/2, coin/2) + transform.localScale;
+        
     }
+    
+    /*private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            Destroy(transform.parent.parent.gameObject);
+        }
+        else
+        {
+            GetComponent<BoxCollider>().enabled = false;
+        }
+    }*/ // RETURN LATER
+    
 }

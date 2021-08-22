@@ -2,34 +2,36 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Serialization;
 
 public class GenScript : MonoBehaviour
 {
-    public Vector2Int Resolution = new Vector2Int(0, 0);
+    [FormerlySerializedAs("Resolution")] public Vector2Int resolution = new Vector2Int(0, 0);
     public int koeff = 1;
-    public Material NoiseMaterial;
-    public Material SpruceMaterial;
-    public Material RefMaterial;
+    [FormerlySerializedAs("NoiseMaterial")] public Material noiseMaterial;
+    [FormerlySerializedAs("SpruceMaterial")] public Material spruceMaterial;
+    [FormerlySerializedAs("RefMaterial")] public Material refMaterial;
     public UIButtonManager canvas;
     public TerrainData[] datas = new TerrainData[8];
     public Material[] materials = new Material[8];
-    public GameObject Ball;
-    public GameObject Marker;
-    public GameObject FO;
-    public Texture2D[] HeightMaps = new Texture2D[2];
-    public float Seed;
-    private Vector2Int nowPos, prePos = new Vector2Int(0, 0);
+    [FormerlySerializedAs("Ball")] public GameObject ball;
+    [FormerlySerializedAs("Marker")] public GameObject marker;
+    [FormerlySerializedAs("FO")] public GameObject fo;
+    public GameObject water;
+    [FormerlySerializedAs("HeightMaps")] public Texture2D[] heightMaps = new Texture2D[2];
+    [FormerlySerializedAs("Seed")] public float seed;
+    private Vector2Int _nowPos, _prePos = new Vector2Int(0, 0);
     public Dictionary<Vector2Int, GameObject> terrains = new Dictionary<Vector2Int, GameObject>();
-    private int dataID = 0;
-    private bool isStarted = false;
+    private int _dataID = 0;
+    private bool _isStarted = false;
 
     private void Awake()
     {
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Color;
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Depth;
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
-        Ball.transform.position = new Vector3(1, 70, Resolution.y);
-        Seed = Random.Range(-10000f, 10000f);
+        ball.transform.position = new Vector3(1, 70, resolution.y);
+        seed = Random.Range(-10000f, 10000f);
         StartCoroutine(BuildTerrain());
     }
 
@@ -59,7 +61,7 @@ public class GenScript : MonoBehaviour
         List<Vector2Int> keys = terrains.Keys.ToList();
         for (int i = 0; i < keys.Count; i++)
         {
-            if (terrains[keys[i]].transform.position.x < Ball.transform.position.x - Resolution.y * koeff - 10)
+            if (terrains[keys[i]].transform.position.x < ball.transform.position.x - resolution.y * koeff - 10)
             {
                 DestroyImmediate(terrains[keys[i]], true);
                 terrains.Remove(keys[i]);
@@ -69,14 +71,14 @@ public class GenScript : MonoBehaviour
 
     private void SpawnTerrains()
     {
-        Vector2Int[] neighbours = GetNeighbours(nowPos);
+        Vector2Int[] neighbours = GetNeighbours(_nowPos);
         foreach (Vector2Int nb in neighbours)
         {
-            GameObject newTerrain = Terrain.CreateTerrainGameObject(datas[dataID]);
+            GameObject newTerrain = Terrain.CreateTerrainGameObject(datas[_dataID]);
             newTerrain.AddComponent(typeof(TerrainInit));
-            newTerrain.GetComponent<TerrainInit>().InitTerrain(NoiseMaterial, SpruceMaterial, materials[dataID], Resolution, nb, Seed, koeff, FO);
+            newTerrain.GetComponent<TerrainInit>().InitTerrain(noiseMaterial, spruceMaterial, materials[_dataID], resolution, nb, seed, koeff, fo, water);
             terrains.Add(nb, newTerrain);
-            dataID = (dataID + 1) % 12;
+            _dataID = (_dataID + 1) % 12;
         }
 
     }
@@ -89,17 +91,17 @@ public class GenScript : MonoBehaviour
     {
         while (true)
         {
-            nowPos = new Vector2Int((int)Mathf.Floor(Ball.transform.position.x / Resolution.y), (int)Mathf.Floor(Ball.transform.position.z / Resolution.y));
-            if (nowPos != prePos)
+            _nowPos = new Vector2Int((int)Mathf.Floor(ball.transform.position.x / resolution.y), (int)Mathf.Floor(ball.transform.position.z / resolution.y));
+            if (_nowPos != _prePos)
             {
                 SpawnTerrains();
                 yield return null;
                 DestroyOldTerrains();
             }
             yield return new WaitForFixedUpdate();
-            if (!isStarted && dataID > 4)
+            if (!_isStarted && _dataID > 4)
             {
-                isStarted = true;
+                _isStarted = true;
                 StartGame();
             }
         }
