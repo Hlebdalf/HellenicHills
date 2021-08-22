@@ -16,7 +16,8 @@ public class FieldChecker : MonoBehaviour
     public int partsAll = 0; //
 
     private void Start()
-    {    
+    {   
+        Debug.Log("Поехали!");
         fuelBar.maxValue = fuel;
     }
 
