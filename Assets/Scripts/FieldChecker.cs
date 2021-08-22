@@ -80,12 +80,14 @@ public class FieldChecker : MonoBehaviour
         }
     }
     public IEnumerator PartsCollectCoroutine()
-    {
+    {   
+        _rb.isKinematic = true;
         yield return new WaitForSeconds(2);
         partsAll += (int)Random.Range(0, 10.0f);
         partsAllText.text = partsAll.ToString();
         GetComponent<Rigidbody>().isKinematic = false;
         StartCoroutine(FuelConsumption());
+        _rb.isKinematic = false;
     }
     public IEnumerator FuelConsumption()
     {
