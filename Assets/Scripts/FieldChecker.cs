@@ -5,7 +5,10 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class FieldChecker : MonoBehaviour
-{
+{   
+    public GameObject volume;
+    public GameObject panel;
+    public bool _upOrDown = true;
     public float fuel = 1000;
     public float consumption = 2;
     public Slider fuelBar;
@@ -25,6 +28,7 @@ public class FieldChecker : MonoBehaviour
     {    
         fuelBar.maxValue = fuel;
         _rb = GetComponent<Rigidbody>();
+        StartCoroutine(CheckVolume());
     }
 
     private void Awake()
@@ -45,10 +49,10 @@ public class FieldChecker : MonoBehaviour
         StartCoroutine(FuelConsumption());
     }
 
-    public void FieldObjEvent(string type)
+    private void FieldObjEvent(string type)
     {   
+        IsConsumption(false);
         float damage = _rb.velocity.magnitude * mp;
-        StopAllCoroutines();
         switch (type) {  
             case "Chargers":
                 StartCoroutine(ChargeCoroutine());
@@ -56,7 +60,6 @@ public class FieldChecker : MonoBehaviour
             case "Missions":
                 print("Mission");
                 GetComponent<Rigidbody>().isKinematic = false;
-                StartCoroutine(FuelConsumption());
                 break;
             case "Parts":
                 StartCoroutine(PartsCollectCoroutine());
@@ -64,14 +67,11 @@ public class FieldChecker : MonoBehaviour
             case "Repairs":
                 StartCoroutine(RepairCoroutine());
                 break;
-            case "EnterWater":
-                StartCoroutine(HealthConsumption());
-                break;
-            case "ExitWater":
-                StopCoroutine(HealthConsumption());
-                StartCoroutine(FuelConsumption());
+            case "Water":
+                IsConsumption(true);
                 break;
             case "Decorate":
+                IsConsumption(true);
                 DamageMachine(damage);
                 break;
             default:
@@ -79,17 +79,17 @@ public class FieldChecker : MonoBehaviour
                 break;
         }
     }
-    public IEnumerator PartsCollectCoroutine()
+    private IEnumerator PartsCollectCoroutine()
     {   
         _rb.isKinematic = true;
         yield return new WaitForSeconds(2);
         partsAll += (int)Random.Range(0, 10.0f);
         partsAllText.text = partsAll.ToString();
         GetComponent<Rigidbody>().isKinematic = false;
-        StartCoroutine(FuelConsumption());
         _rb.isKinematic = false;
+        IsConsumption(true);
     }
-    public IEnumerator FuelConsumption()
+    private IEnumerator FuelConsumption()
     {
         while (fuel > 1)
         {
@@ -101,7 +101,7 @@ public class FieldChecker : MonoBehaviour
 
     }
     
-    public IEnumerator HealthConsumption()
+    private IEnumerator HealthConsumption()
     {   
         _rb.isKinematic = false;
         while (health > 1)
@@ -113,25 +113,52 @@ public class FieldChecker : MonoBehaviour
         GameOver();
     }
 
-    public IEnumerator ChargeCoroutine()
+    private IEnumerator ChargeCoroutine()
     {   
         _rb.isKinematic = true;
         yield return new WaitForSeconds(2);
         fuel = 1000;
+        fuelBar.value = fuel;
         GetComponent<Rigidbody>().isKinematic = false;
-        StartCoroutine(FuelConsumption());
         _rb.isKinematic = false;
+        IsConsumption(true);
     }
     
-    public IEnumerator RepairCoroutine()
+    private IEnumerator RepairCoroutine()
     {   
         _rb.isKinematic = true;
         yield return new WaitForSeconds(2);
         health = 1000;
         healthBar.value = health;
         GetComponent<Rigidbody>().isKinematic = false;
-        StartCoroutine(FuelConsumption());
         _rb.isKinematic = false;
+        IsConsumption(true);
+    }
+    
+    private IEnumerator CheckVolume()
+    {
+        while (true)
+        {
+            if (transform.position.y < 32)
+            {
+                if (_upOrDown)
+                {   
+                    _upOrDown = false;
+                    VolumeSetActive();
+                }
+                _upOrDown = false;
+            }
+            else
+            {
+                if (!_upOrDown)
+                {
+                    _upOrDown = true;
+                    VolumeSetActive();
+                }
+                _upOrDown = true;
+            }
+            yield return new WaitForSeconds(0.066f);
+        }
     }
 
     public void SaveParts()
@@ -147,8 +174,45 @@ public class FieldChecker : MonoBehaviour
         health -= damage * mp;
         healthBar.value = health;
         if(health <= 0) GameOver();
-        StartCoroutine(FuelConsumption());
         _rb.isKinematic = false;
+    }
+
+    private void IsConsumption(bool how)
+    {
+        if (how)
+        {
+            if (_upOrDown)
+            {
+                StartCoroutine(FuelConsumption());
+                StopCoroutine(HealthConsumption());
+            }
+            else
+            {
+                StartCoroutine(HealthConsumption());
+                StopCoroutine(FuelConsumption());
+            }
+        }
+        else
+        {
+            StopAllCoroutines();
+            StartCoroutine(CheckVolume());
+        }
+    }
+    
+    private void VolumeSetActive()
+    {
+        if (_upOrDown)
+        {
+            FieldObjEvent("Water");
+            volume.SetActive(false); 
+            panel.SetActive(false);
+        }
+        else
+        {
+            FieldObjEvent("Water");
+            volume.SetActive(true);
+            panel.SetActive(true);
+        }
     }
     
     private void OnTriggerEnter(Collider other)
