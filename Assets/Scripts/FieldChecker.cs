@@ -103,7 +103,6 @@ public class FieldChecker : MonoBehaviour
     
     private IEnumerator HealthConsumption()
     {   
-        _rb.isKinematic = false;
         while (health > 1)
         {
             health -= consumption * mp;
