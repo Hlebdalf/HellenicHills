@@ -41,13 +41,14 @@ public class UIButtonManager : MonoBehaviour
         Magazine.SetActive(true);
         Stats.SetActive(false);
         Camera.main.GetComponent<Animator>().Play("Forward");
+        Content.GetComponent<Magazine>().RefreshButtons();
         StartCoroutine(ChoiseActive());
     }
     public void MagazineSetDisactive()
     {
         MenuUI.GetComponent<TouchToPlay>().enabled = true;
         Content.GetComponent<Image>().raycastTarget = false;
-        Content.GetComponent<MagazineScroller>().ModelSwitcher();
+        Content.GetComponent<Magazine>().ModelSwitcher();
         Camera.main.GetComponent<Animator>().Play("Back");
         Magazine.SetActive(false);
         Stats.SetActive(true);
@@ -55,7 +56,7 @@ public class UIButtonManager : MonoBehaviour
     IEnumerator ChoiseActive()
     {
         yield return new WaitForSeconds(1);
-        Content.GetComponent<MagazineScroller>().ChoiseActive();
+        Content.GetComponent<Magazine>().ChoiseActive();
         Content.GetComponent<Image>().raycastTarget = true;
     }
 }

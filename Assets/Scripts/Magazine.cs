@@ -4,25 +4,36 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class Magazine : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {   
+    
     public GameObject parts;
     public GameObject balls;
     public GameObject ups;
     public float sens;
     private RectTransform rt;
+    private List<GameObject> buttons = new List<GameObject>();
     private float nowx = 0, prex = 0, deltax = 0;
     private int childCNT;
     public static int modelType;
-    void Awake()
+    private void Awake()
     {
         modelType = PlayerPrefs.GetInt("modelType");
     }
-    void Start()
-    {
+    private void Start()
+    {   
         rt = gameObject.GetComponent<RectTransform>();
         rt.transform.position = new Vector3(-modelType*1080 , rt.position.y, rt.position.z);
         childCNT = transform.childCount;
+        for (int i = 0; i < childCNT; i++){
+            buttons.Add(transform.GetChild(i).GetChild(0).gameObject);
+            buttons[i].GetComponent<BuyButton>().Refresh();
+        }
+    }
+    public void RefreshButtons(){
+        for (int i = 0; i < childCNT; i++){
+            buttons[i].GetComponent<BuyButton>().Refresh();
+        }
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -101,16 +112,4 @@ public class MagazineScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandle
         }
     }
 
-    //DEBUG TOOL
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).GetChild(0).gameObject.GetComponent<BuyButton>().DeleteInfo();
-            }
-        }
-    }
-    //DEBUG TOOL
 }

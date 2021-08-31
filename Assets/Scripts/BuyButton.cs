@@ -8,17 +8,19 @@ public class BuyButton : MonoBehaviour
     public GameObject content;
     public int price = 0;
     public bool isBuyed;
-    public GameObject[] buttons;
     private void Awake()
     {
         isBuyed = PlayerPrefs.GetInt(name + "button", 0) == 1;
     }
-    void Start()
+    private void Start(){
+        Refresh();
+    }
+    public void Refresh()
     {
         gameObject.transform.GetChild(0).GetComponent<Text>().text = price.ToString();
         if (isBuyed)
         {   
-            if(MagazineScroller.modelType == int.Parse(name)){
+            if(Magazine.modelType == int.Parse(name)){
                 gameObject.GetComponent<Image>().color = new Color(0.6f, 0.6f, 0);
                 gameObject.transform.GetChild(0).GetComponent<Text>().text = "in use";
             }
@@ -57,26 +59,14 @@ public class BuyButton : MonoBehaviour
         }
         else if (isBuyed)
         {
-            content.GetComponent<MagazineScroller>().SaveModelType(name);
+            content.GetComponent<Magazine>().SaveModelType(name);
             gameObject.GetComponent<Image>().color = new Color(0.6f, 0.6f, 0);
             gameObject.transform.GetChild(0).GetComponent<Text>().text = "in use";
-            IsUse();
+            content.GetComponent<Magazine>().RefreshButtons();
         }
 
     }
 
-    private void IsUse()
-    {
-        foreach(GameObject it in buttons)
-        {
-            if(it.GetComponent<BuyButton>().isBuyed && it.name != name)
-            {
-                it.GetComponent<Image>().color = new Color(1, 1, 0);
-                it.transform.GetChild(0).GetComponent<Text>().text = "use?";
-            }
-        }
-    }
-    //DEBUG TOOL
     public void DeleteInfo()
     {
         isBuyed = false;
