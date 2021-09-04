@@ -35,7 +35,7 @@ public class FieldObjMarker : MonoBehaviour
         }
         
         _selfMarker = Instantiate(refMarker);
-        _selfMarker.GetComponent<Transform>().SetParent(_canvas.transform.GetChild(3).transform);
+        _selfMarker.GetComponent<Transform>().SetParent(_canvas.transform.GetChild(2).GetChild(0));
         _selfMarker.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(transform.position);
         StartCoroutine(MarkerPosition());
     }
@@ -46,7 +46,7 @@ public class FieldObjMarker : MonoBehaviour
         {
             _selfMarker.GetComponent<Image>().color = new Color(_color.r, _color.g, _color.b, 1 - (gameObject.GetComponent<Transform>().position.x - _ball.GetComponent<Transform>().position.x) / 512);
             RectTransform nowTransform = _selfMarker.GetComponent<RectTransform>();
-            nowTransform.position = new Vector3(Camera.main.WorldToScreenPoint(transform.position).x, Screen.height - 440, 1);
+            nowTransform.position = new Vector3(Camera.main.WorldToScreenPoint(transform.position).x, Screen.height - 340, 1);
             _selfMarker.GetComponent<RectTransform>().position = nowTransform.position;
             yield return new WaitForEndOfFrame();
         }
