@@ -25,7 +25,8 @@ public class UIButtonManager : MonoBehaviour
     public void StartSession()
     {
         InGameUI.SetActive(true);
-        MenuUI.SetActive(false);
+        //MenuUI.SetActive(false);
+        GetComponent<Animator>().Play("GameStart");
         Ball.GetComponent<Rigidbody>().isKinematic = false;
         Ball.GetComponent<FieldChecker>().GameStart();
     }
@@ -43,6 +44,15 @@ public class UIButtonManager : MonoBehaviour
         Camera.main.GetComponent<Animator>().Play("Forward");
         Content.GetComponent<Magazine>().RefreshButtons();
         StartCoroutine(ChoiseActive());
+    }
+
+    public void EnterSettings()
+    {
+        GetComponent<Animator>().Play("EnterSettings");
+    }
+    public void ExitSettings()
+    {
+        GetComponent<Animator>().Play("ExitSettings");
     }
     public void MagazineSetDisactive()
     {

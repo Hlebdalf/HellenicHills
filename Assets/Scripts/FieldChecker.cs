@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class FieldChecker : MonoBehaviour
 {   
+    public GameObject canvas;
+    public GameObject magazine;
     public GameObject volume;
     public GameObject panel;
     public bool _upOrDown = true;
@@ -35,14 +37,14 @@ public class FieldChecker : MonoBehaviour
     {   
         scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString(); 
         partsAll = PlayerPrefs.GetInt("partsAll");
-        partsAllText.text = partsAll.ToString();
+        partsAllText.text = "₽: " + partsAll.ToString();
     }
     public void GameOver()
     {
         GetComponent<Rigidbody>().isKinematic = true;
         PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();   
-        reloadButton.SetActive(true);
+        canvas.GetComponent<Animator>().Play("GameOver");
     }
     public void GameStart()
     {
@@ -84,7 +86,7 @@ public class FieldChecker : MonoBehaviour
         _rb.isKinematic = true;
         yield return new WaitForSeconds(2);
         partsAll += (int)Random.Range(0, 10.0f);
-        partsAllText.text = partsAll.ToString();
+        partsAllText.text = "₽: " + partsAll.ToString();
         GetComponent<Rigidbody>().isKinematic = false;
         _rb.isKinematic = false;
         IsConsumption(true);
@@ -162,7 +164,7 @@ public class FieldChecker : MonoBehaviour
 
     public void SaveParts()
     {
-        partsAllText.text = partsAll.ToString();
+        partsAllText.text = "₽: " + partsAll.ToString();
         PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();
     }
@@ -233,7 +235,7 @@ public class FieldChecker : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             partsAll = 1000;
-            partsAllText.text = partsAll.ToString();
+            partsAllText.text = "₽: " + partsAll.ToString();
             PlayerPrefs.SetInt("partsAll", partsAll);
             PlayerPrefs.Save();
         }
@@ -241,18 +243,18 @@ public class FieldChecker : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             partsAll = 0;
-            partsAllText.text = partsAll.ToString();
+            partsAllText.text = "₽: " + partsAll.ToString();
             PlayerPrefs.SetInt("partsAll", partsAll);
             PlayerPrefs.Save();
         }
 
-        // if (Input.GetKeyDown(KeyCode.LeftArrow))
-        // {
-        //     for (int i = 0; i < transform.childCount; i++)
-        //     {
-        //         transform.GetChild(i).GetChild(0).gameObject.GetComponent<BuyButton>().DeleteInfo();
-        //     }
-        // }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                magazine.GetComponent<Magazine>().DeleteButtons();
+            }
+        }
         //DEBUG TOOL
     }
 }

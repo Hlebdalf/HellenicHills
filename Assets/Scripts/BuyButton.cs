@@ -13,6 +13,7 @@ public class BuyButton : MonoBehaviour
         isBuyed = PlayerPrefs.GetInt(name + "button", 0) == 1;
     }
     private void Start(){
+        death = GameObject.FindGameObjectWithTag("Ball").GetComponent<FieldChecker>();
         Refresh();
     }
     public void Refresh()
