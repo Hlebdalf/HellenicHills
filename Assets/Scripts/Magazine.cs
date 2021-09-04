@@ -35,6 +35,13 @@ public class Magazine : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             buttons[i].GetComponent<BuyButton>().Refresh();
         }
     }
+
+    public void DeleteButtons(){
+        for (int i = 0; i < childCNT; i++){
+            buttons[i].GetComponent<BuyButton>().DeleteInfo();
+            buttons[i].GetComponent<BuyButton>().Refresh();
+        }
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         nowx = eventData.pointerCurrentRaycast.screenPosition.x;

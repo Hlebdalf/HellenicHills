@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class FieldChecker : MonoBehaviour
 {   
     public GameObject canvas;
-    public GameObject curtain;
+    public GameObject magazine;
     public GameObject volume;
     public GameObject panel;
     public bool _upOrDown = true;
@@ -248,13 +248,13 @@ public class FieldChecker : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        // if (Input.GetKeyDown(KeyCode.LeftArrow))
-        // {
-        //     for (int i = 0; i < transform.childCount; i++)
-        //     {
-        //         transform.GetChild(i).GetChild(0).gameObject.GetComponent<BuyButton>().DeleteInfo();
-        //     }
-        // }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                magazine.GetComponent<Magazine>().DeleteButtons();
+            }
+        }
         //DEBUG TOOL
     }
 }

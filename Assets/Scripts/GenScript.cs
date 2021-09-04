@@ -30,7 +30,7 @@ public class GenScript : MonoBehaviour
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Color;
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Depth;
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
-        ball.transform.position = new Vector3(1, 70, resolution.y);
+        ball.transform.position = new Vector3(30, 70, resolution.y);
         seed = Random.Range(-10000f, 10000f);
         StartCoroutine(BuildTerrain());
     }
