@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class FieldChecker : MonoBehaviour
 {   
+    public GameObject canvas;
+    public GameObject curtain;
     public GameObject volume;
     public GameObject panel;
     public bool _upOrDown = true;
@@ -42,7 +44,7 @@ public class FieldChecker : MonoBehaviour
         GetComponent<Rigidbody>().isKinematic = true;
         PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();   
-        reloadButton.SetActive(true);
+        canvas.GetComponent<Animator>().Play("GameOver");
     }
     public void GameStart()
     {
