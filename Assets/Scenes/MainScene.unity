@@ -5465,10 +5465,11 @@ AudioSource:
   m_GameObject: {fileID: 1644744607}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7985732949340608617, guid: 3f101db11a960424480eb80a503b3e94,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 664ed7afccdff08418db989cb826ec0d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.507
+  m_Volume: 0.198
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -12172,6 +12173,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1141fb1b587aec94bb01be48d51ddb8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mixer: {fileID: 24300002, guid: 3f101db11a960424480eb80a503b3e94, type: 2}
+  upSnap: {fileID: -3678896345556278547, guid: 3f101db11a960424480eb80a503b3e94, type: 2}
+  downSnap: {fileID: -6608755674873631673, guid: 3f101db11a960424480eb80a503b3e94,
+    type: 2}
   canvas: {fileID: 1715893966}
   magazine: {fileID: 1200534381}
   volume: {fileID: 1855321239}

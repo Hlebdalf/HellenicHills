@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class FieldChecker : MonoBehaviour
 {   
+    public AudioMixerGroup Mixer;    
+    public AudioMixerSnapshot upSnap;
+    public AudioMixerSnapshot downSnap;
     public GameObject canvas;
     public GameObject magazine;
     public GameObject volume;
@@ -149,6 +153,7 @@ public class FieldChecker : MonoBehaviour
             {
                 if (_upOrDown)
                 {   
+                    downSnap.TransitionTo(0.3f);
                     _upOrDown = false;
                     VolumeSetActive();
                 }
@@ -159,6 +164,7 @@ public class FieldChecker : MonoBehaviour
                 if (!_upOrDown)
                 {
                     _upOrDown = true;
+                    upSnap.TransitionTo(0.3f);
                     VolumeSetActive();
                 }
                 _upOrDown = true;
