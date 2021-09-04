@@ -10,9 +10,10 @@ public class FieldChecker : MonoBehaviour
     public AudioMixerGroup Mixer;    
     public AudioMixerSnapshot upSnap;
     public AudioMixerSnapshot downSnap;
+    public AudioMixerSnapshot gameOver;
     public GameObject canvas;
     public GameObject magazine;
-    public GameObject volume;
+    public GameObject volume; 
     public GameObject panel;
     public bool _upOrDown = true;
     public float fuel = 1000;
@@ -47,6 +48,7 @@ public class FieldChecker : MonoBehaviour
     
     {   
         Camera.main.GetComponent<AudioSource>().Stop();
+        gameOver.TransitionTo(0.1f);
         StopAllCoroutines();
         GetComponent<AudioSource>().Play();
         GetComponent<Rigidbody>().isKinematic = true;
