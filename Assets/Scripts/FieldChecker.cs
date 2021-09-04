@@ -45,6 +45,7 @@ public class FieldChecker : MonoBehaviour
         PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();   
         canvas.GetComponent<Animator>().Play("GameOver");
+        GetComponent<FieldChecker>().enabled = false;
     }
     public void GameStart()
     {
