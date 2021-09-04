@@ -20,7 +20,7 @@ public class Ghost : MonoBehaviour
         if (gameObject.transform.position.x > scores)
         {
             scores = (int)gameObject.transform.position.x;
-            scoresText.text = scores.ToString() + "/" + scoreRecord.ToString();
+            scoresText.text = "m: " + scores.ToString() + "/" + scoreRecord.ToString();
             if (scores > scoreRecord)
             {
                 PlayerPrefs.SetInt("scoreRecord", scores);  
