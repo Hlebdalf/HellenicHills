@@ -158,6 +158,7 @@ public class FieldChecker : MonoBehaviour
                     downSnap.TransitionTo(0.3f);
                     _upOrDown = false;
                     VolumeSetActive();
+                    Mixer.audioMixer.SetFloat("MasterLowPass", 600);
                 }
                 _upOrDown = false;
             }
@@ -168,9 +169,11 @@ public class FieldChecker : MonoBehaviour
                     _upOrDown = true;
                     upSnap.TransitionTo(0.3f);
                     VolumeSetActive();
+                    Mixer.audioMixer.SetFloat("MasterLowPass", 20000);
                 }
                 _upOrDown = true;
             }
+            
             yield return new WaitForFixedUpdate();
         }
     }
