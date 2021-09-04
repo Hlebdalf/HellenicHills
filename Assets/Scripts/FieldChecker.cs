@@ -42,8 +42,7 @@ public class FieldChecker : MonoBehaviour
     public void GameOver()
     {
         GetComponent<Rigidbody>().isKinematic = true;
-        PlayerPrefs.SetInt("partsAll", partsAll);
-        PlayerPrefs.Save();   
+        SaveParts();
         canvas.GetComponent<Animator>().Play("GameOver");
         GetComponent<FieldChecker>().enabled = false;
     }
@@ -88,6 +87,7 @@ public class FieldChecker : MonoBehaviour
         yield return new WaitForSeconds(2);
         partsAll += (int)Random.Range(0, 10.0f);
         partsAllText.text = "₽: " + partsAll.ToString();
+        SaveParts();
         GetComponent<Rigidbody>().isKinematic = false;
         _rb.isKinematic = false;
         IsConsumption(true);
