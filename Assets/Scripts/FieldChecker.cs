@@ -40,7 +40,11 @@ public class FieldChecker : MonoBehaviour
         partsAllText.text = "₽: " + partsAll.ToString();
     }
     public void GameOver()
-    {
+    
+    {   
+        Camera.main.GetComponent<AudioSource>().Stop();
+        StopAllCoroutines();
+        GetComponent<AudioSource>().Play();
         GetComponent<Rigidbody>().isKinematic = true;
         SaveParts();
         canvas.GetComponent<Animator>().Play("GameOver");
@@ -108,7 +112,7 @@ public class FieldChecker : MonoBehaviour
     {   
         while (health > 1)
         {
-            health -= consumption * mp;
+            health -= (consumption * mp);
             healthBar.value = health;
             yield return new WaitForSeconds(0.1f);
         }
@@ -139,7 +143,7 @@ public class FieldChecker : MonoBehaviour
     
     private IEnumerator CheckVolume()
     {
-        while (true)
+        while (health > 1 && fuel > 1)
         {
             if (transform.position.y < 32)
             {
@@ -159,7 +163,7 @@ public class FieldChecker : MonoBehaviour
                 }
                 _upOrDown = true;
             }
-            yield return new WaitForSeconds(0.066f);
+            yield return new WaitForFixedUpdate();
         }
     }
 
@@ -175,8 +179,8 @@ public class FieldChecker : MonoBehaviour
         
         health -= damage * mp;
         healthBar.value = health;
-        if(health <= 0) GameOver();
-        _rb.isKinematic = false;
+        if(health < 1) GameOver();
+        else{_rb.isKinematic = false;}
     }
 
     private void IsConsumption(bool how)
