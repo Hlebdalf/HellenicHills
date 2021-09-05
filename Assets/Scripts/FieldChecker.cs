@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 
 public class FieldChecker : MonoBehaviour
 {   
+    public Audio audio;
     public AudioMixerGroup Mixer;    
     public AudioMixerSnapshot upSnap;
     public AudioMixerSnapshot downSnap;
@@ -187,7 +188,7 @@ public class FieldChecker : MonoBehaviour
 
     private void DamageMachine(float damage)
     {
-        
+        audio.HitSound(_rb.velocity.x / 25);
         health -= damage * mp;
         healthBar.value = health;
         if(health < 1) GameOver();
