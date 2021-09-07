@@ -8,6 +8,7 @@ using UnityEngine.Serialization;
 public class BallMovement : MonoBehaviour
 {   
     public Slider slider;
+    public Image button;
     public float turnForce = 1;
     public float forwardForce = 10;
     [FormerlySerializedAs("InertiaDivider")] public float inertiaDivider = 2;
@@ -110,6 +111,7 @@ public class BallMovement : MonoBehaviour
     public void OnBoost(){
         if (!_isBoost)
         {
+        button.color = new Color(0.3f, 0.3f, 0.3f);
         _isBoost = true;
         forwardForce *= boostMP;
         turnForce *= boostMP;
@@ -137,5 +139,6 @@ public class BallMovement : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         _isBoost = false;
+        button.color = new Color(0.85f, 1, 0);
     }
 }
