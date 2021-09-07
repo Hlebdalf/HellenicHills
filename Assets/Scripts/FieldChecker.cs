@@ -48,7 +48,7 @@ public class FieldChecker : MonoBehaviour
     public void GameOver()
     
     {   
-        Camera.main.GetComponent<AudioSource>().Stop();
+        audio.PlayMusic(false);
         gameOver.TransitionTo(0.1f);
         StopAllCoroutines();
         GetComponent<AudioSource>().Play();
