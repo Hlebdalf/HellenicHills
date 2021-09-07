@@ -8,6 +8,10 @@ public class Audio : MonoBehaviour
     public AudioSource hit1;
     public AudioSource hit2;
     public AudioSource music;
+    public AudioSource button;
+    public AudioSource motor;
+    public AudioSource water;
+    public AudioSource end;
     private bool _isMusic = true;
     public void HitSound(float val)
     {
@@ -21,14 +25,19 @@ public class Audio : MonoBehaviour
     }
 
     public void PlayMusic(bool how)
-    {
-        if (how) 
-        {
-            music.mute = false;
-        }
-        else 
-        {
-            music.mute = true;
-        }
+    {   
+        how = !how;
+        music.mute = how;
+    }
+
+    public void PlaySound(bool how)
+    {   
+        how = !how;
+        hit1.mute = how;
+        hit2.mute = how;
+        motor.mute = how;
+        button.mute = how;
+        water.mute = how;
+        end.mute = how;
     }
 }
