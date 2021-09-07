@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class GenScript : MonoBehaviour
 {
-    [FormerlySerializedAs("Resolution")] public Vector2Int resolution = new Vector2Int(0, 0);
+    [FormerlySerializedAs("Resolution")] public Vector2Int resolution = new Vector2Int(512, 512);
     public int koeff = 1;
     [FormerlySerializedAs("NoiseMaterial")] public Material noiseMaterial;
     [FormerlySerializedAs("SpruceMaterial")] public Material spruceMaterial;

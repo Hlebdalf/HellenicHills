@@ -60,6 +60,7 @@ public class FieldChecker : MonoBehaviour
     public void GameStart()
     {
         StartCoroutine(FuelConsumption());
+        transform.GetChild(0).GetComponent<AudioSource>().Play();
     }
 
     private void FieldObjEvent(string type)
