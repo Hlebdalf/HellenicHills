@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Serialization;
 
 
 public class BallMovement : MonoBehaviour
 {   
+    public Slider slider;
+    public Image button;
     public float turnForce = 1;
     public float forwardForce = 10;
     [FormerlySerializedAs("InertiaDivider")] public float inertiaDivider = 2;
@@ -14,6 +17,11 @@ public class BallMovement : MonoBehaviour
     private Rigidbody _rb;
     private bool _moovingRight = false;
     private bool _moovingLeft = false;
+    private bool _isBoost = false;
+    public float boost = 1000;
+    public float boostCons = 10;
+    public float boostGrow = 1;
+    public float boostMP = 1;
     void Start()
     {
         _rb = gameObject.GetComponent<Rigidbody>();
@@ -98,5 +106,39 @@ public class BallMovement : MonoBehaviour
             }
             yield return new WaitForFixedUpdate();
         }
+    }
+
+    public void OnBoost(){
+        if (!_isBoost)
+        {
+        button.color = new Color(0.3f, 0.3f, 0.3f);
+        _isBoost = true;
+        forwardForce *= boostMP;
+        turnForce *= boostMP;
+        StartCoroutine(BoostConsumption());
+        }
+    }
+
+    IEnumerator BoostConsumption()
+    {
+        while(boost > 0){
+            slider.value = boost;
+            boost -= boostCons;
+            yield return new WaitForFixedUpdate();
+        }
+        forwardForce /= boostMP;
+        turnForce /= boostMP;
+        StartCoroutine(BoostGrow());
+    }
+
+    IEnumerator BoostGrow()
+    {
+        while(boost < 1000){
+            boost += boostGrow;
+            slider.value = boost;
+            yield return new WaitForFixedUpdate();
+        }
+        _isBoost = false;
+        button.color = new Color(0.85f, 1, 0);
     }
 }
