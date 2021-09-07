@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class FieldChecker : MonoBehaviour
 {   
+    public Audio audio;
+    public AudioMixerGroup Mixer;    
+    public AudioMixerSnapshot upSnap;
+    public AudioMixerSnapshot downSnap;
+    public AudioMixerSnapshot gameOver;
     public GameObject canvas;
     public GameObject magazine;
-    public GameObject volume;
+    public GameObject volume; 
     public GameObject panel;
     public bool _upOrDown = true;
     public float fuel = 1000;
@@ -40,7 +46,12 @@ public class FieldChecker : MonoBehaviour
         partsAllText.text = "₽: " + partsAll.ToString();
     }
     public void GameOver()
-    {
+    
+    {   
+        audio.PlayMusic(false);
+        gameOver.TransitionTo(0.1f);
+        StopAllCoroutines();
+        GetComponent<AudioSource>().Play();
         GetComponent<Rigidbody>().isKinematic = true;
         SaveParts();
         canvas.GetComponent<Animator>().Play("GameOver");
@@ -49,6 +60,7 @@ public class FieldChecker : MonoBehaviour
     public void GameStart()
     {
         StartCoroutine(FuelConsumption());
+        transform.GetChild(0).GetComponent<AudioSource>().Play();
     }
 
     private void FieldObjEvent(string type)
@@ -108,7 +120,7 @@ public class FieldChecker : MonoBehaviour
     {   
         while (health > 1)
         {
-            health -= consumption * mp;
+            health -= (consumption * mp);
             healthBar.value = health;
             yield return new WaitForSeconds(0.1f);
         }
@@ -139,14 +151,16 @@ public class FieldChecker : MonoBehaviour
     
     private IEnumerator CheckVolume()
     {
-        while (true)
+        while (health > 1 && fuel > 1)
         {
             if (transform.position.y < 32)
             {
                 if (_upOrDown)
                 {   
+                    downSnap.TransitionTo(0.3f);
                     _upOrDown = false;
                     VolumeSetActive();
+                    Mixer.audioMixer.SetFloat("MasterLowPass", 600);
                 }
                 _upOrDown = false;
             }
@@ -155,11 +169,14 @@ public class FieldChecker : MonoBehaviour
                 if (!_upOrDown)
                 {
                     _upOrDown = true;
+                    upSnap.TransitionTo(0.3f);
                     VolumeSetActive();
+                    Mixer.audioMixer.SetFloat("MasterLowPass", 20000);
                 }
                 _upOrDown = true;
             }
-            yield return new WaitForSeconds(0.066f);
+            
+            yield return new WaitForFixedUpdate();
         }
     }
 
@@ -172,11 +189,11 @@ public class FieldChecker : MonoBehaviour
 
     private void DamageMachine(float damage)
     {
-        
+        audio.HitSound(_rb.velocity.x / 25);
         health -= damage * mp;
         healthBar.value = health;
-        if(health <= 0) GameOver();
-        _rb.isKinematic = false;
+        if(health < 1) GameOver();
+        else{_rb.isKinematic = false;}
     }
 
     private void IsConsumption(bool how)

@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 
 public class BallMovement : MonoBehaviour
-{
+{   
     public float turnForce = 1;
     public float forwardForce = 10;
     [FormerlySerializedAs("InertiaDivider")] public float inertiaDivider = 2;
@@ -86,7 +86,7 @@ public class BallMovement : MonoBehaviour
     IEnumerator ForwardCoroutine()
     {
         while (true)
-
+        //Debug.Log(_rb.velocity.magnitude);
         {
             if (_rb.velocity.x > forwardSpeedRoof)
             {
