@@ -7,6 +7,9 @@ using UnityEngine.Audio;
 
 public class FieldChecker : MonoBehaviour
 {   
+    public Sprite resume;
+    public Sprite pause;
+    public Image pauseButton;
     public Audio audio;
     public AudioMixerGroup Mixer;    
     public AudioMixerSnapshot upSnap;
@@ -30,10 +33,13 @@ public class FieldChecker : MonoBehaviour
     public Slider healthBar;
     public float mp = 1;
     private Rigidbody _rb;
+    private bool _isPause = false;
+    private Vector3 _preVelocity = new Vector3(0, 0, 0);
     
 
     private void Start()
     {    
+        upSnap.TransitionTo(0.3f);
         fuelBar.maxValue = fuel;
         _rb = GetComponent<Rigidbody>();
         StartCoroutine(CheckVolume());
@@ -56,6 +62,26 @@ public class FieldChecker : MonoBehaviour
         SaveParts();
         canvas.GetComponent<Animator>().Play("GameOver");
         GetComponent<FieldChecker>().enabled = false;
+    }
+    public void PauseGame()
+    {   
+        _isPause = !_isPause;
+        if(_isPause)
+        {   
+            _preVelocity = _rb.velocity;
+            StopAllCoroutines();
+            _rb.isKinematic = true;
+            pauseButton.sprite = resume;
+            canvas.GetComponent<Animator>().Play("EnterPause");
+        } 
+        else 
+        {   
+            pauseButton.sprite = pause;
+            IsConsumption(true);
+            _rb.isKinematic = false;
+            _rb.velocity = _preVelocity;
+            canvas.GetComponent<Animator>().Play("ExitPause");
+        }
     }
     public void GameStart()
     {
