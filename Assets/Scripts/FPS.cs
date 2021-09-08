@@ -5,16 +5,18 @@ using UnityEngine.UI;
 
 public class FPS : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = int.Parse(PlayerPrefs.GetString("Freq", "60"));
     }
-
-    // Update is called once per frame
     void Update()
     {
         float fps = 1.0f / Time.deltaTime;
         gameObject.GetComponent<Text>().text = fps.ToString();
+    }
+
+    public void SetFreq(int freq)
+    {
+        Application.targetFrameRate = freq;
     }
 }
