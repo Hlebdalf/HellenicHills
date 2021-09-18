@@ -1793,13 +1793,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8915888890626707801}
   - component: {fileID: 5865001062738202414}
+  - component: {fileID: 1481425921846476705}
   m_Layer: 0
   m_Name: Repairs
   m_TagString: Interactive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8915888890626707801
 Transform:
   m_ObjectHideFlags: 0
@@ -1829,6 +1830,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.4146152, y: 3.701739, z: 1.9821614}
   m_Center: {x: 0, y: 1.090868, z: 0.08143945}
+--- !u!114 &1481425921846476705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8093229586047598678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98febe0bd1a5354c89cf903135149bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8122482188632334317
 GameObject:
   m_ObjectHideFlags: 0
