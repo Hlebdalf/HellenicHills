@@ -271,6 +271,10 @@ public class FieldChecker : MonoBehaviour
         {
             FieldObjEvent(other.name);
             other.GetComponent<BoxCollider>().enabled =  false;
+            if(other.GetComponent<Repairs>())
+            {
+                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
+            }
         }
     }
     void Update()
