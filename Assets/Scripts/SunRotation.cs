@@ -49,10 +49,11 @@ public class SunRotation : MonoBehaviour
     private IEnumerator RotatorCoroutine()
     {
         while (true)
-        {
-            _angle = Quaternion.Angle(transform.rotation, new Quaternion(0, 0, 0, 1)) / 180;
+        {   
+            _angle = -Mathf.Acos(transform.up.z) * Mathf.Abs(Mathf.Asin(transform.up.y)) / Mathf.Asin(transform.up.y) / Mathf.PI;
             _angle1 = -Vector3.SignedAngle(_up, transform.up, transform.right) / 180;
-            if (_angle < 0.5f && upOrDown)
+            //Debug.Log(_angle);
+            if (_angle < 0 && upOrDown)
             {
                 upOrDown = false;
                 _sun.SetActive(false);
@@ -60,7 +61,7 @@ public class SunRotation : MonoBehaviour
                 ball.SetActive(true);
             }
 
-            else if (_angle > 0.5f && !upOrDown)
+            else if (_angle > 0 && !upOrDown)
             {
                 ball.SetActive(false);
                 _sun.SetActive(true);
@@ -69,23 +70,23 @@ public class SunRotation : MonoBehaviour
             }
             if (upOrDown)
             {
-                _sunLight.intensity = sunStrenght.Evaluate(_angle1).g;
-                _sunLight.color = sunColor.Evaluate(_angle1);
-                RenderSettings.ambientSkyColor = skyColorUp.Evaluate(_angle1);
-                RenderSettings.ambientEquatorColor = gorizontColorUp.Evaluate(_angle1);
-                Camera.main.backgroundColor = fogColorUp.Evaluate(_angle1);
-                RenderSettings.fogColor = fogColorUp.Evaluate(_angle1);
+                _sunLight.intensity = sunStrenght.Evaluate(_angle).g;
+                _sunLight.color = sunColor.Evaluate(_angle);
+                RenderSettings.ambientSkyColor = skyColorUp.Evaluate(_angle);
+                RenderSettings.ambientEquatorColor = gorizontColorUp.Evaluate(_angle);
+                Camera.main.backgroundColor = fogColorUp.Evaluate(_angle);
+                RenderSettings.fogColor = fogColorUp.Evaluate(_angle);
                 _mySpeed = speed;
             }
 
             else
             {
-                _moonLight.intensity = moonStrenght.Evaluate(_angle1 + 1).g;
-                _ballLight.intensity = (1 - _angle - 0.5f) * 2;
-                RenderSettings.ambientSkyColor = skyColorDown.Evaluate(_angle1 + 1);
-                RenderSettings.ambientEquatorColor = gorizontColorDown.Evaluate(_angle1 + 1);
-                Camera.main.backgroundColor = fogColorDown.Evaluate(_angle1 + 1);
-                RenderSettings.fogColor = fogColorDown.Evaluate(_angle1 + 1);
+                _moonLight.intensity = moonStrenght.Evaluate(_angle + 1).g;
+                _ballLight.intensity = (_angle + 1) * 2;
+                RenderSettings.ambientSkyColor = skyColorDown.Evaluate(_angle + 1);
+                RenderSettings.ambientEquatorColor = gorizontColorDown.Evaluate(_angle + 1);
+                Camera.main.backgroundColor = fogColorDown.Evaluate(_angle + 1);
+                RenderSettings.fogColor = fogColorDown.Evaluate(_angle + 1);
                 _mySpeed = speed * 2;
             }
             _backGround = new Color(_angle, _angle, _angle);
