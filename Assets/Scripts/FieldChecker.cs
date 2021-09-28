@@ -166,7 +166,7 @@ public class FieldChecker : MonoBehaviour
     
     private IEnumerator RepairCoroutine()
     {   
-        _rb.isKinematic = true;
+        //_rb.isKinematic = true;
         yield return new WaitForSeconds(2);
         health = 1000;
         healthBar.value = health;

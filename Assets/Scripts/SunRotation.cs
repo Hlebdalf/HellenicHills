@@ -68,6 +68,7 @@ public class SunRotation : MonoBehaviour
                 _moon.SetActive(false);
                 upOrDown = true;
             }
+            _angle1 = Mathf.Abs(_angle);
             if (upOrDown)
             {
                 _sunLight.intensity = sunStrenght.Evaluate(_angle).g;
@@ -81,12 +82,12 @@ public class SunRotation : MonoBehaviour
 
             else
             {
-                _moonLight.intensity = moonStrenght.Evaluate(_angle + 1).g;
+                _moonLight.intensity = moonStrenght.Evaluate(_angle).g;
                 _ballLight.intensity = (_angle + 1) * 2;
-                RenderSettings.ambientSkyColor = skyColorDown.Evaluate(_angle + 1);
-                RenderSettings.ambientEquatorColor = gorizontColorDown.Evaluate(_angle + 1);
-                Camera.main.backgroundColor = fogColorDown.Evaluate(_angle + 1);
-                RenderSettings.fogColor = fogColorDown.Evaluate(_angle + 1);
+                RenderSettings.ambientSkyColor = skyColorDown.Evaluate(_angle);
+                RenderSettings.ambientEquatorColor = gorizontColorDown.Evaluate(_angle);
+                Camera.main.backgroundColor = fogColorDown.Evaluate(_angle);
+                RenderSettings.fogColor = fogColorDown.Evaluate(_angle);
                 _mySpeed = speed * 2;
             }
             _backGround = new Color(_angle, _angle, _angle);
