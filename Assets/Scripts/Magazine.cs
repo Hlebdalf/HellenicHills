@@ -23,7 +23,7 @@ public class Magazine : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private void Start()
     {   
         rt = gameObject.GetComponent<RectTransform>();
-        rt.transform.position = new Vector3(-modelType*1080 , rt.position.y, rt.position.z);
+        rt.transform.position = new Vector3(-modelType * Screen.width , rt.position.y, rt.position.z);
         childCNT = transform.childCount;
         for (int i = 0; i < childCNT; i++){
             buttons.Add(transform.GetChild(i).GetChild(0).gameObject);
@@ -62,8 +62,8 @@ public class Magazine : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         {
             rt.position =  new Vector3(-(childCNT - 1) * Screen.width, rt.position.y, rt.position.z);
         }
-        ups.transform.localPosition = new Vector3((rt.position.x / 1080) * 5, 0, -(rt.position.x / 1080) * 5);
-        balls.transform.localPosition = new Vector3((rt.position.x / 1080) * 5, 0, -(rt.position.x / 1080) * 5);
+        ups.transform.localPosition = new Vector3((rt.position.x / Screen.width) * 5, 0, -(rt.position.x / Screen.width) * 5);
+        balls.transform.localPosition = new Vector3((rt.position.x / Screen.width) * 5, 0, -(rt.position.x / Screen.width) * 5);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -86,8 +86,8 @@ public class Magazine : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         while(Mathf.Abs(rt.position.x - target) > 2)
         {
             rt.position = new Vector3(rt.position.x - (rt.position.x - target)/2, rt.position.y, rt.position.z);
-            balls.transform.localPosition = new Vector3((rt.position.x / 1080) * 5, 0, -(rt.position.x / 1080) * 5);
-            ups.transform.localPosition = new Vector3((rt.position.x / 1080) * 5, 0, -(rt.position.x / 1080) * 5);
+            balls.transform.localPosition = new Vector3((rt.position.x / Screen.width) * 5, 0, -(rt.position.x / Screen.width) * 5);
+            ups.transform.localPosition = new Vector3((rt.position.x / Screen.width) * 5, 0, -(rt.position.x / Screen.width) * 5);
             yield return new WaitForFixedUpdate();
         }
     }
