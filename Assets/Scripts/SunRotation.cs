@@ -68,7 +68,6 @@ public class SunRotation : MonoBehaviour
                 _moon.SetActive(false);
                 upOrDown = true;
             }
-            _angle1 = Mathf.Abs(_angle);
             if (upOrDown)
             {
                 _sunLight.intensity = sunStrenght.Evaluate(_angle).g;
@@ -79,9 +78,9 @@ public class SunRotation : MonoBehaviour
                 RenderSettings.fogColor = fogColorUp.Evaluate(_angle);
                 _mySpeed = speed;
             }
-
             else
-            {
+            {   
+                _angle = 1-Mathf.Abs(_angle);
                 _moonLight.intensity = moonStrenght.Evaluate(_angle).g;
                 _ballLight.intensity = (_angle + 1) * 2;
                 RenderSettings.ambientSkyColor = skyColorDown.Evaluate(_angle);

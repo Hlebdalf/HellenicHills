@@ -35,6 +35,8 @@ public class FieldChecker : MonoBehaviour
     private Rigidbody _rb;
     private bool _isPause = false;
     private Vector3 _preVelocity = new Vector3(0, 0, 0);
+
+    private bool canRepair = true;
     
 
     private void Start()
@@ -165,14 +167,18 @@ public class FieldChecker : MonoBehaviour
     }
     
     private IEnumerator RepairCoroutine()
-    {   
-        //_rb.isKinematic = true;
-        yield return new WaitForSeconds(2);
-        health = 1000;
-        healthBar.value = health;
-        GetComponent<Rigidbody>().isKinematic = false;
-        _rb.isKinematic = false;
-        IsConsumption(true);
+    {         
+        for(int i =0; i < 80 * 5; i++)
+        {
+            if(canRepair)
+            {
+                yield return new WaitForSeconds(0.05f / 5);
+                if(health < 1000) health += 3;
+                else health = 1000;
+                healthBar.value = health;
+            } 
+            else break;
+        }     
     }
     
     private IEnumerator CheckVolume()
@@ -270,13 +276,27 @@ public class FieldChecker : MonoBehaviour
         else if (other.CompareTag("Interactive"))
         {
             FieldObjEvent(other.name);
-            other.GetComponent<BoxCollider>().enabled =  false;
             if(other.GetComponent<Repairs>())
-            {
+            {   
+                canRepair = true;
                 other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
             }
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {   
+        if (other.CompareTag("Interactive"))
+        {
+            if(other.GetComponent<Repairs>())
+            {   
+                canRepair = false;
+                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
+                StopCoroutine(RepairCoroutine());
+            }
+        }
+    }
+
     void Update()
     {
         //DEBUG TOOL

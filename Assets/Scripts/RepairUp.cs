@@ -21,16 +21,28 @@ public class RepairUp : MonoBehaviour
 
     IEnumerator Rotator()
     {   
-        for (int i =0; i < 40; i++)
+        for (int i =0; i < 80 * 5; i++)
         {   
             Vector2 _targetPos = new Vector2(_ball.position.x, _ball.position.z);
             float _angle = Vector2.Angle(new Vector2(transform.forward.x, transform.forward.z), _targetPos - _selfPos);
             if(_angle > 180) _angle = -(360 - _angle);
+            if(line != null)
+            {
             line.SetPosition(0, transform.position);
             line.SetPosition(1, _ball.position);
-            yield return new WaitForSeconds(0.05f);
+            }
+            yield return new WaitForSeconds(0.01f);
             transform.Rotate(0, _angle / 3, 0);
         }
-        Destroy(line.gameObject);
+        DestroyLine();       
+    }
+
+    public void DestroyLine()
+    {   
+        if(line != null)
+        {
+            StopCoroutine(Rotator());
+            Destroy(line.gameObject);
+        }
     }
 }

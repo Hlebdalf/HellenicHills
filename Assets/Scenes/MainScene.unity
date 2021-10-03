@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 1, g: 1, b: 1, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
@@ -1777,7 +1777,7 @@ MonoBehaviour:
     m_NumColorKeys: 5
     m_NumAlphaKeys: 2
   ball: {fileID: 6022534968241501373}
-  speed: 0.01
+  speed: 0.1
   rate: 5
   upOrDown: 1
 --- !u!4 &248216867
