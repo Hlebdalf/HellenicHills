@@ -35,8 +35,8 @@ public class FieldChecker : MonoBehaviour
     private Rigidbody _rb;
     private bool _isPause = false;
     private Vector3 _preVelocity = new Vector3(0, 0, 0);
-
     private bool canRepair = true;
+    private bool canCharge = true;
     
 
     private void Start()
@@ -147,9 +147,12 @@ public class FieldChecker : MonoBehaviour
     private IEnumerator HealthConsumption()
     {   
         while (health > 1)
-        {
-            health -= (consumption * mp);
-            healthBar.value = health;
+        {   
+            if(!canRepair)
+            {
+                health -= (consumption * mp);
+                healthBar.value = health;   
+            }
             yield return new WaitForSeconds(0.1f);
         }
         GameOver();
@@ -157,12 +160,18 @@ public class FieldChecker : MonoBehaviour
 
     private IEnumerator ChargeCoroutine()
     {   
-        _rb.isKinematic = true;
-        yield return new WaitForSeconds(2);
-        fuel = 1000;
+        for(int i =0; i < 80 * 5; i++)
+        {
+            if(canCharge)
+            {
+                yield return new WaitForSeconds(0.05f / 5);
+                if(fuel < 1000) fuel += 6;
+                else fuel = 1000;
+                fuelBar.value = fuel;
+            } 
+            else break;
+        }
         fuelBar.value = fuel;
-        GetComponent<Rigidbody>().isKinematic = false;
-        _rb.isKinematic = false;
         IsConsumption(true);
     }
     
@@ -173,12 +182,14 @@ public class FieldChecker : MonoBehaviour
             if(canRepair)
             {
                 yield return new WaitForSeconds(0.05f / 5);
-                if(health < 1000) health += 3;
+                if(health < 1000) health += 6;
                 else health = 1000;
                 healthBar.value = health;
-            } 
+            }           
             else break;
         }     
+        healthBar.value = health;
+        IsConsumption(true);
     }
     
     private IEnumerator CheckVolume()
@@ -276,9 +287,14 @@ public class FieldChecker : MonoBehaviour
         else if (other.CompareTag("Interactive"))
         {
             FieldObjEvent(other.name);
-            if(other.GetComponent<Repairs>())
+            if(other.name == "Repairs")
             {   
                 canRepair = true;
+                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
+            }
+            if(other.name == "Chargers")
+            {   
+                canCharge = true;
                 other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
             }
         }
@@ -288,12 +304,19 @@ public class FieldChecker : MonoBehaviour
     {   
         if (other.CompareTag("Interactive"))
         {
-            if(other.GetComponent<Repairs>())
+            if(other.name == "Repairs")
             {   
                 canRepair = false;
                 other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
                 StopCoroutine(RepairCoroutine());
             }
+            if(other.name == "Chargers")
+            {   
+                canCharge = false;
+                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
+                StopCoroutine(ChargeCoroutine());
+            }
+            
         }
     }
 
