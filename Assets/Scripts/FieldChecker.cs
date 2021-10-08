@@ -109,7 +109,8 @@ public class FieldChecker : MonoBehaviour
                 GetComponent<Rigidbody>().isKinematic = false;
                 break;
             case "Parts":
-                StartCoroutine(PartsCollectCoroutine());
+                //StartCoroutine(PartsCollectCoroutine());
+                PartsCollect();
                 break;
             case "Repairs":
                 break;
@@ -123,15 +124,13 @@ public class FieldChecker : MonoBehaviour
                 break;
         }
     }
-    private IEnumerator PartsCollectCoroutine()
+    private void PartsCollect()
     {   
-        _rb.isKinematic = true;
-        yield return new WaitForSeconds(2);
+        //yield return new WaitForSeconds(2);
         partsAll += (int)Random.Range(0, 10.0f);
         partsAllText.text = "₽: " + partsAll.ToString();
         SaveParts();
         GetComponent<Rigidbody>().isKinematic = false;
-        _rb.isKinematic = false;
     }
     private IEnumerator Consumption()
     {   
