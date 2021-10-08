@@ -21,21 +21,27 @@ public class FieldChecker : MonoBehaviour
     public GameObject panel;
     public bool _upOrDown = true;
     public float fuel = 1000;
-    public float consumption = 2;
+    public float fuelDecr = 2;
+    public float healthDecr = 2;
+    public float fuelIncr = 4;
+    public float healthIncr = 4;
     public Slider fuelBar;
     [FormerlySerializedAs("Ball_up")] public GameObject ballUp;
     [FormerlySerializedAs("ReloadButton")] public GameObject reloadButton;
     public Text scoreRecordText;
     public Text partsAllText;
-    public int partsAll = 0; 
-    
+    public int partsAll = 0;    
     public float health = 1000;
     public Slider healthBar;
     public float mp = 1;
     private Rigidbody _rb;
     private bool _isPause = false;
     private Vector3 _preVelocity = new Vector3(0, 0, 0);
-    
+    private float _healthDecr;
+    private float _fuelDecr;
+    private float _healthIncr = 0;
+    private float _fuelIncr = 0;
+
 
     private void Start()
     {    
@@ -43,6 +49,8 @@ public class FieldChecker : MonoBehaviour
         fuelBar.maxValue = fuel;
         _rb = GetComponent<Rigidbody>();
         StartCoroutine(CheckVolume());
+        _fuelDecr = fuelDecr;
+        _healthDecr = 0;
     }
 
     private void Awake()
@@ -75,9 +83,8 @@ public class FieldChecker : MonoBehaviour
             canvas.GetComponent<Animator>().Play("EnterPause");
         } 
         else 
-        {   
+        {
             pauseButton.sprite = pause;
-            IsConsumption(true);
             _rb.isKinematic = false;
             _rb.velocity = _preVelocity;
             canvas.GetComponent<Animator>().Play("ExitPause");
@@ -85,33 +92,31 @@ public class FieldChecker : MonoBehaviour
     }
     public void GameStart()
     {
-        StartCoroutine(FuelConsumption());
+        StartCoroutine(Consumption());
+        StartCoroutine(Restore());
         transform.GetChild(0).GetComponent<AudioSource>().Play();
+        _healthIncr = 0;
+        _fuelIncr = 0;
     }
 
     private void FieldObjEvent(string type)
     {   
-        IsConsumption(false);
         float damage = _rb.velocity.magnitude * mp;
         switch (type) {  
             case "Chargers":
-                StartCoroutine(ChargeCoroutine());
                 break;
             case "Missions":
-                print("Mission");
                 GetComponent<Rigidbody>().isKinematic = false;
                 break;
             case "Parts":
-                StartCoroutine(PartsCollectCoroutine());
+                //StartCoroutine(PartsCollectCoroutine());
+                PartsCollect();
                 break;
             case "Repairs":
-                StartCoroutine(RepairCoroutine());
                 break;
             case "Water":
-                IsConsumption(true);
                 break;
             case "Decorate":
-                IsConsumption(true);
                 DamageMachine(damage);
                 break;
             default:
@@ -119,60 +124,41 @@ public class FieldChecker : MonoBehaviour
                 break;
         }
     }
-    private IEnumerator PartsCollectCoroutine()
+    private void PartsCollect()
     {   
-        _rb.isKinematic = true;
-        yield return new WaitForSeconds(2);
+        //yield return new WaitForSeconds(2);
         partsAll += (int)Random.Range(0, 10.0f);
         partsAllText.text = "₽: " + partsAll.ToString();
         SaveParts();
         GetComponent<Rigidbody>().isKinematic = false;
-        _rb.isKinematic = false;
-        IsConsumption(true);
     }
-    private IEnumerator FuelConsumption()
-    {
-        while (fuel > 1)
-        {
-            fuel -= consumption;
+    private IEnumerator Consumption()
+    {   
+        while (health > 1 && fuel > 1)
+        {   
+            health -= _healthDecr;
+            healthBar.value = health;
+            fuel -= _fuelDecr;
             fuelBar.value = fuel;
             yield return new WaitForSeconds(0.1f);
         }
         GameOver();
-
     }
-    
-    private IEnumerator HealthConsumption()
+
+    private IEnumerator Restore()
     {   
-        while (health > 1)
+        while(true)
         {
-            health -= (consumption * mp);
+            yield return new WaitForSeconds(0.016f);
+            if(fuel < 1000) fuel += _fuelIncr;
+            else fuel = 1000;
+            fuelBar.value = fuel;
+            if (health < 1000) health += _healthIncr;
+            else health = 1000;
             healthBar.value = health;
-            yield return new WaitForSeconds(0.1f);
-        }
-        GameOver();
-    }
-
-    private IEnumerator ChargeCoroutine()
-    {   
-        _rb.isKinematic = true;
-        yield return new WaitForSeconds(2);
-        fuel = 1000;
-        fuelBar.value = fuel;
-        GetComponent<Rigidbody>().isKinematic = false;
-        _rb.isKinematic = false;
-        IsConsumption(true);
-    }
-    
-    private IEnumerator RepairCoroutine()
-    {   
-        _rb.isKinematic = true;
-        yield return new WaitForSeconds(2);
-        health = 1000;
-        healthBar.value = health;
-        GetComponent<Rigidbody>().isKinematic = false;
-        _rb.isKinematic = false;
-        IsConsumption(true);
+            fuelBar.value = fuel;
+            healthBar.value = health;
+        }    
     }
     
     private IEnumerator CheckVolume()
@@ -193,11 +179,13 @@ public class FieldChecker : MonoBehaviour
             else
             {
                 if (!_upOrDown)
-                {
+                {   
+
                     _upOrDown = true;
                     upSnap.TransitionTo(0.3f);
                     VolumeSetActive();
                     Mixer.audioMixer.SetFloat("MasterLowPass", 20000);
+                    
                 }
                 _upOrDown = true;
             }
@@ -222,28 +210,6 @@ public class FieldChecker : MonoBehaviour
         else{_rb.isKinematic = false;}
     }
 
-    private void IsConsumption(bool how)
-    {
-        if (how)
-        {
-            if (_upOrDown)
-            {
-                StartCoroutine(FuelConsumption());
-                StopCoroutine(HealthConsumption());
-            }
-            else
-            {
-                StartCoroutine(HealthConsumption());
-                StopCoroutine(FuelConsumption());
-            }
-        }
-        else
-        {
-            StopAllCoroutines();
-            StartCoroutine(CheckVolume());
-        }
-    }
-    
     private void VolumeSetActive()
     {
         if (_upOrDown)
@@ -251,12 +217,16 @@ public class FieldChecker : MonoBehaviour
             FieldObjEvent("Water");
             volume.SetActive(false); 
             panel.SetActive(false);
+            _fuelDecr = fuelDecr;
+            _healthDecr = 0;
         }
         else
         {
             FieldObjEvent("Water");
             volume.SetActive(true);
             panel.SetActive(true);
+            _healthDecr = healthDecr;
+            _fuelDecr = 0;
         }
     }
     
@@ -270,9 +240,37 @@ public class FieldChecker : MonoBehaviour
         else if (other.CompareTag("Interactive"))
         {
             FieldObjEvent(other.name);
-            other.GetComponent<BoxCollider>().enabled =  false;
+            if(other.name == "Repairs")
+            {   
+                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
+                _healthIncr += healthIncr;
+            }
+            if(other.name == "Chargers")
+            {
+                _fuelIncr += fuelIncr;
+                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
+            }
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {   
+        if (other.CompareTag("Interactive"))
+        {
+            if(other.name == "Repairs")
+            {   
+                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
+                _healthIncr -= healthIncr;
+            }
+            if(other.name == "Chargers")
+            {   
+                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
+                _fuelIncr -= fuelIncr;
+            }
+            
+        }
+    }
+
     void Update()
     {
         //DEBUG TOOL

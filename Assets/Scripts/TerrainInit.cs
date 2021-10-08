@@ -16,10 +16,10 @@ public class TerrainInit : MonoBehaviour
     private int _koeff;
     private GameObject _refFo;
     private GameObject _water;
-    public void InitTerrain(Material ns, Material sp, Material tr,
+    public void InitTerrain(Material ns, Material tr,
         Vector2Int res, Vector2Int oft, float sd, int kf, GameObject rFo, GameObject rWater)
     {
-        _noiseMaterial = ns; _spruceMaterial = sp; _terrainMaterial = tr;
+        _noiseMaterial = ns; _terrainMaterial = tr;
         _resolution = res; _offset = oft; _seed = sd; _koeff = kf; _refFo = rFo;
         _water = Instantiate(rWater);
         rWater.transform.position = new Vector3((_offset.x+ 0.5f) * _resolution.x, 35, (_offset.y+ 0.5f) * _resolution.x);
@@ -78,25 +78,18 @@ public class TerrainInit : MonoBehaviour
         gameObject.GetComponent<Terrain>().terrainData.size = new Vector3((_resolution.x) * _koeff, 100, (_resolution.x) * _koeff);
         gameObject.GetComponent<Terrain>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         gameObject.GetComponent<Terrain>().materialTemplate.mainTexture = texture;
-        _texture2 = new Texture2D(_resolution.y + 1, _resolution.y + 1);
-        Graphics.Blit(null, renderTexture, _spruceMaterial);
-        RenderTexture.active = renderTexture;
-        _texture2.ReadPixels(new Rect(Vector2.zero, new Vector2Int(_resolution.x * _koeff, _resolution.y * _koeff)), 0, 0);
-        _texture2.Apply();
-        RenderTexture.active = null;
-        RenderTexture.ReleaseTemporary(renderTexture);
-        for (int x = 0; x < _resolution.x; x++)
+        for (int x = 0; x < _resolution.x/2; x++)
         {
 
-            for (int y = 0; y < _resolution.y; y++)
+            for (int y = 0; y < _resolution.y/2; y++)
             {
-                if (_texture2.GetPixel(x, y).r > 0.5f)
+                if (Random.value > 0.992f)
                 {
                     yield return null;
                     GameObject fo = Instantiate(_refFo);
-                    float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x / (float)_resolution.x, y / (float)_resolution.y);
-                    fo.transform.position = transform.position + new Vector3(x * _koeff, height, y * _koeff);
-                    fo.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x / (float)_resolution.x, y / (float)_resolution.y);
+                    float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
+                    fo.transform.position = transform.position + new Vector3(x * _koeff * 2, height, y * 2 * _koeff);
+                    fo.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
                     _fOs.Add(fo);
                 }
             }
