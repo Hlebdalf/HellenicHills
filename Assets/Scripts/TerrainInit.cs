@@ -4,102 +4,96 @@ using UnityEngine;
 
 public class TerrainInit : MonoBehaviour
 {
-    private Texture2D texture2;
+    private Texture2D _texture2;
     public Texture2D texture;
-    private List<GameObject> FOs = new List<GameObject>();
-    private Material noiseMaterial;
-    private Material spruceMaterial;
-    private Material terrainMaterial;
-    private Vector2Int Resolution;
-    private Vector2Int offset;
-    private float seed;
-    private int koeff;
-    private GameObject refFO;
-    public void InitTerrain(Material ns, Material sp, Material tr,
-        Vector2Int res, Vector2Int oft, float sd, int kf, GameObject rFO)
+    private List<GameObject> _fOs = new List<GameObject>();
+    private Material _noiseMaterial;
+    private Material _spruceMaterial;
+    private Material _terrainMaterial;
+    private Vector2Int _resolution;
+    private Vector2Int _offset;
+    private float _seed;
+    private int _koeff;
+    private GameObject _refFo;
+    private GameObject _water;
+    public void InitTerrain(Material ns, Material tr,
+        Vector2Int res, Vector2Int oft, float sd, int kf, GameObject rFo, GameObject rWater)
     {
-        noiseMaterial = ns; spruceMaterial = sp; terrainMaterial = tr;
-        Resolution = res; offset = oft; seed = sd; koeff = kf; refFO = rFO;
+        _noiseMaterial = ns; _terrainMaterial = tr;
+        _resolution = res; _offset = oft; _seed = sd; _koeff = kf; _refFo = rFo;
+        _water = Instantiate(rWater);
+        rWater.transform.position = new Vector3((_offset.x + 0.5f) * _resolution.x, 35, (_offset.y + 0.5f) * _resolution.x);
         StartCoroutine(Build());
     }
     void OnDestroy()
     {
-        DestroyImmediate(texture2, true);
+        DestroyImmediate(_texture2, true);
         DestroyImmediate(texture, true);
-        foreach (GameObject it in FOs)
+        DestroyImmediate(_water, true);
+        foreach (GameObject it in _fOs)
         {
             DestroyImmediate(it, true);
         }
-        FOs.Clear();
+        _fOs.Clear();
     }
 
 
     private IEnumerator Build()
     {
-        noiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", offset.x + seed);
-        noiseMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", offset.y);
-        RenderTexture renderTexture = RenderTexture.GetTemporary(Resolution.y + 1, Resolution.y + 1);
-        Graphics.Blit(null, renderTexture, noiseMaterial);
-        texture = new Texture2D(Resolution.y + 1, Resolution.y + 1);
+        _noiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", _offset.x + _seed);
+        _noiseMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", _offset.y);
+        RenderTexture renderTexture = RenderTexture.GetTemporary(_resolution.y + 1, _resolution.y + 1);
+        Graphics.Blit(null, renderTexture, _noiseMaterial);
+        texture = new Texture2D(_resolution.y + 1, _resolution.y + 1);
         RenderTexture.active = renderTexture;
-        texture.ReadPixels(new Rect(Vector2.zero, new Vector2Int(Resolution.y + 1, Resolution.y + 1)), 0, 0);
+        texture.ReadPixels(new Rect(Vector2.zero, new Vector2Int(_resolution.y + 1, _resolution.y + 1)), 0, 0);
         RenderTexture.active = null;
         RenderTexture.ReleaseTemporary(renderTexture);
         texture.Apply();
-        if (Camera.main.GetComponent<GenScript>().terrains.ContainsKey(new Vector2Int(offset.x - 1, offset.y)))
+        if (Camera.main.GetComponent<GenScript>().terrains.ContainsKey(new Vector2Int(_offset.x - 1, _offset.y)))
         {
-            texture.SetPixels(0, 0, 1, Resolution.x, Camera.main.GetComponent<GenScript>().terrains[new Vector2Int(offset.x - 1, offset.y)].GetComponent<TerrainInit>().texture.GetPixels(Resolution.x, 0, 1, Resolution.x));
+            texture.SetPixels(0, 0, 1, _resolution.x, Camera.main.GetComponent<GenScript>().terrains[new Vector2Int(_offset.x - 1, _offset.y)].GetComponent<TerrainInit>().texture.GetPixels(_resolution.x, 0, 1, _resolution.x));
         }
-        if (Camera.main.GetComponent<GenScript>().terrains.ContainsKey(new Vector2Int(offset.x, offset.y + 1)))
+        if (Camera.main.GetComponent<GenScript>().terrains.ContainsKey(new Vector2Int(_offset.x, _offset.y + 1)))
         {
-            texture.SetPixels(0, Resolution.x, Resolution.x, 1, Camera.main.GetComponent<GenScript>().terrains[new Vector2Int(offset.x, offset.y + 1)].GetComponent<TerrainInit>().texture.GetPixels(0, 0, Resolution.x, 1));
+            texture.SetPixels(0, _resolution.x, _resolution.x, 1, Camera.main.GetComponent<GenScript>().terrains[new Vector2Int(_offset.x, _offset.y + 1)].GetComponent<TerrainInit>().texture.GetPixels(0, 0, _resolution.x, 1));
         }
-        if (Camera.main.GetComponent<GenScript>().terrains.ContainsKey(new Vector2Int(offset.x, offset.y - 1)))
+        if (Camera.main.GetComponent<GenScript>().terrains.ContainsKey(new Vector2Int(_offset.x, _offset.y - 1)))
         {
-            texture.SetPixels(0, 0, Resolution.x, 1, Camera.main.GetComponent<GenScript>().terrains[new Vector2Int(offset.x, offset.y - 1)].GetComponent<TerrainInit>().texture.GetPixels(0, Resolution.x, Resolution.x, 1));
+            texture.SetPixels(0, 0, _resolution.x, 1, Camera.main.GetComponent<GenScript>().terrains[new Vector2Int(_offset.x, _offset.y - 1)].GetComponent<TerrainInit>().texture.GetPixels(0, _resolution.x, _resolution.x, 1));
         }
-        gameObject.GetComponent<Terrain>().materialTemplate = terrainMaterial;
-        float[,] HeightColors = new float[Resolution.y + 1, Resolution.y + 1];
-        for (int p = 0; p < Resolution.y + 1; p++)
+        gameObject.GetComponent<Terrain>().materialTemplate = _terrainMaterial;
+        float[,] heightColors = new float[_resolution.y + 1, _resolution.y + 1];
+        for (int p = 0; p < _resolution.y + 1; p++)
         {
-            for (int y = 0; y < Resolution.y + 1; y++)
+            for (int y = 0; y < _resolution.y + 1; y++)
             {
-                HeightColors[p, y] = texture.GetPixel(y, p).a;
+                heightColors[p, y] = texture.GetPixel(y, p).a;
             }
         }
-        gameObject.transform.position = new Vector3((offset.x) * Resolution.y * koeff, 0, (offset.y) * Resolution.y * koeff);
-        gameObject.GetComponent<Terrain>().terrainData.heightmapResolution = Resolution.x + 1;
-        gameObject.GetComponent<Terrain>().terrainData.SetHeights(0, 0, HeightColors);
+        gameObject.transform.position = new Vector3((_offset.x) * _resolution.y * _koeff, 0, (_offset.y) * _resolution.y * _koeff);
+        gameObject.GetComponent<Terrain>().terrainData.heightmapResolution = _resolution.x + 1;
+        gameObject.GetComponent<Terrain>().terrainData.SetHeights(0, 0, heightColors);
         gameObject.GetComponent<Terrain>().heightmapPixelError = 40;
-        gameObject.GetComponent<Terrain>().terrainData.size = new Vector3((Resolution.x) * koeff, 100, (Resolution.x) * koeff);
+        gameObject.GetComponent<Terrain>().terrainData.size = new Vector3((_resolution.x) * _koeff, 100, (_resolution.x) * _koeff);
         gameObject.GetComponent<Terrain>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-
-
-        texture2 = new Texture2D(Resolution.y + 1, Resolution.y + 1);
-        Graphics.Blit(null, renderTexture, spruceMaterial);
-        RenderTexture.active = renderTexture;
-        texture2.ReadPixels(new Rect(Vector2.zero, new Vector2Int(Resolution.x * koeff, Resolution.y * koeff)), 0, 0);
-        texture2.Apply();
-        RenderTexture.active = null;
-        RenderTexture.ReleaseTemporary(renderTexture);
-        for (int x = 0; x < Resolution.x; x++)
+        gameObject.GetComponent<Terrain>().materialTemplate.mainTexture = texture;
+        for (int x = 0; x < _resolution.x / 2; x++)
         {
 
-            for (int y = 0; y < Resolution.y; y++)
+            for (int y = 0; y < _resolution.y / 2; y++)
             {
-                if (texture2.GetPixel(x, y).r > 0.5f)
+                if (Random.value > 0.992f)
                 {
                     yield return null;
-                    GameObject FO = Instantiate(refFO);
-                    float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x / (float)Resolution.x, y / (float)Resolution.y);
-                    FO.transform.position = transform.position + new Vector3(x * koeff, height, y * koeff);
-                    FO.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x / (float)Resolution.x, y / (float)Resolution.y);
-                    FOs.Add(FO);
+                    GameObject fo = Instantiate(_refFo);
+                    float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
+                    fo.transform.position = transform.position + new Vector3(x * _koeff * 2, height, y * 2 * _koeff);
+                    fo.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
+                    _fOs.Add(fo);
                 }
             }
         }
-
-        gameObject.GetComponent<Terrain>().materialTemplate.mainTexture = texture;
         yield return null;
     }
 }

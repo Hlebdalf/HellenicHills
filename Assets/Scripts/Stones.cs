@@ -17,6 +17,6 @@ public class Stones : MonoBehaviour
             if (i == target) continue;
             else Destroy(transform.GetChild(i).gameObject);
         }
-        transform.LookAt(transform.parent.parent.GetComponent<FieldObject>().normal + transform.position- up);
+        transform.LookAt(transform.parent.parent.GetComponent<FieldObject>().normal + transform.position - up);
     }
 }

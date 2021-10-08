@@ -1,99 +1,276 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
-public class Death : MonoBehaviour
+public class FieldChecker : MonoBehaviour
 {
+    public Material coinUsedMaterial;
+    public Sprite resume;
+    public Sprite pause;
+    public Image pauseButton;
+    public Audio audio;
+    public AudioMixerGroup Mixer;
+    public AudioMixerSnapshot upSnap;
+    public AudioMixerSnapshot downSnap;
+    public AudioMixerSnapshot gameOver;
+    public GameObject canvas;
+    public GameObject magazine;
+    public GameObject volume;
+    public GameObject panel;
+    public bool _upOrDown = true;
     public float fuel = 1000;
-    public float consumption = 2;
+    public float fuelDecr = 2;
+    public float healthDecr = 2;
+    public float fuelIncr = 4;
+    public float healthIncr = 4;
     public Slider fuelBar;
-    public GameObject Ball;
-    public GameObject Ball_up;
-    public GameObject ReloadButton;
+    [FormerlySerializedAs("Ball_up")] public GameObject ballUp;
+    [FormerlySerializedAs("ReloadButton")] public GameObject reloadButton;
     public Text scoreRecordText;
     public Text partsAllText;
-    public int partsAll = 0; //
+    public int partsAll = 0;
+    public float health = 1000;
+    public Slider healthBar;
+    public float mp = 1;
+    private Rigidbody _rb;
+    private bool _isPause = false;
+    private Vector3 _preVelocity = new Vector3(0, 0, 0);
+    private float _healthDecr;
+    private float _fuelDecr;
+    private float _healthIncr = 0;
+    private float _fuelIncr = 0;
+
 
     private void Start()
     {
+        upSnap.TransitionTo(0.3f);
         fuelBar.maxValue = fuel;
+        _rb = GetComponent<Rigidbody>();
+        StartCoroutine(CheckVolume());
+        _fuelDecr = fuelDecr;
+        _healthDecr = 0;
     }
 
     private void Awake()
     {
         scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString();
         partsAll = PlayerPrefs.GetInt("partsAll");
-        partsAllText.text = partsAll.ToString();
+        partsAllText.text = "₽: " + partsAll.ToString();
     }
+    public void GameOver()
 
-    public void GameOver(){
-
-    Ball.GetComponent<Rigidbody>().isKinematic = true;
-    PlayerPrefs.SetInt("partsAll", partsAll);
-    PlayerPrefs.Save();
-    ReloadButton.SetActive(true);
-}
-
-public void GameStart()
     {
-        StartCoroutine(FuelConsumption());
-    }
-
-    public void FieldObjEvent(string type)
-    {
-        Ball.GetComponent<Rigidbody>().isKinematic = true;
+        audio.PlayMusic(false);
+        gameOver.TransitionTo(0.1f);
         StopAllCoroutines();
-        switch (type) {  
-            case "Charger(Clone)":
-                StartCoroutine(ChargeCoroutine());
+        GetComponent<AudioSource>().Play();
+        GetComponent<Rigidbody>().isKinematic = true;
+        SaveParts();
+        canvas.GetComponent<Animator>().Play("GameOver");
+        GetComponent<FieldChecker>().enabled = false;
+    }
+    public void PauseGame()
+    {
+        _isPause = !_isPause;
+        if (_isPause)
+        {
+            _preVelocity = _rb.velocity;
+            StopAllCoroutines();
+            _rb.isKinematic = true;
+            pauseButton.sprite = resume;
+            canvas.GetComponent<Animator>().Play("EnterPause");
+        }
+        else
+        {
+            pauseButton.sprite = pause;
+            _rb.isKinematic = false;
+            _rb.velocity = _preVelocity;
+            canvas.GetComponent<Animator>().Play("ExitPause");
+        }
+    }
+    public void GameStart()
+    {
+        StartCoroutine(Consumption());
+        StartCoroutine(Restore());
+        transform.GetChild(0).GetComponent<AudioSource>().Play();
+        _healthIncr = 0;
+        _fuelIncr = 0;
+    }
+
+    private void FieldObjEvent(string type, Collider other = null)
+    {
+        float damage = _rb.velocity.magnitude * mp;
+        switch (type)
+        {
+            case "Chargers":
                 break;
-            case "Mission(Clone)":
-                print("Mission");
-                Ball.GetComponent<Rigidbody>().isKinematic = false;
-                StartCoroutine(FuelConsumption());
+            case "Missions":
+                GetComponent<Rigidbody>().isKinematic = false;
                 break;
-            case "Parts(Clone)":
-                StartCoroutine(PartsCollectCoroutine());
+            case "Parts":
+                PartsCollect();
+                other.enabled = false;
+                other.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = coinUsedMaterial;
+                break;
+            case "Repairs":
+                break;
+            case "Water":
+                break;
+            case "Decorate":
+                DamageMachine(damage);
                 break;
             default:
                 print(type);
                 break;
         }
     }
-    public IEnumerator PartsCollectCoroutine()
+    private void PartsCollect()
     {
-        yield return new WaitForSeconds(2);
+        audio.CoinSound();
         partsAll += (int)Random.Range(0, 10.0f);
-        partsAllText.text = partsAll.ToString();
-        Ball.GetComponent<Rigidbody>().isKinematic = false;
-        StartCoroutine(FuelConsumption());
+        partsAllText.text = "₽: " + partsAll.ToString();
+        SaveParts();
     }
-    public IEnumerator FuelConsumption()
+    private IEnumerator Consumption()
     {
-        while (fuel > 1)
+        while (health > 1 && fuel > 1)
         {
-            fuel -= consumption;
+            health -= _healthDecr;
+            healthBar.value = health;
+            fuel -= _fuelDecr;
             fuelBar.value = fuel;
             yield return new WaitForSeconds(0.1f);
         }
         GameOver();
-
     }
 
-    public IEnumerator ChargeCoroutine()
+    private IEnumerator Restore()
     {
-        yield return new WaitForSeconds(2);
-        fuel = 1000;
-        Ball.GetComponent<Rigidbody>().isKinematic = false;
-        StartCoroutine(FuelConsumption());
+        while (true)
+        {
+            yield return new WaitForSeconds(0.016f);
+            if (fuel < 1000) fuel += _fuelIncr;
+            else fuel = 1000;
+            fuelBar.value = fuel;
+            if (health < 1000) health += _healthIncr;
+            else health = 1000;
+            healthBar.value = health;
+            fuelBar.value = fuel;
+            healthBar.value = health;
+        }
+    }
+
+    private IEnumerator CheckVolume()
+    {
+        while (health > 1 && fuel > 1)
+        {
+            if (transform.position.y < 32)
+            {
+                if (_upOrDown)
+                {
+                    downSnap.TransitionTo(0.3f);
+                    _upOrDown = false;
+                    VolumeSetActive();
+                    Mixer.audioMixer.SetFloat("MasterLowPass", 600);
+                }
+                _upOrDown = false;
+            }
+            else
+            {
+                if (!_upOrDown)
+                {
+
+                    _upOrDown = true;
+                    upSnap.TransitionTo(0.3f);
+                    VolumeSetActive();
+                    Mixer.audioMixer.SetFloat("MasterLowPass", 20000);
+
+                }
+                _upOrDown = true;
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
     }
 
     public void SaveParts()
     {
-        partsAllText.text = partsAll.ToString();
+        partsAllText.text = "₽: " + partsAll.ToString();
         PlayerPrefs.SetInt("partsAll", partsAll);
         PlayerPrefs.Save();
+    }
+
+    private void DamageMachine(float damage)
+    {
+        audio.HitSound(_rb.velocity.x / 25);
+        health -= damage * mp;
+        healthBar.value = health;
+        if (health < 1) GameOver();
+        else { _rb.isKinematic = false; }
+    }
+
+    private void VolumeSetActive()
+    {
+        if (_upOrDown)
+        {
+            FieldObjEvent("Water");
+            volume.SetActive(false);
+            panel.SetActive(false);
+            _fuelDecr = fuelDecr;
+            _healthDecr = 0;
+        }
+        else
+        {
+            FieldObjEvent("Water");
+            volume.SetActive(true);
+            panel.SetActive(true);
+            _healthDecr = healthDecr;
+            _fuelDecr = 0;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.CompareTag("Decorate"))
+        {
+            FieldObjEvent("Decorate");
+        }
+        else if (other.CompareTag("Interactive"))
+        {
+            FieldObjEvent(other.name, other);
+            if (other.name == "Repairs")
+            {
+                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
+                _healthIncr += healthIncr;
+            }
+            if (other.name == "Chargers")
+            {
+                _fuelIncr += fuelIncr;
+                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Interactive"))
+        {
+            if (other.name == "Repairs")
+            {
+                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
+                _healthIncr -= healthIncr;
+            }
+            if (other.name == "Chargers")
+            {
+                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
+                _fuelIncr -= fuelIncr;
+            }
+
+        }
     }
 
     void Update()
@@ -102,17 +279,24 @@ public void GameStart()
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             partsAll = 1000;
-            partsAllText.text = partsAll.ToString();
+            partsAllText.text = "₽: " + partsAll.ToString();
+            PlayerPrefs.SetInt("partsAll", partsAll);
+            PlayerPrefs.Save();
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            partsAll = 0;
+            partsAllText.text = "₽: " + partsAll.ToString();
             PlayerPrefs.SetInt("partsAll", partsAll);
             PlayerPrefs.Save();
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            partsAll = 0;
-            partsAllText.text = partsAll.ToString();
-            PlayerPrefs.SetInt("partsAll", partsAll);
-            PlayerPrefs.Save();
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                magazine.GetComponent<Magazine>().DeleteButtons();
+            }
         }
         //DEBUG TOOL
     }

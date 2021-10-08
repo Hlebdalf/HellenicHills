@@ -7,7 +7,6 @@ public class Ghost : MonoBehaviour
 {
     public GameObject target;
     public Text scoresText;
-    
     public int scores;
     private int scoreRecord = 0;
     private void Awake()
@@ -20,10 +19,10 @@ public class Ghost : MonoBehaviour
         if (gameObject.transform.position.x > scores)
         {
             scores = (int)gameObject.transform.position.x;
-            scoresText.text = scores.ToString() + "/" + scoreRecord.ToString();
+            scoresText.text = "m: " + scores.ToString() + "/" + scoreRecord.ToString();
             if (scores > scoreRecord)
             {
-                PlayerPrefs.SetInt("scoreRecord", scores);  
+                PlayerPrefs.SetInt("scoreRecord", scores);
             }
         }
         //DEBUG TOOL

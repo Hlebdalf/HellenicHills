@@ -15,7 +15,7 @@ public class UIButtonManager : MonoBehaviour
     public GameObject Stats;
     public GameObject Content;
     public GameObject PartsAll;
-    
+
     public void ReloadScene()
     {
         ReloadButton.SetActive(false);
@@ -25,9 +25,9 @@ public class UIButtonManager : MonoBehaviour
     public void StartSession()
     {
         InGameUI.SetActive(true);
-        MenuUI.SetActive(false);
+        GetComponent<Animator>().Play("GameStart");
         Ball.GetComponent<Rigidbody>().isKinematic = false;
-        myCamera.GetComponent<FieldChecker>().GameStart();
+        Ball.GetComponent<FieldChecker>().GameStart();
     }
 
     public void MenuUIActive()
@@ -41,13 +41,23 @@ public class UIButtonManager : MonoBehaviour
         Magazine.SetActive(true);
         Stats.SetActive(false);
         Camera.main.GetComponent<Animator>().Play("Forward");
+        Content.GetComponent<Magazine>().RefreshButtons();
         StartCoroutine(ChoiseActive());
+    }
+
+    public void EnterSettings()
+    {
+        GetComponent<Animator>().Play("EnterSettings");
+    }
+    public void ExitSettings()
+    {
+        GetComponent<Animator>().Play("ExitSettings");
     }
     public void MagazineSetDisactive()
     {
         MenuUI.GetComponent<TouchToPlay>().enabled = true;
         Content.GetComponent<Image>().raycastTarget = false;
-        Content.GetComponent<MagazineScroller>().ModelSwitcher();
+        Content.GetComponent<Magazine>().ModelSwitcher();
         Camera.main.GetComponent<Animator>().Play("Back");
         Magazine.SetActive(false);
         Stats.SetActive(true);
@@ -55,7 +65,7 @@ public class UIButtonManager : MonoBehaviour
     IEnumerator ChoiseActive()
     {
         yield return new WaitForSeconds(1);
-        Content.GetComponent<MagazineScroller>().ChoiseActive();
+        Content.GetComponent<Magazine>().ChoiseActive();
         Content.GetComponent<Image>().raycastTarget = true;
     }
 }

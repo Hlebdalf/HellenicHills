@@ -1,41 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SunRotation : MonoBehaviour
 {
-    public Gradient SunColor;
-    public Gradient FogColorUp;
-    public Gradient FogColorDown;
-    public Gradient SunStrenght;
-    public Gradient GorizontColorUp;
-    public Gradient SkyColorUp;
-    public Gradient GorizontColorDown;
-    public Gradient SkyColorDown;
+    [FormerlySerializedAs("SunColor")] public Gradient sunColor;
+    [FormerlySerializedAs("FogColorUp")] public Gradient fogColorUp;
+    [FormerlySerializedAs("FogColorDown")] public Gradient fogColorDown;
+    [FormerlySerializedAs("SunStrenght")] public Gradient sunStrenght;
+    [FormerlySerializedAs("MoonStrenght")] public Gradient moonStrenght;
+    [FormerlySerializedAs("GorizontColorUp")] public Gradient gorizontColorUp;
+    [FormerlySerializedAs("SkyColorUp")] public Gradient skyColorUp;
+    [FormerlySerializedAs("GorizontColorDown")] public Gradient gorizontColorDown;
+    [FormerlySerializedAs("SkyColorDown")] public Gradient skyColorDown;
     public GameObject ball;
     public float speed;
+    private float _mySpeed;
     public int rate = 30;
-    private int myRate;
-    private Color backGround;
-    private GameObject sun;
-    private GameObject moon;
-    private Light moonLight;
-    private Light sunLight;
-    private Light ballLight;
-    private float angle;
-    private float angle1;
+    private int _myRate;
+    private Color _backGround;
+    private GameObject _sun;
+    private GameObject _moon;
+    private Light _moonLight;
+    private Light _sunLight;
+    private Light _ballLight;
+    private float _angle;
+    private float _angle1;
     [SerializeField]
     private bool upOrDown = true;
-    private Vector3 up;
+    private Vector3 _up;
     private void Start()
     {
-        up = transform.forward;
-        sun = transform.GetChild(0).gameObject;
-        moon = transform.GetChild(1).gameObject;
-        sunLight = sun.GetComponent<Light>();
-        moonLight = moon.GetComponent<Light>();
-        ballLight = ball.GetComponent<Light>();
-        myRate = rate;
+        float coin = Random.value;
+        _up = transform.forward;
+        _sun = transform.GetChild(0).gameObject;
+        _moon = transform.GetChild(1).gameObject;
+        _sunLight = _sun.GetComponent<Light>();
+        _moonLight = _moon.GetComponent<Light>();
+        _ballLight = ball.GetComponent<Light>();
+        _myRate = rate;
+        _mySpeed = speed;
+        transform.Rotate(coin * 360, 0, 0);
         StartCoroutine(RotatorCoroutine());
 
     }
@@ -44,45 +50,44 @@ public class SunRotation : MonoBehaviour
     {
         while (true)
         {
-            angle = Quaternion.Angle(transform.rotation, new Quaternion(0, 0, 0, 1)) / 180;
-            angle1 = -Vector3.SignedAngle(up, transform.up, transform.right) / 180;
-            if (angle < 0.5f && upOrDown)
+            _angle = -Mathf.Acos(transform.up.z) * Mathf.Abs(Mathf.Asin(transform.up.y)) / Mathf.Asin(transform.up.y) / Mathf.PI;
+            if (_angle < 0 && upOrDown)
             {
                 upOrDown = false;
-                sun.SetActive(false);
-                moon.SetActive(true);
+                _sun.SetActive(false);
+                _moon.SetActive(true);
                 ball.SetActive(true);
             }
-
-            else if (angle > 0.5f && !upOrDown)
+            else if (_angle > 0 && !upOrDown)
             {
                 ball.SetActive(false);
-                sun.SetActive(true);
-                moon.SetActive(false);
+                _sun.SetActive(true);
+                _moon.SetActive(false);
                 upOrDown = true;
             }
             if (upOrDown)
             {
-                sunLight.intensity = SunStrenght.Evaluate(angle1).g;
-                sunLight.color = SunColor.Evaluate(angle1);
-                RenderSettings.ambientSkyColor = SkyColorUp.Evaluate(angle1);
-                RenderSettings.ambientEquatorColor = GorizontColorUp.Evaluate(angle1);
-                Camera.main.backgroundColor = FogColorUp.Evaluate(angle1);
-                RenderSettings.fogColor = FogColorUp.Evaluate(angle1);
+                _sunLight.intensity = sunStrenght.Evaluate(_angle).g;
+                _sunLight.color = sunColor.Evaluate(_angle);
+                RenderSettings.ambientSkyColor = skyColorUp.Evaluate(_angle);
+                RenderSettings.ambientEquatorColor = gorizontColorUp.Evaluate(_angle);
+                Camera.main.backgroundColor = fogColorUp.Evaluate(_angle);
+                RenderSettings.fogColor = fogColorUp.Evaluate(_angle);
+                _mySpeed = speed;
             }
-
             else
             {
-                moonLight.intensity = (1 - angle) / 4;
-                ballLight.intensity = (1 - angle - 0.5f) * 2;
-                RenderSettings.ambientSkyColor = SkyColorDown.Evaluate(angle1 + 1);
-                RenderSettings.ambientEquatorColor = GorizontColorDown.Evaluate(angle1 + 1);
-                Camera.main.backgroundColor = FogColorDown.Evaluate(angle1 + 1);
-                RenderSettings.fogColor = FogColorDown.Evaluate(angle1 + 1);
+                _angle = 1 - Mathf.Abs(_angle);
+                _moonLight.intensity = moonStrenght.Evaluate(_angle).g;
+                RenderSettings.ambientSkyColor = skyColorDown.Evaluate(_angle);
+                RenderSettings.ambientEquatorColor = gorizontColorDown.Evaluate(_angle);
+                Camera.main.backgroundColor = fogColorDown.Evaluate(_angle);
+                RenderSettings.fogColor = fogColorDown.Evaluate(_angle);
+                _mySpeed = speed * 2;
             }
-            backGround = new Color(angle, angle, angle);
-            transform.Rotate(speed, 0, 0);
-            yield return new WaitForSeconds(1 / myRate);
+            _backGround = new Color(_angle, _angle, _angle);
+            transform.Rotate(_mySpeed, 0, 0);
+            yield return new WaitForSeconds(1 / _myRate);
         }
     }
 }

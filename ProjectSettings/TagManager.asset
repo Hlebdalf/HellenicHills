@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - MainCanvas
+  - Ball
+  - Decorate
+  - Water
+  - Interactive
+  - Ghost
   layers:
   - Default
   - TransparentFX

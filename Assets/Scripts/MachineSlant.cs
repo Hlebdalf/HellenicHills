@@ -23,9 +23,9 @@ public class MachineSlant : MonoBehaviour
     {
         if (right.z > rb.velocity.z) mp = 1;
         else mp = -1;
-        angle = Vector3.Angle(right, new Vector3(rb.velocity.x, 0, rb.velocity.z))*mp;
+        angle = Vector3.Angle(right, new Vector3(rb.velocity.x, 0, rb.velocity.z)) * mp;
         delta = angle - preangle;
-        transform.rotation = Quaternion.Euler(0, angle, rb.velocity.magnitude/3);
+        transform.rotation = Quaternion.Euler(0, angle, rb.velocity.magnitude / 3);
         particle.transform.rotation = Quaternion.Euler(0, angle, 0);
         machineUp.transform.Rotate(0, -delta, 0);
         preangle = angle;

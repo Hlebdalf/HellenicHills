@@ -8,7 +8,6 @@ public class Decorates : MonoBehaviour
     {
         float childsCNT = (float)transform.childCount;
         float coin = Random.value;
-
         int target = Mathf.FloorToInt(coin * childsCNT * childsCNT / childsCNT);
         for (int i = 0; i < childsCNT; i++)
         {

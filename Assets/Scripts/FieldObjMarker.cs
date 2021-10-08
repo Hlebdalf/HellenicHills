@@ -5,31 +5,51 @@ using UnityEngine.UI;
 
 public class FieldObjMarker : MonoBehaviour
 {
-    public Death death;
-    public Color color;
+
     public GameObject refMarker;
-    public GameObject canvas;
-    private GameObject selfMarker;
-    public GameObject ball;
-    public void StartGame()
+    private GameObject _canvas;
+    private GameObject _selfMarker;
+    private GameObject _ball;
+    private Color _color;
+    public void StartGame(string type)
     {
-        selfMarker = Instantiate(refMarker);
-        selfMarker.GetComponent<Transform>().SetParent(canvas.GetComponent<Transform>().GetChild(0).transform);
-        selfMarker.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(transform.position);
+        _ball = GameObject.FindGameObjectWithTag("Ball");
+        _canvas = GameObject.FindGameObjectWithTag("MainCanvas");
+        switch (type)
+        {
+            case "Chargers":
+                _color = Color.cyan;
+                break;
+            case "Missions":
+                _color = Color.yellow;
+                break;
+            case "Parts":
+                _color = Color.white;
+                break;
+            case "Repairs":
+                _color = Color.green;
+                break;
+            default:
+                _color = Color.red;
+                break;
+        }
+
+        _selfMarker = Instantiate(refMarker);
+        _selfMarker.GetComponent<Transform>().SetParent(_canvas.transform.GetChild(2).GetChild(0));
+        _selfMarker.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(transform.position);
         StartCoroutine(MarkerPosition());
     }
 
-    IEnumerator MarkerPosition()
+    private IEnumerator MarkerPosition()
     {
-        while (gameObject.GetComponent<Transform>().position.x > ball.GetComponent<Transform>().position.x + 40)
+        while (gameObject.GetComponent<Transform>().position.x > _ball.GetComponent<Transform>().position.x + 40)
         {
-            selfMarker.GetComponent<Image>().color = new Color(color.r, color.g, color.b, 1 - (gameObject.GetComponent<Transform>().position.x - ball.GetComponent<Transform>().position.x) / 1200);
-            RectTransform nowTransfporm = selfMarker.GetComponent<RectTransform>();
-            nowTransfporm.position = new Vector3(Camera.main.WorldToScreenPoint(transform.position).x, Screen.height - 120, 1);
-            selfMarker.GetComponent<RectTransform>().position = nowTransfporm.position;
+            _selfMarker.GetComponent<Image>().color = new Color(_color.r, _color.g, _color.b, 1 - (gameObject.GetComponent<Transform>().position.x - _ball.GetComponent<Transform>().position.x) / 512);
+            RectTransform nowTransform = _selfMarker.GetComponent<RectTransform>();
+            nowTransform.position = new Vector3(Camera.main.WorldToScreenPoint(transform.position).x, Screen.height - 340, 1);
+            _selfMarker.GetComponent<RectTransform>().position = nowTransform.position;
             yield return new WaitForEndOfFrame();
         }
-        Destroy(selfMarker);
-        yield break;
+        Destroy(_selfMarker);
     }
 }
