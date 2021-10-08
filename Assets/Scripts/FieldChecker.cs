@@ -99,7 +99,7 @@ public class FieldChecker : MonoBehaviour
         _fuelIncr = 0;
     }
 
-    private void FieldObjEvent(string type)
+    private void FieldObjEvent(string type, Collider other = null)
     {
         float damage = _rb.velocity.magnitude * mp;
         switch (type)
@@ -111,6 +111,7 @@ public class FieldChecker : MonoBehaviour
                 break;
             case "Parts":
                 PartsCollect();
+                other.enabled = false;
                 break;
             case "Repairs":
                 break;
@@ -238,7 +239,7 @@ public class FieldChecker : MonoBehaviour
         }
         else if (other.CompareTag("Interactive"))
         {
-            FieldObjEvent(other.name);
+            FieldObjEvent(other.name, other);
             if (other.name == "Repairs")
             {
                 other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
