@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SoundButton : MonoBehaviour
-{   
+{
     private bool _isSound = true;
     public Audio audio;
     private void Start()
@@ -14,10 +14,10 @@ public class SoundButton : MonoBehaviour
             Play(true);
             _isSound = true;
         }
-        else 
+        else
         {
             Play(false);
-             _isSound = false;
+            _isSound = false;
         }
         ChangeColor();
     }
@@ -39,7 +39,7 @@ public class SoundButton : MonoBehaviour
             GetComponent<Image>().color = new Color(0, 1, 0);
             PlayerPrefs.SetInt("isSound", 1);
         }
-        else 
+        else
         {
             GetComponent<Image>().color = new Color(1, 0, 0);
             PlayerPrefs.SetInt("isSound", 0);

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MusicButton : MonoBehaviour
-{   
+{
     private bool _isMusic = true;
     public Audio audio;
     private void Start()
@@ -14,10 +14,10 @@ public class MusicButton : MonoBehaviour
             Play(true);
             _isMusic = true;
         }
-        else 
+        else
         {
             Play(false);
-             _isMusic = false;
+            _isMusic = false;
         }
         ChangeColor();
     }
@@ -39,7 +39,7 @@ public class MusicButton : MonoBehaviour
             GetComponent<Image>().color = new Color(0, 1, 0);
             PlayerPrefs.SetInt("isMusic", 1);
         }
-        else 
+        else
         {
             GetComponent<Image>().color = new Color(1, 0, 0);
             PlayerPrefs.SetInt("isMusic", 0);

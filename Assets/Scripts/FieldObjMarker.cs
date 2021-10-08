@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class FieldObjMarker : MonoBehaviour
 {
-    
+
     public GameObject refMarker;
     private GameObject _canvas;
     private GameObject _selfMarker;
@@ -17,23 +17,23 @@ public class FieldObjMarker : MonoBehaviour
         _canvas = GameObject.FindGameObjectWithTag("MainCanvas");
         switch (type)
         {
-          case "Chargers":
-              _color = Color.cyan;
-              break;
-          case "Missions":
-              _color = Color.yellow;
-              break;
-          case "Parts":
-              _color = Color.white;
-              break;
-          case "Repairs":
-              _color = Color.green;
-              break;
-          default:
-              _color = Color.red;
-              break;
+            case "Chargers":
+                _color = Color.cyan;
+                break;
+            case "Missions":
+                _color = Color.yellow;
+                break;
+            case "Parts":
+                _color = Color.white;
+                break;
+            case "Repairs":
+                _color = Color.green;
+                break;
+            default:
+                _color = Color.red;
+                break;
         }
-        
+
         _selfMarker = Instantiate(refMarker);
         _selfMarker.GetComponent<Transform>().SetParent(_canvas.transform.GetChild(2).GetChild(0));
         _selfMarker.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(transform.position);

@@ -2,22 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-//using UnityEngine.Rendering.Universal;
 
 public class RSButton : MonoBehaviour
 {
     public Light sunLight;
     public Light moonLight;
     private bool _isEnableRS;
-    private void Start(){
-        if(PlayerPrefs.GetInt("isEnableRS") == 1)
-        {
-            _isEnableRS = true;
-        } 
-        else 
-        {
-            _isEnableRS = false;
-        }
+    private void Start()
+    {
+        if (PlayerPrefs.GetInt("isEnableRS") == 1) _isEnableRS = true;
+        else _isEnableRS = false;
         Refresh();
     }
     public void SetRSActivity()
@@ -27,18 +21,21 @@ public class RSButton : MonoBehaviour
     }
     public void Refresh()
     {
-        if (_isEnableRS) { 
+        if (_isEnableRS)
+        {
             gameObject.GetComponent<Image>().color = new Color(0, 1, 0);
             sunLight.shadows = LightShadows.Hard;
             moonLight.shadows = LightShadows.Hard;
             PlayerPrefs.SetInt("isEnableRS", 1);
         }
-        else { 
+        else
+        {
             gameObject.GetComponent<Image>().color = new Color(1, 0, 0);
             sunLight.shadows = LightShadows.None;
             moonLight.shadows = LightShadows.None;
             PlayerPrefs.SetInt("isEnableRS", 0);
-        
-        PlayerPrefs.Save();   
+
+            PlayerPrefs.Save();
+        }
     }
-}}
+}

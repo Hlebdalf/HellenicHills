@@ -29,7 +29,5 @@ public class VelocityUI : MonoBehaviour
             R.rectTransform.sizeDelta = new Vector2(-rb.velocity.z * 10.3f, _height);
             L.rectTransform.sizeDelta = new Vector2(0, _height);
         }
-        
-        
     }
 }

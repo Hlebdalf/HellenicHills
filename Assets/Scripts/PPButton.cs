@@ -8,15 +8,10 @@ public class PPButton : MonoBehaviour
 {
     public Camera MainCamera;
     private bool _isEnablePP;
-    private void Start(){
-        if(PlayerPrefs.GetInt("isEnablePP") == 1)
-        {
-            _isEnablePP = true;
-        } 
-        else 
-        {
-            _isEnablePP = false;
-        }
+    private void Start()
+    {
+        if (PlayerPrefs.GetInt("isEnablePP") == 1) _isEnablePP = true;
+        else _isEnablePP = false;
         Refresh();
     }
     public void SetPPActivity()
@@ -29,16 +24,16 @@ public class PPButton : MonoBehaviour
     {
         UniversalAdditionalCameraData uac = MainCamera.GetComponent<Camera>().GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
         uac.renderPostProcessing = _isEnablePP;
-        if (_isEnablePP) 
-        { 
-            gameObject.GetComponent<Image>().color = new Color(0, 1, 0); 
+        if (_isEnablePP)
+        {
+            gameObject.GetComponent<Image>().color = new Color(0, 1, 0);
             PlayerPrefs.SetInt("isEnablePP", 1);
         }
-        else 
-        { 
-            gameObject.GetComponent<Image>().color = new Color(1, 0, 0); 
+        else
+        {
+            gameObject.GetComponent<Image>().color = new Color(1, 0, 0);
             PlayerPrefs.SetInt("isEnablePP", 0);
-        } 
-        PlayerPrefs.Save();   
+        }
+        PlayerPrefs.Save();
     }
 }

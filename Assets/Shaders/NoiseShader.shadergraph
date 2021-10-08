@@ -13,9 +13,6 @@
             "m_Id": "fd0d843ba4ac45c2bd344a013bfa0ab7"
         },
         {
-            "m_Id": "e253eaee486344d7bf98213a4351dc62"
-        },
-        {
             "m_Id": "090150e04f634e6eb9f7220d01725be0"
         },
         {
@@ -2601,29 +2598,6 @@
     },
     "m_Property": {
         "m_Id": "2890a1d24f7f415986e2ea5c2f0e3b46"
-    }
-}
-
-{
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "e253eaee486344d7bf98213a4351dc62",
-    "m_Guid": {
-        "m_GuidSerialized": "dbd25e66-6502-4d5c-96a7-34fd76432b43"
-    },
-    "m_Name": "Scale",
-    "m_DefaultReferenceName": "Vector1_e253eaee486344d7bf98213a4351dc62",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": 73.19999694824219,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
     }
 }
 

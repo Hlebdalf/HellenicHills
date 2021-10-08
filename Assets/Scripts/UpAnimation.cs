@@ -9,5 +9,5 @@ public class UpAnimation : MonoBehaviour
     {
         transform.Rotate(0, speed, 0);
     }
-    
+
 }

@@ -31,7 +31,7 @@ public class SunRotation : MonoBehaviour
     private bool upOrDown = true;
     private Vector3 _up;
     private void Start()
-    {   
+    {
         float coin = Random.value;
         _up = transform.forward;
         _sun = transform.GetChild(0).gameObject;
@@ -49,10 +49,8 @@ public class SunRotation : MonoBehaviour
     private IEnumerator RotatorCoroutine()
     {
         while (true)
-        {   
+        {
             _angle = -Mathf.Acos(transform.up.z) * Mathf.Abs(Mathf.Asin(transform.up.y)) / Mathf.Asin(transform.up.y) / Mathf.PI;
-            _angle1 = -Vector3.SignedAngle(_up, transform.up, transform.right) / 180;
-            //Debug.Log(_angle);
             if (_angle < 0 && upOrDown)
             {
                 upOrDown = false;
@@ -60,7 +58,6 @@ public class SunRotation : MonoBehaviour
                 _moon.SetActive(true);
                 ball.SetActive(true);
             }
-
             else if (_angle > 0 && !upOrDown)
             {
                 ball.SetActive(false);
@@ -79,10 +76,9 @@ public class SunRotation : MonoBehaviour
                 _mySpeed = speed;
             }
             else
-            {   
-                _angle = 1-Mathf.Abs(_angle);
+            {
+                _angle = 1 - Mathf.Abs(_angle);
                 _moonLight.intensity = moonStrenght.Evaluate(_angle).g;
-                //_ballLight.intensity = (_angle + 1) * 2;
                 RenderSettings.ambientSkyColor = skyColorDown.Evaluate(_angle);
                 RenderSettings.ambientEquatorColor = gorizontColorDown.Evaluate(_angle);
                 Camera.main.backgroundColor = fogColorDown.Evaluate(_angle);

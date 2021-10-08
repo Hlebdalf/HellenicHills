@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 public class ParticleControl : MonoBehaviour
-{   
+{
     public AudioMixerGroup mixerGroup;
     public AudioMixerSnapshot ground;
     public AudioMixerSnapshot air;
@@ -18,9 +18,9 @@ public class ParticleControl : MonoBehaviour
     {
         particle.startSpeed = rb.velocity.magnitude * 3;
         particle.emissionRate = rb.velocity.magnitude * 10;
-        mixerGroup.audioMixer.SetFloat("PitchShift", Mathf.Lerp(0.5f, 1 , rb.velocity.magnitude/30));
-        mixerGroup.audioMixer.SetFloat("LowPass", Mathf.Lerp(600, 8000, rb.velocity.magnitude/30));
-        
+        mixerGroup.audioMixer.SetFloat("PitchShift", Mathf.Lerp(0.5f, 1, rb.velocity.magnitude / 30));
+        mixerGroup.audioMixer.SetFloat("LowPass", Mathf.Lerp(600, 8000, rb.velocity.magnitude / 30));
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -33,9 +33,9 @@ public class ParticleControl : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.name == "Terrain")
-        {   
+        {
             air.TransitionTo(0.3f);
-            particle.startDelay = 10000;     
+            particle.startDelay = 10000;
         }
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - Decorate
   - Water
   - Interactive
+  - Ghost
   layers:
   - Default
   - TransparentFX

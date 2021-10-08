@@ -19,11 +19,11 @@ public class FieldObject : MonoBehaviour
         else if (coin < _missionChance + _partChance + _chargerChance) _type = 0;
         else if (coin < _missionChance + _partChance + _chargerChance + _repairChance) _type = 4;
         else _type = 1;
-        for (int i =0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             if (i == _type)
             {
-                transform.GetChild(i).gameObject.SetActive(true); 
+                transform.GetChild(i).gameObject.SetActive(true);
                 continue;
             }
             Destroy(transform.GetChild(i).gameObject);

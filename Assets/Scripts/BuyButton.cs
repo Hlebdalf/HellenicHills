@@ -12,7 +12,8 @@ public class BuyButton : MonoBehaviour
     {
         isBuyed = PlayerPrefs.GetInt(name + "button", 0) == 1;
     }
-    private void Start(){
+    private void Start()
+    {
         death = GameObject.FindGameObjectWithTag("Ball").GetComponent<FieldChecker>();
         Refresh();
     }
@@ -20,12 +21,14 @@ public class BuyButton : MonoBehaviour
     {
         gameObject.transform.GetChild(0).GetComponent<Text>().text = price.ToString();
         if (isBuyed)
-        {   
-            if(Magazine.modelType == int.Parse(name)){
+        {
+            if (Magazine.modelType == int.Parse(name))
+            {
                 gameObject.GetComponent<Image>().color = new Color(0.6f, 0.6f, 0);
                 gameObject.transform.GetChild(0).GetComponent<Text>().text = "in use";
             }
-            else {
+            else
+            {
                 gameObject.GetComponent<Image>().color = new Color(1, 1, 0);
                 gameObject.transform.GetChild(0).GetComponent<Text>().text = "use?";
             }
@@ -41,14 +44,13 @@ public class BuyButton : MonoBehaviour
             {
                 gameObject.GetComponent<Button>().interactable = true;
                 gameObject.GetComponent<Image>().color = new Color(0, 1, 0);
-
             }
         }
     }
 
     public void OnRelease()
     {
-        if (!isBuyed && death.partsAll> price)
+        if (!isBuyed && death.partsAll > price)
         {
             isBuyed = true;
             PlayerPrefs.SetInt(name + "button", 1);

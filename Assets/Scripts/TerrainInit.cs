@@ -22,7 +22,7 @@ public class TerrainInit : MonoBehaviour
         _noiseMaterial = ns; _terrainMaterial = tr;
         _resolution = res; _offset = oft; _seed = sd; _koeff = kf; _refFo = rFo;
         _water = Instantiate(rWater);
-        rWater.transform.position = new Vector3((_offset.x+ 0.5f) * _resolution.x, 35, (_offset.y+ 0.5f) * _resolution.x);
+        rWater.transform.position = new Vector3((_offset.x + 0.5f) * _resolution.x, 35, (_offset.y + 0.5f) * _resolution.x);
         StartCoroutine(Build());
     }
     void OnDestroy()
@@ -78,10 +78,10 @@ public class TerrainInit : MonoBehaviour
         gameObject.GetComponent<Terrain>().terrainData.size = new Vector3((_resolution.x) * _koeff, 100, (_resolution.x) * _koeff);
         gameObject.GetComponent<Terrain>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         gameObject.GetComponent<Terrain>().materialTemplate.mainTexture = texture;
-        for (int x = 0; x < _resolution.x/2; x++)
+        for (int x = 0; x < _resolution.x / 2; x++)
         {
 
-            for (int y = 0; y < _resolution.y/2; y++)
+            for (int y = 0; y < _resolution.y / 2; y++)
             {
                 if (Random.value > 0.992f)
                 {

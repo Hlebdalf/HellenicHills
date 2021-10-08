@@ -15,7 +15,7 @@ public class UIButtonManager : MonoBehaviour
     public GameObject Stats;
     public GameObject Content;
     public GameObject PartsAll;
-    
+
     public void ReloadScene()
     {
         ReloadButton.SetActive(false);
@@ -25,7 +25,6 @@ public class UIButtonManager : MonoBehaviour
     public void StartSession()
     {
         InGameUI.SetActive(true);
-        //MenuUI.SetActive(false);
         GetComponent<Animator>().Play("GameStart");
         Ball.GetComponent<Rigidbody>().isKinematic = false;
         Ball.GetComponent<FieldChecker>().GameStart();

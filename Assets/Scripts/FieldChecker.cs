@@ -6,18 +6,18 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 
 public class FieldChecker : MonoBehaviour
-{   
+{
     public Sprite resume;
     public Sprite pause;
     public Image pauseButton;
     public Audio audio;
-    public AudioMixerGroup Mixer;    
+    public AudioMixerGroup Mixer;
     public AudioMixerSnapshot upSnap;
     public AudioMixerSnapshot downSnap;
     public AudioMixerSnapshot gameOver;
     public GameObject canvas;
     public GameObject magazine;
-    public GameObject volume; 
+    public GameObject volume;
     public GameObject panel;
     public bool _upOrDown = true;
     public float fuel = 1000;
@@ -30,7 +30,7 @@ public class FieldChecker : MonoBehaviour
     [FormerlySerializedAs("ReloadButton")] public GameObject reloadButton;
     public Text scoreRecordText;
     public Text partsAllText;
-    public int partsAll = 0;    
+    public int partsAll = 0;
     public float health = 1000;
     public Slider healthBar;
     public float mp = 1;
@@ -44,7 +44,7 @@ public class FieldChecker : MonoBehaviour
 
 
     private void Start()
-    {    
+    {
         upSnap.TransitionTo(0.3f);
         fuelBar.maxValue = fuel;
         _rb = GetComponent<Rigidbody>();
@@ -54,14 +54,14 @@ public class FieldChecker : MonoBehaviour
     }
 
     private void Awake()
-    {   
-        scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString(); 
+    {
+        scoreRecordText.text = PlayerPrefs.GetInt("scoreRecord").ToString();
         partsAll = PlayerPrefs.GetInt("partsAll");
         partsAllText.text = "₽: " + partsAll.ToString();
     }
     public void GameOver()
-    
-    {   
+
+    {
         audio.PlayMusic(false);
         gameOver.TransitionTo(0.1f);
         StopAllCoroutines();
@@ -72,17 +72,17 @@ public class FieldChecker : MonoBehaviour
         GetComponent<FieldChecker>().enabled = false;
     }
     public void PauseGame()
-    {   
+    {
         _isPause = !_isPause;
-        if(_isPause)
-        {   
+        if (_isPause)
+        {
             _preVelocity = _rb.velocity;
             StopAllCoroutines();
             _rb.isKinematic = true;
             pauseButton.sprite = resume;
             canvas.GetComponent<Animator>().Play("EnterPause");
-        } 
-        else 
+        }
+        else
         {
             pauseButton.sprite = pause;
             _rb.isKinematic = false;
@@ -100,16 +100,16 @@ public class FieldChecker : MonoBehaviour
     }
 
     private void FieldObjEvent(string type)
-    {   
+    {
         float damage = _rb.velocity.magnitude * mp;
-        switch (type) {  
+        switch (type)
+        {
             case "Chargers":
                 break;
             case "Missions":
                 GetComponent<Rigidbody>().isKinematic = false;
                 break;
             case "Parts":
-                //StartCoroutine(PartsCollectCoroutine());
                 PartsCollect();
                 break;
             case "Repairs":
@@ -125,17 +125,16 @@ public class FieldChecker : MonoBehaviour
         }
     }
     private void PartsCollect()
-    {   
-        //yield return new WaitForSeconds(2);
+    {
         partsAll += (int)Random.Range(0, 10.0f);
         partsAllText.text = "₽: " + partsAll.ToString();
         SaveParts();
         GetComponent<Rigidbody>().isKinematic = false;
     }
     private IEnumerator Consumption()
-    {   
+    {
         while (health > 1 && fuel > 1)
-        {   
+        {
             health -= _healthDecr;
             healthBar.value = health;
             fuel -= _fuelDecr;
@@ -146,11 +145,11 @@ public class FieldChecker : MonoBehaviour
     }
 
     private IEnumerator Restore()
-    {   
-        while(true)
+    {
+        while (true)
         {
             yield return new WaitForSeconds(0.016f);
-            if(fuel < 1000) fuel += _fuelIncr;
+            if (fuel < 1000) fuel += _fuelIncr;
             else fuel = 1000;
             fuelBar.value = fuel;
             if (health < 1000) health += _healthIncr;
@@ -158,9 +157,9 @@ public class FieldChecker : MonoBehaviour
             healthBar.value = health;
             fuelBar.value = fuel;
             healthBar.value = health;
-        }    
+        }
     }
-    
+
     private IEnumerator CheckVolume()
     {
         while (health > 1 && fuel > 1)
@@ -168,7 +167,7 @@ public class FieldChecker : MonoBehaviour
             if (transform.position.y < 32)
             {
                 if (_upOrDown)
-                {   
+                {
                     downSnap.TransitionTo(0.3f);
                     _upOrDown = false;
                     VolumeSetActive();
@@ -179,17 +178,17 @@ public class FieldChecker : MonoBehaviour
             else
             {
                 if (!_upOrDown)
-                {   
+                {
 
                     _upOrDown = true;
                     upSnap.TransitionTo(0.3f);
                     VolumeSetActive();
                     Mixer.audioMixer.SetFloat("MasterLowPass", 20000);
-                    
+
                 }
                 _upOrDown = true;
             }
-            
+
             yield return new WaitForFixedUpdate();
         }
     }
@@ -206,8 +205,8 @@ public class FieldChecker : MonoBehaviour
         audio.HitSound(_rb.velocity.x / 25);
         health -= damage * mp;
         healthBar.value = health;
-        if(health < 1) GameOver();
-        else{_rb.isKinematic = false;}
+        if (health < 1) GameOver();
+        else { _rb.isKinematic = false; }
     }
 
     private void VolumeSetActive()
@@ -215,7 +214,7 @@ public class FieldChecker : MonoBehaviour
         if (_upOrDown)
         {
             FieldObjEvent("Water");
-            volume.SetActive(false); 
+            volume.SetActive(false);
             panel.SetActive(false);
             _fuelDecr = fuelDecr;
             _healthDecr = 0;
@@ -229,10 +228,10 @@ public class FieldChecker : MonoBehaviour
             _fuelDecr = 0;
         }
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
-        
+
         if (other.CompareTag("Decorate"))
         {
             FieldObjEvent("Decorate");
@@ -240,12 +239,12 @@ public class FieldChecker : MonoBehaviour
         else if (other.CompareTag("Interactive"))
         {
             FieldObjEvent(other.name);
-            if(other.name == "Repairs")
-            {   
+            if (other.name == "Repairs")
+            {
                 other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
                 _healthIncr += healthIncr;
             }
-            if(other.name == "Chargers")
+            if (other.name == "Chargers")
             {
                 _fuelIncr += fuelIncr;
                 other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
@@ -254,20 +253,20 @@ public class FieldChecker : MonoBehaviour
     }
 
     private void OnTriggerExit(Collider other)
-    {   
+    {
         if (other.CompareTag("Interactive"))
         {
-            if(other.name == "Repairs")
-            {   
+            if (other.name == "Repairs")
+            {
                 other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
                 _healthIncr -= healthIncr;
             }
-            if(other.name == "Chargers")
-            {   
+            if (other.name == "Chargers")
+            {
                 other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
                 _fuelIncr -= fuelIncr;
             }
-            
+
         }
     }
 
@@ -281,7 +280,6 @@ public class FieldChecker : MonoBehaviour
             PlayerPrefs.SetInt("partsAll", partsAll);
             PlayerPrefs.Save();
         }
-
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             partsAll = 0;

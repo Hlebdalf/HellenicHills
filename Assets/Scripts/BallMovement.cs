@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 
 public class BallMovement : MonoBehaviour
-{   
+{
     public Slider slider;
     public Image button;
     public float turnForce = 1;
@@ -64,7 +64,6 @@ public class BallMovement : MonoBehaviour
                 }
                 _rb.AddForce(new Vector3(0, 0, turnForce));
             }
-            // yield return new WaitForFixedUpdate();
             yield return new WaitForSeconds(0.0083f);
         }
     }
@@ -86,7 +85,6 @@ public class BallMovement : MonoBehaviour
                 }
                 _rb.AddForce(new Vector3(0, 0, -turnForce));
             }
-            //yield return new WaitForFixedUpdate();
             yield return new WaitForSeconds(0.0083f);
         }
     }
@@ -94,7 +92,6 @@ public class BallMovement : MonoBehaviour
     IEnumerator ForwardCoroutine()
     {
         while (true)
-        //Debug.Log(_rb.velocity.magnitude);
         {
             if (_rb.velocity.x > forwardSpeedRoof)
             {
@@ -108,20 +105,22 @@ public class BallMovement : MonoBehaviour
         }
     }
 
-    public void OnBoost(){
+    public void OnBoost()
+    {
         if (!_isBoost)
         {
-        button.color = new Color(0.3f, 0.3f, 0.3f);
-        _isBoost = true;
-        forwardForce *= boostMP;
-        turnForce *= boostMP;
-        StartCoroutine(BoostConsumption());
+            button.color = new Color(0.3f, 0.3f, 0.3f);
+            _isBoost = true;
+            forwardForce *= boostMP;
+            turnForce *= boostMP;
+            StartCoroutine(BoostConsumption());
         }
     }
 
     IEnumerator BoostConsumption()
     {
-        while(boost > 0){
+        while (boost > 0)
+        {
             slider.value = boost;
             boost -= boostCons;
             yield return new WaitForFixedUpdate();
@@ -133,7 +132,8 @@ public class BallMovement : MonoBehaviour
 
     IEnumerator BoostGrow()
     {
-        while(boost < 1000){
+        while (boost < 1000)
+        {
             boost += boostGrow;
             slider.value = boost;
             yield return new WaitForFixedUpdate();

@@ -16,7 +16,7 @@ public class ModelTypeLoad : MonoBehaviour
         for (int i = 0; i < ups.transform.childCount; i++)
         {
             if (i == type)
-            {   
+            {
                 ballTransform = balls.transform.GetChild(i).gameObject.transform;
                 continue;
             }
@@ -24,5 +24,4 @@ public class ModelTypeLoad : MonoBehaviour
             balls.transform.GetChild(i).gameObject.SetActive(false);
         }
     }
-
 }
