@@ -31,7 +31,7 @@ public class RepairUp : MonoBehaviour
 
     IEnumerator Rotator()
     {
-        while(true)
+        for (int i = 0; i < 540; i++)
         {
             Vector2 _targetPos = new Vector2(_ball.position.x, _ball.position.z) - _selfPos;
             Vector2 _forward2 = new Vector2(transform.forward.x, transform.forward.z);

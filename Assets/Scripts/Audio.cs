@@ -12,6 +12,7 @@ public class Audio : MonoBehaviour
     public AudioSource motor;
     public AudioSource water;
     public AudioSource end;
+    public AudioSource coin;
     public void HitSound(float val)
     {
         hit1.volume = val;
@@ -38,5 +39,11 @@ public class Audio : MonoBehaviour
         button.mute = how;
         water.mute = how;
         end.mute = how;
+        coin.mute = how;
+    }
+
+    public void CoinSound()
+    {
+        coin.Play();
     }
 }

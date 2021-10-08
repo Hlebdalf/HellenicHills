@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 
 public class FieldChecker : MonoBehaviour
 {
+    public Material coinUsedMaterial;
     public Sprite resume;
     public Sprite pause;
     public Image pauseButton;
@@ -112,6 +113,7 @@ public class FieldChecker : MonoBehaviour
             case "Parts":
                 PartsCollect();
                 other.enabled = false;
+                other.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = coinUsedMaterial;
                 break;
             case "Repairs":
                 break;
@@ -127,10 +129,10 @@ public class FieldChecker : MonoBehaviour
     }
     private void PartsCollect()
     {
+        audio.CoinSound();
         partsAll += (int)Random.Range(0, 10.0f);
         partsAllText.text = "₽: " + partsAll.ToString();
         SaveParts();
-        GetComponent<Rigidbody>().isKinematic = false;
     }
     private IEnumerator Consumption()
     {

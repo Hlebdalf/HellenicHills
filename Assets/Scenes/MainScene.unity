@@ -795,11 +795,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 213748942}
+  - component: {fileID: 213748943}
   - component: {fileID: 213748941}
   - component: {fileID: 213748940}
-  - component: {fileID: 213748943}
   - component: {fileID: 213748944}
   - component: {fileID: 213748945}
+  - component: {fileID: 213748946}
   m_Layer: 0
   m_Name: AudioGod
   m_TagString: Untagged
@@ -1034,6 +1035,7 @@ MonoBehaviour:
   motor: {fileID: 234191632}
   water: {fileID: 1855321242}
   end: {fileID: 1197008666310753519}
+  coin: {fileID: 213748946}
 --- !u!82 &213748944
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1150,6 +1152,102 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &213748946
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213748939}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 046afeff3a5cbd849be655410efd97e6, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.874
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 102
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -14653,6 +14751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1141fb1b587aec94bb01be48d51ddb8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinUsedMaterial: {fileID: 2100000, guid: bd8c3a4420dbdf04bab6fed329902224, type: 2}
   resume: {fileID: 21300000, guid: 5bdfe5524851d7b4f9496ea223deb794, type: 3}
   pause: {fileID: 21300000, guid: d8003b4943fd3454a806ba59a071c4b0, type: 3}
   pauseButton: {fileID: 402347140}
@@ -14669,7 +14768,10 @@ MonoBehaviour:
   panel: {fileID: 1787259352}
   _upOrDown: 1
   fuel: 1000
-  consumption: 2
+  fuelDecr: 2
+  healthDecr: 2
+  fuelIncr: 4
+  healthIncr: 4
   fuelBar: {fileID: 1000302138}
   ballUp: {fileID: 646575579}
   reloadButton: {fileID: 902108549}
