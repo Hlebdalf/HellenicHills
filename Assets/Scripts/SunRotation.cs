@@ -82,7 +82,7 @@ public class SunRotation : MonoBehaviour
             {   
                 _angle = 1-Mathf.Abs(_angle);
                 _moonLight.intensity = moonStrenght.Evaluate(_angle).g;
-                _ballLight.intensity = (_angle + 1) * 2;
+                //_ballLight.intensity = (_angle + 1) * 2;
                 RenderSettings.ambientSkyColor = skyColorDown.Evaluate(_angle);
                 RenderSettings.ambientEquatorColor = gorizontColorDown.Evaluate(_angle);
                 Camera.main.backgroundColor = fogColorDown.Evaluate(_angle);

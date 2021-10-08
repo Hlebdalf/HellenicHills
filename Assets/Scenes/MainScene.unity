@@ -1777,7 +1777,7 @@ MonoBehaviour:
     m_NumColorKeys: 5
     m_NumAlphaKeys: 2
   ball: {fileID: 6022534968241501373}
-  speed: 0.1
+  speed: 0.01
   rate: 5
   upOrDown: 1
 --- !u!4 &248216867
