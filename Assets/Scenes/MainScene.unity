@@ -1674,8 +1674,8 @@ MonoBehaviour:
   fogColorDown:
     serializedVersion: 2
     key0: {r: 0.28235295, g: 0.25882354, b: 0.33333334, a: 1}
-    key1: {r: 0, g: 0, b: 0, a: 1}
-    key2: {r: 0.045454547, g: 0.045454547, b: 0.045454547, a: 0}
+    key1: {r: 0.11366415, g: 0.07943217, b: 0.14150941, a: 1}
+    key2: {r: 0.11372549, g: 0.078431375, b: 0.14117648, a: 0}
     key3: {r: 0.6039216, g: 0.4862745, b: 0.4862745, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1732,16 +1732,16 @@ MonoBehaviour:
   moonStrenght:
     serializedVersion: 2
     key0: {r: 0, g: 0, b: 0, a: 1}
-    key1: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
-    key2: {r: 1, g: 1, b: 1, a: 0}
+    key1: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+    key2: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 6287
-    ctime2: 59368
+    ctime1: 20621
+    ctime2: 35308
     ctime3: 65535
     ctime4: 65535
     ctime5: 65535
@@ -1819,8 +1819,8 @@ MonoBehaviour:
   gorizontColorDown:
     serializedVersion: 2
     key0: {r: 0.3679245, g: 0.3152265, b: 0.18222676, a: 1}
-    key1: {r: 0, g: 0, b: 0, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
+    key1: {r: 0.1631903, g: 0.16131186, b: 0.23584908, a: 1}
+    key2: {r: 0.15824135, g: 0.18587238, b: 0.26415092, a: 0}
     key3: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 0}
     key4: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1828,7 +1828,7 @@ MonoBehaviour:
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
     ctime1: 23708
-    ctime2: 40863
+    ctime2: 41029
     ctime3: 65535
     ctime4: 65535
     ctime5: 0
@@ -1848,17 +1848,17 @@ MonoBehaviour:
   skyColorDown:
     serializedVersion: 2
     key0: {r: 0.2648948, g: 0.19624421, b: 0.3962264, a: 1}
-    key1: {r: 0, g: 0, b: 0, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0.032646876, g: 0.022637222, b: 0.022637222, a: 0}
+    key1: {r: 0.19417228, g: 0.16682982, b: 0.21698111, a: 1}
+    key2: {r: 0.086673394, g: 0.069152735, b: 0.13207549, a: 0}
+    key3: {r: 0.745283, g: 0.51677644, b: 0.51677644, a: 0}
     key4: {r: 0.745283, g: 0.51677644, b: 0.51677644, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
     ctime1: 24287
-    ctime2: 39128
-    ctime3: 41827
+    ctime2: 41797
+    ctime3: 65535
     ctime4: 65535
     ctime5: 0
     ctime6: 0
@@ -1872,7 +1872,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_NumColorKeys: 5
+    m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   ball: {fileID: 6022534968241501373}
   speed: 0.01
@@ -3219,7 +3219,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.740566, g: 1, b: 0.94674397, a: 1}
+  m_Color: {r: 0.99199396, g: 1, b: 0.9009434, a: 1}
   m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
@@ -14768,9 +14768,9 @@ MonoBehaviour:
   panel: {fileID: 1787259352}
   _upOrDown: 1
   fuel: 1000
-  fuelDecr: 2
-  healthDecr: 2
-  fuelIncr: 4
+  fuelDecr: 4
+  healthDecr: 6
+  fuelIncr: 3
   healthIncr: 4
   fuelBar: {fileID: 1000302138}
   ballUp: {fileID: 646575579}
