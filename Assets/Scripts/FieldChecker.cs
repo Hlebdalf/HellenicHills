@@ -98,6 +98,7 @@ public class FieldChecker : MonoBehaviour
         transform.GetChild(0).GetComponent<AudioSource>().Play();
         _healthIncr = 0;
         _fuelIncr = 0;
+        GetComponent<SphereCollider>().enabled = true;
     }
 
     private void FieldObjEvent(string type, Collider other = null)

@@ -1674,10 +1674,10 @@ MonoBehaviour:
   fogColorDown:
     serializedVersion: 2
     key0: {r: 0.28235295, g: 0.25882354, b: 0.33333334, a: 1}
-    key1: {r: 0.11366415, g: 0.07943217, b: 0.14150941, a: 1}
-    key2: {r: 0.11372549, g: 0.078431375, b: 0.14117648, a: 0}
+    key1: {r: 0.17456725, g: 0.13216448, b: 0.20754719, a: 1}
+    key2: {r: 0.20031875, g: 0.1546369, b: 0.23584908, a: 0}
     key3: {r: 0.6039216, g: 0.4862745, b: 0.4862745, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0.6039216, g: 0.4862745, b: 0.4862745, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
@@ -1685,7 +1685,7 @@ MonoBehaviour:
     ctime1: 23130
     ctime2: 42598
     ctime3: 65535
-    ctime4: 0
+    ctime4: 65535
     ctime5: 0
     ctime6: 0
     ctime7: 0
@@ -3219,7 +3219,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.99199396, g: 1, b: 0.9009434, a: 1}
+  m_Color: {r: 0.7299083, g: 0.6448024, b: 0.8490566, a: 1}
   m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
@@ -3604,7 +3604,7 @@ SphereCollider:
   m_GameObject: {fileID: 1197008666310753517}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 1.59
   m_Center: {x: 0, y: 0, z: 0}
