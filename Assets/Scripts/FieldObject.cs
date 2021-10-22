@@ -6,7 +6,7 @@ public class FieldObject : MonoBehaviour
 {
     private float _chargerChance = 20;
     private float _repairChance = 20;
-    private float _decorateChanse = 1000;
+    private float _decorateChanse = 2000;
     private float _missionChance = 4;
     private float _partChance = 8;
     private int _type;
