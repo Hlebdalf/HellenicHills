@@ -42,6 +42,8 @@ public class FieldChecker : MonoBehaviour
     private float _fuelDecr;
     private float _healthIncr = 0;
     private float _fuelIncr = 0;
+    public SphereCollider colliderOne;
+    public SphereCollider colliderTwo;
 
 
     private void Start()
@@ -98,7 +100,8 @@ public class FieldChecker : MonoBehaviour
         transform.GetChild(0).GetComponent<AudioSource>().Play();
         _healthIncr = 0;
         _fuelIncr = 0;
-        GetComponent<SphereCollider>().enabled = true;
+        colliderOne.enabled = true;
+        colliderTwo.enabled = true;
     }
 
     private void FieldObjEvent(string type, Collider other = null)

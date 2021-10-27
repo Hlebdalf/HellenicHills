@@ -3633,7 +3633,7 @@ SphereCollider:
   m_GameObject: {fileID: 1197008666310753517}
   m_Material: {fileID: 13400000, guid: e136fd663912d894d94c8dbf2ade2d7f, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 1.1
   m_Center: {x: 0, y: 0, z: 0}
@@ -14781,6 +14781,8 @@ MonoBehaviour:
   health: 1000
   healthBar: {fileID: 674031}
   mp: 3
+  colliderOne: {fileID: 520590073}
+  colliderTwo: {fileID: 520590076}
 --- !u!82 &1197008666310753519
 AudioSource:
   m_ObjectHideFlags: 0
