@@ -2893,7 +2893,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 322, y: -83.3}
+  m_AnchoredPosition: {x: 322, y: -83.29999}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &347849135
@@ -3436,7 +3436,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 149.6}
+  m_AnchoredPosition: {x: 0, y: 149.59998}
   m_SizeDelta: {x: 642, y: 96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &469335813
@@ -4276,7 +4276,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -158, y: -149.82}
+  m_AnchoredPosition: {x: -158, y: -149.82007}
   m_SizeDelta: {x: 154, y: 154}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &721358691
@@ -7531,7 +7531,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 322, y: 80.3}
+  m_AnchoredPosition: {x: 322, y: 80.30011}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1667225347
@@ -7910,7 +7910,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.0313, y: 150.2852}
+  m_AnchoredPosition: {x: 0.0313, y: 150.28522}
   m_SizeDelta: {x: 621.7471, y: 75.8549}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1716017393
@@ -14768,9 +14768,9 @@ MonoBehaviour:
   panel: {fileID: 1787259352}
   _upOrDown: 1
   fuel: 1000
-  fuelDecr: 4
+  fuelDecr: 3
   healthDecr: 6
-  fuelIncr: 3
+  fuelIncr: 4
   healthIncr: 4
   fuelBar: {fileID: 1000302138}
   ballUp: {fileID: 646575579}

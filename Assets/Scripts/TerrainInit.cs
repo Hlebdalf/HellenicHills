@@ -94,6 +94,7 @@ public class TerrainInit : MonoBehaviour
                 }
             }
         }
+        GetComponent<TerrainCollider>().enabled = true;
         yield return null;
     }
 }

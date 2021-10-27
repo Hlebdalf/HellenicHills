@@ -18,7 +18,7 @@ public class Audio : MonoBehaviour
         hit1.volume = val;
         hit1.pitch = val;
         hit1.Play();
-        Handheld.Vibrate();
+        //Handheld.Vibrate();
         hit2.volume = val;
         hit2.pitch = val;
         hit2.Play();
