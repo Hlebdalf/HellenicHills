@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Storytell : MonoBehaviour
 {
+    public float showSpeed = 0.03f;
     public string[] stories;
     public Text storyText;
     private int progress = 0;
@@ -13,6 +14,7 @@ public class Storytell : MonoBehaviour
 
     public void UnlockStory()
     {
+        if (progress > stories.Length) progress = 0;
         if (progress % 2 == 0)
         {
             StartCoroutine(ShowText(stories[(int)progress / 2 + progress % 2]));
@@ -28,7 +30,7 @@ public class Storytell : MonoBehaviour
         {
             str += text[i];
             storyText.text = str;
-            yield return new WaitForSeconds(7 / len);
+            yield return new WaitForSeconds(showSpeed);
         }
 
         yield return new WaitForSeconds(5);
