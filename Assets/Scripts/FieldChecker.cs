@@ -112,7 +112,7 @@ public class FieldChecker : MonoBehaviour
             case "Chargers":
                 break;
             case "Missions":
-                GetComponent<Rigidbody>().isKinematic = false;
+                Camera.main.GetComponent<Storytell>().UnlockStory();
                 break;
             case "Parts":
                 PartsCollect();
@@ -238,7 +238,6 @@ public class FieldChecker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.CompareTag("Decorate"))
         {
             FieldObjEvent("Decorate");
@@ -248,13 +247,13 @@ public class FieldChecker : MonoBehaviour
             FieldObjEvent(other.name, other);
             if (other.name == "Repairs")
             {
-                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
+                other.GetComponent<InterFO>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
                 _healthIncr += healthIncr;
             }
             if (other.name == "Chargers")
             {
                 _fuelIncr += fuelIncr;
-                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
+                other.GetComponent<InterFO>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
             }
         }
     }
@@ -265,12 +264,12 @@ public class FieldChecker : MonoBehaviour
         {
             if (other.name == "Repairs")
             {
-                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
+                other.GetComponent<InterFO>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
                 _healthIncr -= healthIncr;
             }
             if (other.name == "Chargers")
             {
-                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
+                other.GetComponent<InterFO>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
                 _fuelIncr -= fuelIncr;
             }
 

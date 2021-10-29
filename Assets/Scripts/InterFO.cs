@@ -8,8 +8,8 @@ public class InterFO : MonoBehaviour
     void Start()
     {
         up = transform.up;
-        float childsCNT = (float)transform.childCount;
         float coin = Random.value;
         transform.LookAt(transform.parent.GetComponent<FieldObject>().normal + transform.position - up);
+        transform.Rotate(0, coin * 360, 0);
     }
 }
