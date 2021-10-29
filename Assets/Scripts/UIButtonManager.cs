@@ -49,6 +49,14 @@ public class UIButtonManager : MonoBehaviour
     {
         GetComponent<Animator>().Play("EnterSettings");
     }
+    public void EnterStory()
+    {
+        GetComponent<Animator>().Play("EnterStory");
+    }
+    public void ExitStory()
+    {
+        GetComponent<Animator>().Play("ExitStory");
+    }
     public void ExitSettings()
     {
         GetComponent<Animator>().Play("ExitSettings");
