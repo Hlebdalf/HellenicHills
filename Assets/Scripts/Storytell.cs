@@ -9,17 +9,22 @@ public class Storytell : MonoBehaviour
     public float showSpeed = 0.03f;
     public string[] stories;
     public Text storyText;
-    private int progress = 0;
+    private int progress;
 
-
-    public void UnlockStory()
+    private void Start()
     {
+        progress = PlayerPrefs.GetInt("progress", 0);
+    }
+    public void UnlockStory()
+    {     
         if (progress > stories.Length) progress = 0;
         if (progress % 2 == 0)
         {
             StartCoroutine(ShowText(stories[(int)progress / 2 + progress % 2]));
         }
         progress++;
+        PlayerPrefs.SetInt("progress", progress);
+        PlayerPrefs.Save();
     }
 
     private IEnumerator ShowText(string text)

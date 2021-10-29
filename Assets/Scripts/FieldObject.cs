@@ -7,7 +7,7 @@ public class FieldObject : MonoBehaviour
     private float _chargerChance = 20;
     private float _repairChance = 20;
     private float _decorateChanse = 2000;
-    private float _missionChance = 8;
+    private float _missionChance = 5;
     private float _partChance = 15;
     private int _type;
     public Vector3 normal;
