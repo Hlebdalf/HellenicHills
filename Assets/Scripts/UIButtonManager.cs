@@ -15,6 +15,7 @@ public class UIButtonManager : MonoBehaviour
     public GameObject Stats;
     public GameObject Content;
     public GameObject PartsAll;
+    public TouchToPlay ttp;
 
     public void ReloadScene()
     {
@@ -37,7 +38,7 @@ public class UIButtonManager : MonoBehaviour
     }
     public void MagazineSetActive()
     {
-        MenuUI.GetComponent<TouchToPlay>().enabled = false;
+        ttp.enabled = false;
         Magazine.SetActive(true);
         Stats.SetActive(false);
         Camera.main.GetComponent<Animator>().Play("Forward");
@@ -63,7 +64,7 @@ public class UIButtonManager : MonoBehaviour
     }
     public void MagazineSetDisactive()
     {
-        MenuUI.GetComponent<TouchToPlay>().enabled = true;
+        ttp.enabled = true;
         Content.GetComponent<Image>().raycastTarget = false;
         Content.GetComponent<Magazine>().ModelSwitcher();
         Camera.main.GetComponent<Animator>().Play("Back");

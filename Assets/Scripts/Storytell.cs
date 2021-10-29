@@ -11,11 +11,10 @@ public class Storytell : MonoBehaviour
     public Text storyText;
     public Text fullStoryText;
     private int progress;
-    private AudioSource typing;
+    public AudioSource typing;
 
     private void Start()
     {
-        typing = GetComponent<AudioSource>();
         progress = PlayerPrefs.GetInt("progress", 0);
         for (int i = 0; i < progress/2; i++)
         {

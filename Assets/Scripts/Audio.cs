@@ -13,12 +13,13 @@ public class Audio : MonoBehaviour
     public AudioSource water;
     public AudioSource end;
     public AudioSource coin;
+    public AudioSource typing;
     public void HitSound(float val)
     {
         hit1.volume = val;
         hit1.pitch = val;
         hit1.Play();
-        //Handheld.Vibrate();
+        Handheld.Vibrate();
         hit2.volume = val;
         hit2.pitch = val;
         hit2.Play();
@@ -33,6 +34,7 @@ public class Audio : MonoBehaviour
     public void PlaySound(bool how)
     {
         how = !how;
+        typing.mute = how;
         hit1.mute = how;
         hit2.mute = how;
         motor.mute = how;
