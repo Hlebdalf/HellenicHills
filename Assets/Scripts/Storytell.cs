@@ -23,7 +23,7 @@ public class Storytell : MonoBehaviour
 }
     public void UnlockStory()
     {     
-        if (progress >= stories.Length * 2) progress = 0;
+        if (progress >= stories.Length * 2) progress -= 1;
         if (progress % 2 == 0)
         {
             StartCoroutine(ShowText(stories[(int)progress / 2 + progress % 2]));

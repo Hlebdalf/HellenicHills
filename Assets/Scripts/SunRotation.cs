@@ -49,9 +49,10 @@ public class SunRotation : MonoBehaviour
     private IEnumerator RotatorCoroutine()
     {
         while (true)
-        {
+        {        
             _angle = -Mathf.Acos(transform.up.z) * Mathf.Abs(Mathf.Asin(transform.up.y)) / Mathf.Asin(transform.up.y) / Mathf.PI;
             if (_angle == float.NaN) _angle = 0;
+            if (Mathf.Asin(transform.up.y) == 0) _angle = 0;
             if (_angle < 0 && upOrDown)
             {
                 upOrDown = false;
