@@ -3843,19 +3843,6 @@ MonoBehaviour:
   ground: {fileID: -2432949464890348232, guid: 3f101db11a960424480eb80a503b3e94, type: 2}
   air: {fileID: 382645248103096630, guid: 3f101db11a960424480eb80a503b3e94, type: 2}
   particle: {fileID: 1841255887}
---- !u!135 &520590073
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197008666310753517}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 1.59
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &520590074
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16239,7 +16226,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7938313923560353750}
   - component: {fileID: 520590074}
-  - component: {fileID: 520590073}
   - component: {fileID: 520590076}
   - component: {fileID: 520590069}
   - component: {fileID: 520590070}
@@ -16283,8 +16269,8 @@ MonoBehaviour:
   fuel: 1000
   fuelDecr: 3
   healthDecr: 6
-  fuelIncr: 4
-  healthIncr: 4
+  fuelIncr: 6
+  healthIncr: 6
   fuelBar: {fileID: 1000302138}
   ballUp: {fileID: 646575579}
   reloadButton: {fileID: 902108549}
@@ -16294,7 +16280,6 @@ MonoBehaviour:
   health: 1000
   healthBar: {fileID: 674031}
   mp: 3
-  colliderOne: {fileID: 520590073}
   colliderTwo: {fileID: 520590076}
 --- !u!82 &1197008666310753519
 AudioSource:

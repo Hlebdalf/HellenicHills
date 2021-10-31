@@ -42,7 +42,6 @@ public class FieldChecker : MonoBehaviour
     private float _fuelDecr;
     private float _healthIncr = 0;
     private float _fuelIncr = 0;
-    public SphereCollider colliderOne;
     public SphereCollider colliderTwo;
 
 
@@ -72,7 +71,9 @@ public class FieldChecker : MonoBehaviour
         GetComponent<Rigidbody>().isKinematic = true;
         SaveParts();
         canvas.GetComponent<Animator>().Play("GameOver");
+        colliderTwo.enabled = false;
         GetComponent<FieldChecker>().enabled = false;
+
     }
     public void PauseGame()
     {
@@ -100,7 +101,6 @@ public class FieldChecker : MonoBehaviour
         transform.GetChild(0).GetComponent<AudioSource>().Play();
         _healthIncr = 0;
         _fuelIncr = 0;
-        colliderOne.enabled = true;
         colliderTwo.enabled = true;
     }
 
@@ -258,22 +258,10 @@ public class FieldChecker : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Interactive"))
-        {
-            if (other.name == "Repairs")
-            {
-                other.GetComponent<InterFO>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
-                _healthIncr -= healthIncr;
-            }
-            if (other.name == "Chargers")
-            {
-                other.GetComponent<InterFO>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
-                _fuelIncr -= fuelIncr;
-            }
-
-        }
+    public void ChangeRepairChargeVelocity(string target)
+    {   
+        if (target == "Charger" ) _fuelIncr -= fuelIncr;
+        else if (target == "Repair") _healthIncr -= healthIncr;
     }
 
     void Update()
@@ -302,5 +290,13 @@ public class FieldChecker : MonoBehaviour
             }
         }
         //DEBUG TOOL
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.gameObject.CompareTag("Decorate"))
+        {
+            FieldObjEvent("Decorate");
+        }
     }
 }
