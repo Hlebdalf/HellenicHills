@@ -80,23 +80,27 @@ public class TerrainInit : MonoBehaviour
         gameObject.GetComponent<Terrain>().terrainData.size = new Vector3((_resolution.x) * _koeff, 100, (_resolution.x) * _koeff);
         gameObject.GetComponent<Terrain>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         gameObject.GetComponent<Terrain>().materialTemplate.mainTexture = texture;
-        for (int x = 0; x < _resolution.x / 2; x++)
+        for (int x = 0; x < _resolution.x; x++)
         {
 
-            for (int y = 0; y < _resolution.y / 2; y++)
+            for (int y = 0; y < _resolution.y; y++)
             {
-                float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
-                GameObject gr = Instantiate(_grass);
-
-                gr.transform.position = transform.position + new Vector3(x * _koeff * 2, height, y * 2 * _koeff);
+                float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x / (float)_resolution.x, y / (float)_resolution.y);
+                
+                Color cl = texture.GetPixel(x, y);
+                if (cl.r > 0.6f && cl.b < cl.r && cl.g < cl.r)
+                {
+                    GameObject gr = Instantiate(_grass);
+                    gr.transform.position = transform.position + new Vector3(x * _koeff, height, y * _koeff);
+                }
                 //gr.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
-                if (Random.value > 0.992f)
+                if (Random.value > 0.998f)
                 {
                     yield return null;
                     GameObject fo = Instantiate(_refFo);
                     
-                    fo.transform.position = transform.position + new Vector3(x * _koeff * 2, height, y * 2 * _koeff);
-                    fo.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
+                    fo.transform.position = transform.position + new Vector3(x * _koeff, height, y * _koeff);
+                    fo.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x / (float)_resolution.x, y / (float)_resolution.y);
                     _fOs.Add(fo);
                 }
             }

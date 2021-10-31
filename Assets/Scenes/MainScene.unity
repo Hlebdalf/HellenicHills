@@ -8279,6 +8279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e4c1f781d8a2444861d261d9adce42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grass: {fileID: 3043072599153469046, guid: 9cbddd8ceef4e8643ac81541ac529fea, type: 3}
   resolution: {x: 512, y: 512}
   koeff: 1
   noiseMaterial: {fileID: 2100000, guid: b2aa1795c21033e4b88f9729babc35b2, type: 2}
