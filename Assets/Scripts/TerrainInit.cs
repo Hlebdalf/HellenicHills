@@ -16,12 +16,14 @@ public class TerrainInit : MonoBehaviour
     private int _koeff;
     private GameObject _refFo;
     private GameObject _water;
+    private GameObject _grass;
     public void InitTerrain(Material ns, Material tr,
-        Vector2Int res, Vector2Int oft, float sd, int kf, GameObject rFo, GameObject rWater)
+        Vector2Int res, Vector2Int oft, float sd, int kf, GameObject rFo, GameObject rWater, GameObject gr)
     {
         _noiseMaterial = ns; _terrainMaterial = tr;
         _resolution = res; _offset = oft; _seed = sd; _koeff = kf; _refFo = rFo;
         _water = Instantiate(rWater);
+        _grass = gr;
         rWater.transform.position = new Vector3((_offset.x + 0.5f) * _resolution.x, 35, (_offset.y + 0.5f) * _resolution.x);
         StartCoroutine(Build());
     }
@@ -83,11 +85,16 @@ public class TerrainInit : MonoBehaviour
 
             for (int y = 0; y < _resolution.y / 2; y++)
             {
+                float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
+                GameObject gr = Instantiate(_grass);
+
+                gr.transform.position = transform.position + new Vector3(x * _koeff * 2, height, y * 2 * _koeff);
+                //gr.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
                 if (Random.value > 0.992f)
                 {
                     yield return null;
                     GameObject fo = Instantiate(_refFo);
-                    float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
+                    
                     fo.transform.position = transform.position + new Vector3(x * _koeff * 2, height, y * 2 * _koeff);
                     fo.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
                     _fOs.Add(fo);
