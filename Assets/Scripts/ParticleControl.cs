@@ -12,6 +12,7 @@ public class ParticleControl : MonoBehaviour
     private Rigidbody rb;
     private void Start()
     {
+        particle.startDelay = 10000;
         rb = gameObject.GetComponent<Rigidbody>();
     }
     private void FixedUpdate()
@@ -22,17 +23,17 @@ public class ParticleControl : MonoBehaviour
         mixerGroup.audioMixer.SetFloat("LowPass", Mathf.Lerp(600, 8000, rb.velocity.magnitude / 30));
 
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.name == "Terrain")
+        if (collision.collider.name == "Terrain")
         {
             particle.startDelay = 0;
             ground.TransitionTo(0.1f);
         }
     }
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision collision)
     {
-        if (other.name == "Terrain")
+        if (collision.collider.name == "Terrain")
         {
             air.TransitionTo(0.3f);
             particle.startDelay = 10000;
