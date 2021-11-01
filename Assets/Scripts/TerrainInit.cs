@@ -13,6 +13,7 @@ public class TerrainInit : MonoBehaviour
     private Vector2Int _resolution;
     private Vector2Int _offset;
     private float _seed;
+    private float _grassTreshold;
     private int _koeff;
     private GameObject _refFo;
     private GameObject _water;
@@ -22,7 +23,8 @@ public class TerrainInit : MonoBehaviour
     private List<GameObject> _grassesLP = new List<GameObject>();
     private List<GameObject> _grassesHP = new List<GameObject>();
     private void Awake()
-    {
+    {   
+        
         GameObject[] grasses = GameObject.FindGameObjectsWithTag("Grass");
         if(grasses[0].name == "GrassHP")
         {
@@ -36,13 +38,14 @@ public class TerrainInit : MonoBehaviour
         }
     }
     public void InitTerrain(Material ns, Material tr,
-        Vector2Int res, Vector2Int oft, float sd, int kf, GameObject rFo, GameObject rWater, GameObject gr)
+        Vector2Int res, Vector2Int oft, float sd, int kf, GameObject rFo, GameObject rWater, GameObject gr, float gt)
     {
         _noiseMaterial = ns; _terrainMaterial = tr;
         _resolution = res; _offset = oft; _seed = sd; _koeff = kf; _refFo = rFo;
         _water = Instantiate(rWater);
         _grass = gr;
         rWater.transform.position = new Vector3((_offset.x + 0.5f) * _resolution.x, 35, (_offset.y + 0.5f) * _resolution.x);
+        _grassTreshold = gt;
         StartCoroutine(Build());
     }
     void OnDestroy()
@@ -114,7 +117,7 @@ public class TerrainInit : MonoBehaviour
                 float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x / (float)_resolution.x, y / (float)_resolution.y);
                 Vector3 normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x / (float)_resolution.x, y / (float)_resolution.y);
                 Color cl = texture.GetPixel(x, y);
-                if (Random.value > 0.98f && height > 37 && !(texture.GetPixel(x, y).r > 0.65f && texture.GetPixel(x, y).g > 0.65f && texture.GetPixel(x, y).b > 0.65f))
+                if (Random.value > _grassTreshold && height > 37 && !(texture.GetPixel(x, y).r > 0.65f && texture.GetPixel(x, y).g > 0.65f && texture.GetPixel(x, y).b > 0.65f))
                 {   
                     GameObject gr = Instantiate(_grass);
                     gr.transform.position = transform.position + new Vector3(x * _koeff, height - 0.5f, y * _koeff);  
