@@ -93,6 +93,7 @@ public class TerrainInit : MonoBehaviour
                     GameObject gr = Instantiate(_grass);
                     gr.transform.position = transform.position + new Vector3(x * _koeff, height + 20, y * _koeff);
                     gr.GetComponent<Grass>().SetGrass(gameObject.GetComponent<Terrain>());
+                    gr.GetComponent<Grass>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x / (float)_resolution.x, y / (float)_resolution.y);
                 }
                 //gr.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
                 if (Random.value > 0.998f)
