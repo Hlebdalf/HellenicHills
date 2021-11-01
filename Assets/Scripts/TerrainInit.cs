@@ -88,10 +88,11 @@ public class TerrainInit : MonoBehaviour
                 float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x / (float)_resolution.x, y / (float)_resolution.y);
                 
                 Color cl = texture.GetPixel(x, y);
-                if (cl.r > 0.6f && cl.b < cl.r && cl.g < cl.r)
+                if (cl.r > 0.6f && cl.b < cl.r && cl.g < cl.r && height > 35)
                 {
                     GameObject gr = Instantiate(_grass);
-                    gr.transform.position = transform.position + new Vector3(x * _koeff, height, y * _koeff);
+                    gr.transform.position = transform.position + new Vector3(x * _koeff, height + 20, y * _koeff);
+                    gr.GetComponent<Grass>().SetGrass(gameObject.GetComponent<Terrain>());
                 }
                 //gr.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
                 if (Random.value > 0.998f)
