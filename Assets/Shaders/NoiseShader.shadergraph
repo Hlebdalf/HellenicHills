@@ -395,20 +395,6 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "d7b473295a964ab391bcbcd553c6253e"
-                },
-                "m_SlotId": 2
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "2a37ecf7afe544808fcc94aa34232c19"
-                },
-                "m_SlotId": 1
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
                     "m_Id": "dc8a42f936b34fd49a1f8e039e70b1a8"
                 },
                 "m_SlotId": 0
@@ -482,8 +468,8 @@
     },
     "m_FragmentContext": {
         "m_Position": {
-            "x": 1121.0001220703125,
-            "y": 206.00003051757813
+            "x": 1095.0,
+            "y": 205.99998474121095
         },
         "m_Blocks": [
             {
@@ -2585,10 +2571,10 @@
             "b": 0.0,
             "a": 0.0
         },
-        "ctime0": 384,
-        "ctime1": 897,
-        "ctime2": 49574,
-        "ctime3": 49574,
+        "ctime0": 2092,
+        "ctime1": 2562,
+        "ctime2": 0,
+        "ctime3": 0,
         "ctime4": 0,
         "ctime5": 0,
         "ctime6": 0,
@@ -3697,7 +3683,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "AngleOffset",
     "m_StageCapability": 3,
-    "m_Value": 3.25,
+    "m_Value": 3.6600000858306886,
     "m_DefaultValue": 2.0,
     "m_Labels": []
 }

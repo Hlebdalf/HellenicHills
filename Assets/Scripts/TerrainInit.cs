@@ -86,23 +86,21 @@ public class TerrainInit : MonoBehaviour
             for (int y = 0; y < _resolution.y; y++)
             {
                 float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x / (float)_resolution.x, y / (float)_resolution.y);
-                
+                Vector3 normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x / (float)_resolution.x, y / (float)_resolution.y);
                 Color cl = texture.GetPixel(x, y);
-                if (cl.r > 0.6f && cl.b < cl.r && cl.g < cl.r && height > 35)
-                {
+                if (Random.value > 0.98f && height > 37)
+                {   
                     GameObject gr = Instantiate(_grass);
-                    gr.transform.position = transform.position + new Vector3(x * _koeff, height + 20, y * _koeff);
-                    gr.GetComponent<Grass>().SetGrass(gameObject.GetComponent<Terrain>());
-                    gr.GetComponent<Grass>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x / (float)_resolution.x, y / (float)_resolution.y);
+                    gr.transform.position = transform.position + new Vector3(x * _koeff, height, y * _koeff);
+                    gr.transform.LookAt(normal + gr.transform.position - gr.transform.up);
                 }
-                //gr.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
                 if (Random.value > 0.998f)
                 {
                     yield return null;
                     GameObject fo = Instantiate(_refFo);
                     
                     fo.transform.position = transform.position + new Vector3(x * _koeff, height, y * _koeff);
-                    fo.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x / (float)_resolution.x, y / (float)_resolution.y);
+                    fo.GetComponent<FieldObject>().normal = normal;
                     _fOs.Add(fo);
                 }
             }
