@@ -125,7 +125,7 @@ public class TerrainInit : MonoBehaviour
                     _grassesHP.Add(gr.transform.GetChild(0).gameObject);
                     _grassesLP.Add(gr.transform.GetChild(1).gameObject);
                 }
-                if (Random.value > 0.998f)
+                if (Random.value > 0.9968f)
                 {
                     yield return null;
                     GameObject fo = Instantiate(_refFo);

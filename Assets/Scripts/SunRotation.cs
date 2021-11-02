@@ -41,7 +41,7 @@ public class SunRotation : MonoBehaviour
         _ballLight = ball.GetComponent<Light>();
         _myRate = rate;
         _mySpeed = speed;
-        transform.Rotate(coin * 360, 0, 0);
+        transform.Rotate(coin * 180 + 90, 0, 0);
         StartCoroutine(RotatorCoroutine());
 
     }
@@ -49,7 +49,7 @@ public class SunRotation : MonoBehaviour
     private IEnumerator RotatorCoroutine()
     {
         while (true)
-        {        
+        {
             _angle = -Mathf.Acos(transform.up.z) * Mathf.Abs(Mathf.Asin(transform.up.y)) / Mathf.Asin(transform.up.y) / Mathf.PI;
             if (_angle == float.NaN) _angle = 0;
             if (Mathf.Asin(transform.up.y) == 0) _angle = 0;

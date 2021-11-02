@@ -15,21 +15,16 @@ public class Storytell : MonoBehaviour
 
     private void Start()
     {
-/*      PlayerPrefs.SetInt("progress", 0);
-        PlayerPrefs.Save();*/
         progress = PlayerPrefs.GetInt("progress", 0);
-        for (int i = 0; i < progress/2; i++)
+        for (int i = 0; i < progress; i++)
         {
             fullStoryText.text = fullStoryText.text + stories[i] + '\n';
         }
 }
     public void UnlockStory()
     {     
-        if (progress >= stories.Length * 2) progress -= 1;
-        if (progress % 2 == 0)
-        {
-            StartCoroutine(ShowText(stories[(int)progress / 2 + progress % 2]));
-        }
+        if (progress >= stories.Length) progress -= 1;
+        StartCoroutine(ShowText(stories[progress]));
         progress++;
         PlayerPrefs.SetInt("progress", progress);
         PlayerPrefs.Save();
