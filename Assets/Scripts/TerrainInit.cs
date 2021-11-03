@@ -125,7 +125,7 @@ public class TerrainInit : MonoBehaviour
                     _grassesHP.Add(gr.transform.GetChild(0).gameObject);
                     _grassesLP.Add(gr.transform.GetChild(1).gameObject);
                 }
-                if (Random.value > 0.9968f)
+                if (Random.value > 0.9967f)
                 {
                     yield return null;
                     GameObject fo = Instantiate(_refFo);
@@ -133,6 +133,7 @@ public class TerrainInit : MonoBehaviour
                     fo.transform.position = transform.position + new Vector3(x * _koeff, height, y * _koeff);
                     fo.GetComponent<FieldObject>().normal = normal;
                     _fOs.Add(fo);
+                    y++;
                 }
             }
         }
