@@ -50,9 +50,17 @@ public class SunRotation : MonoBehaviour
     {
         while (true)
         {
-            _angle = -Mathf.Acos(transform.up.z) * Mathf.Abs(Mathf.Asin(transform.up.y)) / Mathf.Asin(transform.up.y) / Mathf.PI;
-            if (_angle == float.NaN) _angle = 0;
-            if (Mathf.Asin(transform.up.y) == 0) _angle = 0;
+            if (!(Mathf.Asin(transform.up.y) > -0.0004f && Mathf.Asin(transform.up.y) < 0.0004f))
+            {
+                _angle = -Mathf.Acos(transform.up.z) * Mathf.Abs(Mathf.Asin(transform.up.y)) / Mathf.Asin(transform.up.y) / Mathf.PI;
+            } 
+            else
+            {
+                Debug.Log(Mathf.Asin(transform.up.y));
+                if (upOrDown) _angle = 180;
+                else _angle = 0;
+
+            }
             if (_angle < 0 && upOrDown)
             {
                 upOrDown = false;

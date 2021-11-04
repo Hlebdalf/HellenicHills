@@ -65,6 +65,8 @@ public class TerrainInit : MonoBehaviour
         {
             DestroyImmediate(it, true);
         }
+        _grassesLP.Clear();
+        _grassesHP.Clear();
         _fOs.Clear();
     }
 
@@ -111,7 +113,6 @@ public class TerrainInit : MonoBehaviour
         gameObject.GetComponent<Terrain>().materialTemplate.mainTexture = texture;
         for (int x = 0; x < _resolution.x; x++)
         {
-
             for (int y = 0; y < _resolution.y; y++)
             {
                 float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x / (float)_resolution.x, y / (float)_resolution.y);
@@ -125,22 +126,26 @@ public class TerrainInit : MonoBehaviour
                     _grassesHP.Add(gr.transform.GetChild(0).gameObject);
                     _grassesLP.Add(gr.transform.GetChild(1).gameObject);
                 }
-                if (Random.value > 0.9967f)
+                if ((x + y % 2) % 2 == 0 & y % 2 == 0)
                 {
-                    yield return null;
-                    GameObject fo = Instantiate(_refFo);
-                    
-                    fo.transform.position = transform.position + new Vector3(x * _koeff, height, y * _koeff);
-                    fo.GetComponent<FieldObject>().normal = normal;
-                    _fOs.Add(fo);
-                    y++;
+                    if (Random.value > 0.994f)
+                    {
+                        yield return null;
+                        GameObject fo = Instantiate(_refFo);
+
+                        fo.transform.position = transform.position + new Vector3(x * _koeff, height, y * _koeff);
+                        fo.GetComponent<FieldObject>().normal = normal;
+                        _fOs.Add(fo);
+                        y++;
+                    }
                 }
             }
         }
+        
         /*StaticBatchingUtility.Combine(_grassesLP.ToArray(), _grassLPBatchRoot);
-        StaticBatchingUtility.Combine(_grassesHP.ToArray(), _grassHPBatchRoot);*/
-        /*_grassesLP.Clear(); BATCHING FEATURE
-        _grassesHP.Clear();*/ 
+        StaticBatchingUtility.Combine(_grassesHP.ToArray(), _grassHPBatchRoot);
+        _grassesLP.Clear(); //BATCHING FEATURE
+        _grassesHP.Clear();*/
         GetComponent<TerrainCollider>().enabled = true;
         yield return null;
     }

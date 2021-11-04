@@ -16,6 +16,9 @@ public class Storytell : MonoBehaviour
     private void Start()
     {
         progress = PlayerPrefs.GetInt("progress", 0);
+        /*progress = 0;
+        PlayerPrefs.SetInt("progress", progress);
+        PlayerPrefs.Save();*/
         for (int i = 0; i < progress; i++)
         {
             fullStoryText.text = fullStoryText.text + stories[i] + '\n';
