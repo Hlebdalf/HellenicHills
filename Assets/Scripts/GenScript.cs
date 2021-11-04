@@ -7,6 +7,7 @@ using UnityEngine.Serialization;
 public class GenScript : MonoBehaviour
 {
     public GameObject grass;
+    public GameObject ruble;
     public float grassTreshold;
     [FormerlySerializedAs("Resolution")] public Vector2Int resolution = new Vector2Int(512, 512);
     public int koeff = 1;
@@ -79,7 +80,8 @@ public class GenScript : MonoBehaviour
         {
             GameObject newTerrain = Terrain.CreateTerrainGameObject(datas[_dataID]);
             newTerrain.AddComponent(typeof(TerrainInit));
-            newTerrain.GetComponent<TerrainInit>().InitTerrain(noiseMaterial, materials[_dataID], resolution, nb, seed, koeff, fo, water,grass , grassTreshold);
+            newTerrain.GetComponent<TerrainInit>().InitTerrain(noiseMaterial, materials[_dataID], 
+            resolution, nb, seed, koeff, fo, water,grass , grassTreshold, ruble);
             terrains.Add(nb, newTerrain);
             _dataID = (_dataID + 1) % 12;
         }

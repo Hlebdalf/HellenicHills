@@ -114,7 +114,7 @@ public class FieldChecker : MonoBehaviour
             case "Missions":
                 Camera.main.GetComponent<Storytell>().UnlockStory();
                 break;
-            case "Parts":
+            case "Ruble(Clone)":
                 PartsCollect();
                 other.enabled = false;
                 other.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = coinUsedMaterial;
@@ -134,7 +134,7 @@ public class FieldChecker : MonoBehaviour
     private void PartsCollect()
     {
         audio.CoinSound();
-        partsAll += (int)Random.Range(0, 10.0f);
+        partsAll++;
         partsAllText.text = "₽: " + partsAll.ToString();
         SaveParts();
     }
@@ -256,6 +256,9 @@ public class FieldChecker : MonoBehaviour
                 other.GetComponent<InterFO>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
             }
         }
+        // else{
+        //     Debug.Log(other.gameObject.tag);
+        // }
     }
 
     public void ChangeRepairChargeVelocity(string target)

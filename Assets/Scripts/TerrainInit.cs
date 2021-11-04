@@ -18,6 +18,7 @@ public class TerrainInit : MonoBehaviour
     private GameObject _refFo;
     private GameObject _water;
     private GameObject _grass;
+    private GameObject _ruble;
     private GameObject _grassLPBatchRoot;
     private GameObject _grassHPBatchRoot;
     private List<GameObject> _grassesLP = new List<GameObject>();
@@ -38,7 +39,7 @@ public class TerrainInit : MonoBehaviour
         }
     }
     public void InitTerrain(Material ns, Material tr,
-        Vector2Int res, Vector2Int oft, float sd, int kf, GameObject rFo, GameObject rWater, GameObject gr, float gt)
+        Vector2Int res, Vector2Int oft, float sd, int kf, GameObject rFo, GameObject rWater, GameObject gr, float gt, GameObject rb)
     {
         _noiseMaterial = ns; _terrainMaterial = tr;
         _resolution = res; _offset = oft; _seed = sd; _koeff = kf; _refFo = rFo;
@@ -46,6 +47,7 @@ public class TerrainInit : MonoBehaviour
         _grass = gr;
         rWater.transform.position = new Vector3((_offset.x + 0.5f) * _resolution.x, 35, (_offset.y + 0.5f) * _resolution.x);
         _grassTreshold = gt;
+        _ruble = rb;
         StartCoroutine(Build());
     }
     void OnDestroy()
@@ -125,6 +127,10 @@ public class TerrainInit : MonoBehaviour
                     gr.transform.LookAt(normal + gr.transform.position - gr.transform.up);
                     _grassesHP.Add(gr.transform.GetChild(0).gameObject);
                     _grassesLP.Add(gr.transform.GetChild(1).gameObject);
+                }
+                if(Random.value > 0.9995f) {
+                    GameObject rbl = Instantiate(_ruble);
+                    rbl.transform.position = transform.position + new Vector3(x * _koeff, height - 0.5f, y * _koeff);  
                 }
                 if ((x + y % 2) % 2 == 0 & y % 2 == 0)
                 {
