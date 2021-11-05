@@ -13,8 +13,7 @@ public class FieldObject : MonoBehaviour
     private void Start()
     {
         float coin = Random.Range(0,_chargerChance + _missionChance + _decorateChanse);
-        if (coin < _missionChance) _type = 1;
-        else if (coin < _missionChance) _type = 2;
+        if (coin < _missionChance) _type = 2;
         else if (coin < _missionChance + _chargerChance) _type = 0;
         else if (coin < _missionChance + _chargerChance + _repairChance) _type = 3;
         else _type = 1;
