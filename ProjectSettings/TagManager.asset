@@ -11,6 +11,7 @@ TagManager:
   - Interactive
   - Ghost
   - Grass
+  - Particle
   layers:
   - Default
   - TransparentFX

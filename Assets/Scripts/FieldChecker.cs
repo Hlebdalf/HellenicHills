@@ -20,6 +20,7 @@ public class FieldChecker : MonoBehaviour
     public GameObject magazine;
     public GameObject volume;
     public GameObject panel;
+    public ParticleSystem healthParticle;
     public bool _upOrDown = true;
     public float fuel = 1000;
     public float fuelDecr = 2;
@@ -198,7 +199,7 @@ public class FieldChecker : MonoBehaviour
                 }
                 _upOrDown = true;
             }
-
+            healthParticle.emissionRate = _healthIncr * 4;
             yield return new WaitForFixedUpdate();
         }
     }
@@ -259,9 +260,6 @@ public class FieldChecker : MonoBehaviour
                 other.GetComponent<InterFO>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
             }
         }
-        // else{
-        //     Debug.Log(other.gameObject.tag);
-        // }
     }
 
     public void ChangeRepairChargeVelocity(string target)
