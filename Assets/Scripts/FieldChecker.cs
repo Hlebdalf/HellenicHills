@@ -95,7 +95,10 @@ public class FieldChecker : MonoBehaviour
         }
     }
     public void GameStart()
-    {
+    {   
+        upSnap.TransitionTo(0.3f);
+        VolumeSetActive();
+        Mixer.audioMixer.SetFloat("MasterLowPass", 20000);
         StartCoroutine(Consumption());
         StartCoroutine(Restore());
         transform.GetChild(0).GetComponent<AudioSource>().Play();
