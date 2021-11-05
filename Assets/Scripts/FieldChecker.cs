@@ -21,6 +21,7 @@ public class FieldChecker : MonoBehaviour
     public GameObject volume;
     public GameObject panel;
     public ParticleSystem healthParticle;
+    public ParticleSystem chargeParticle;
     public bool _upOrDown = true;
     public float fuel = 1000;
     public float fuelDecr = 2;
@@ -200,6 +201,7 @@ public class FieldChecker : MonoBehaviour
                 _upOrDown = true;
             }
             healthParticle.emissionRate = _healthIncr * 4;
+            chargeParticle.emissionRate = _fuelIncr * 4;
             yield return new WaitForFixedUpdate();
         }
     }

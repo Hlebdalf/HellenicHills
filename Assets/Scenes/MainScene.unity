@@ -7439,7 +7439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1396841557
 Transform:
   m_ObjectHideFlags: 0
@@ -7474,7 +7474,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0b14719bf82476e4d9a95062d43af5c8, type: 2}
+  - {fileID: 2100000, guid: 450b865344c1b344b8fbe33e3feb3941, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26509,6 +26509,7 @@ MonoBehaviour:
   volume: {fileID: 1855321239}
   panel: {fileID: 1787259352}
   healthParticle: {fileID: 1751561458}
+  chargeParticle: {fileID: 1396841559}
   _upOrDown: 1
   fuel: 1000
   fuelDecr: 3
