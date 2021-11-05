@@ -53,7 +53,7 @@ public class RepairUp : MonoBehaviour
                 }
                 transform.Rotate(0, _angle / 3, 0);
             }
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.0083f);
         }
     }
 

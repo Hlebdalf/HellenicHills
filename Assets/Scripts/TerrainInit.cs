@@ -134,7 +134,7 @@ public class TerrainInit : MonoBehaviour
                 }
                 if ((x + y % 2) % 2 == 0 & y % 2 == 0)
                 {
-                    if (Random.value > 0.994f)
+                    if (Random.value > 0.992f)
                     {
                         yield return null;
                         GameObject fo = Instantiate(_refFo);
