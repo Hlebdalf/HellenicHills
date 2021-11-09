@@ -12,7 +12,8 @@ public class TerrainInit : MonoBehaviour
     private Material _terrainMaterial;
     private Vector2Int _resolution;
     private Vector2Int _offset;
-    private int _seed;
+    private float _seedx;
+    private float _seedy;
     private float _grassTreshold;
     private int _koeff;
     private GameObject _refFo;
@@ -40,10 +41,10 @@ public class TerrainInit : MonoBehaviour
         
     }
     public void InitTerrain(Material ns, Material tr,
-        Vector2Int res, Vector2Int oft, int sd, int kf, GameObject rFo, GameObject rWater, GameObject gr, float gt, GameObject rb)
+        Vector2Int res, Vector2Int oft, float sdx, float sdy, int kf, GameObject rFo, GameObject rWater, GameObject gr, float gt, GameObject rb)
     {
         _noiseMaterial = ns; _terrainMaterial = tr;
-        _resolution = res; _offset = oft; _seed = sd; _koeff = kf; _refFo = rFo;
+        _resolution = res; _offset = oft; _seedx = sdx; _seedy = sdy; _koeff = kf; _refFo = rFo;
         _water = Instantiate(rWater);
         _grass = gr;
         rWater.transform.position = new Vector3((_offset.x + 0.5f) * _resolution.x, 35, (_offset.y + 0.5f) * _resolution.x);
@@ -76,8 +77,8 @@ public class TerrainInit : MonoBehaviour
 
     private IEnumerator Build()
     {
-        _noiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", _offset.x + _seed);
-        _noiseMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", _offset.y);
+        _noiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", _offset.x +_seedx);
+        _noiseMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", _offset.y + _seedy);
         RenderTexture renderTexture = RenderTexture.GetTemporary(_resolution.y + 1, _resolution.y + 1);
         Graphics.Blit(null, renderTexture, _noiseMaterial);
         texture = new Texture2D(_resolution.y + 1, _resolution.y + 1);
