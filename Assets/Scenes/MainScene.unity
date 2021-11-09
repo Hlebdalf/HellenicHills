@@ -13716,6 +13716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e4c1f781d8a2444861d261d9adce42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SeedText: {fileID: 0}
   grass: {fileID: 6600999305899523800, guid: edf92afed0b3bec4da3058da3030acdb, type: 3}
   ruble: {fileID: 2134627043108274003, guid: 2ab777f7d8cc0bd49b9c3f8452611fd4, type: 3}
   grassTreshold: 1
@@ -13758,7 +13759,8 @@ MonoBehaviour:
   heightMaps:
   - {fileID: 0}
   - {fileID: 0}
-  seed: 0
+  seedx: 0
+  seedy: 0
 --- !u!114 &1644744612
 MonoBehaviour:
   m_ObjectHideFlags: 0

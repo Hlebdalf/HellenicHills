@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class GenScript : MonoBehaviour
-{
+{   
+    public Text SeedText;
     public GameObject grass;
     public GameObject ruble;
     public float grassTreshold;
@@ -22,7 +24,8 @@ public class GenScript : MonoBehaviour
     [FormerlySerializedAs("FO")] public GameObject fo;
     public GameObject water;
     [FormerlySerializedAs("HeightMaps")] public Texture2D[] heightMaps = new Texture2D[2];
-    [FormerlySerializedAs("Seed")] public float seed;
+    [FormerlySerializedAs("Seed")] public float seedx;
+    [FormerlySerializedAs("Seedy")] public float seedy;
     private Vector2Int _nowPos, _prePos = new Vector2Int(0, 0);
     public Dictionary<Vector2Int, GameObject> terrains = new Dictionary<Vector2Int, GameObject>();
     private int _dataID = 0;
@@ -35,7 +38,8 @@ public class GenScript : MonoBehaviour
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Depth;
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
         ball.transform.position = new Vector3(30, 70, resolution.y);
-        seed = Random.Range(-10000f, 10000f);
+        seedx = Random.Range(-100f, 100f);
+        seedy = Random.Range(-100f, 100f);
         StartCoroutine(BuildTerrain());
     }
 
@@ -81,7 +85,7 @@ public class GenScript : MonoBehaviour
             GameObject newTerrain = Terrain.CreateTerrainGameObject(datas[_dataID]);
             newTerrain.AddComponent(typeof(TerrainInit));
             newTerrain.GetComponent<TerrainInit>().InitTerrain(noiseMaterial, materials[_dataID], 
-            resolution, nb, seed, koeff, fo, water,grass , grassTreshold, ruble);
+            resolution, nb, seedx, seedy, koeff, fo, water,grass , grassTreshold, ruble);
             terrains.Add(nb, newTerrain);
             _dataID = (_dataID + 1) % 12;
         }
@@ -89,7 +93,7 @@ public class GenScript : MonoBehaviour
     }
 
     private void StartGame()
-    {
+    {   
         canvas.MenuUIActive();
     }
     IEnumerator BuildTerrain()
