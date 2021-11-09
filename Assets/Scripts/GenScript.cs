@@ -22,7 +22,7 @@ public class GenScript : MonoBehaviour
     [FormerlySerializedAs("FO")] public GameObject fo;
     public GameObject water;
     [FormerlySerializedAs("HeightMaps")] public Texture2D[] heightMaps = new Texture2D[2];
-    [FormerlySerializedAs("Seed")] public float seed;
+    [FormerlySerializedAs("Seed")] public int seed;
     private Vector2Int _nowPos, _prePos = new Vector2Int(0, 0);
     public Dictionary<Vector2Int, GameObject> terrains = new Dictionary<Vector2Int, GameObject>();
     private int _dataID = 0;
@@ -35,7 +35,7 @@ public class GenScript : MonoBehaviour
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Depth;
         gameObject.GetComponent<Camera>().clearFlags = CameraClearFlags.Skybox;
         ball.transform.position = new Vector3(30, 70, resolution.y);
-        seed = Random.Range(-10000f, 10000f);
+        seed = (int)Random.Range(1f, 10000f);
         StartCoroutine(BuildTerrain());
     }
 
@@ -80,7 +80,7 @@ public class GenScript : MonoBehaviour
         {
             GameObject newTerrain = Terrain.CreateTerrainGameObject(datas[_dataID]);
             newTerrain.AddComponent(typeof(TerrainInit));
-            seed = 0;
+            //seed = 0;
             newTerrain.GetComponent<TerrainInit>().InitTerrain(noiseMaterial, materials[_dataID], 
             resolution, nb, seed, koeff, fo, water,grass , grassTreshold, ruble);
             terrains.Add(nb, newTerrain);

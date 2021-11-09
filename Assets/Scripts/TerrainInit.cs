@@ -12,7 +12,7 @@ public class TerrainInit : MonoBehaviour
     private Material _terrainMaterial;
     private Vector2Int _resolution;
     private Vector2Int _offset;
-    private float _seed;
+    private int _seed;
     private float _grassTreshold;
     private int _koeff;
     private GameObject _refFo;
@@ -36,10 +36,11 @@ public class TerrainInit : MonoBehaviour
         {
             _grassHPBatchRoot = grasses[1];
             _grassLPBatchRoot = grasses[0];
-        }
+            }
+        
     }
     public void InitTerrain(Material ns, Material tr,
-        Vector2Int res, Vector2Int oft, float sd, int kf, GameObject rFo, GameObject rWater, GameObject gr, float gt, GameObject rb)
+        Vector2Int res, Vector2Int oft, int sd, int kf, GameObject rFo, GameObject rWater, GameObject gr, float gt, GameObject rb)
     {
         _noiseMaterial = ns; _terrainMaterial = tr;
         _resolution = res; _offset = oft; _seed = sd; _koeff = kf; _refFo = rFo;
