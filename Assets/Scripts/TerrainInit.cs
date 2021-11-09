@@ -132,6 +132,7 @@ public class TerrainInit : MonoBehaviour
                 }
                 if(Random.value > 0.9995f) {
                     GameObject rbl = Instantiate(_ruble);
+                    _fOs.Add(rbl);
                     rbl.transform.position = transform.position + new Vector3(x * _koeff, height - 0.5f, y * _koeff);  
                 }
                 if ((x + y % 2) % 2 == 0 & y % 2 == 0)
