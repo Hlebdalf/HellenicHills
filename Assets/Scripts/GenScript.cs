@@ -80,6 +80,7 @@ public class GenScript : MonoBehaviour
         {
             GameObject newTerrain = Terrain.CreateTerrainGameObject(datas[_dataID]);
             newTerrain.AddComponent(typeof(TerrainInit));
+            seed = 0;
             newTerrain.GetComponent<TerrainInit>().InitTerrain(noiseMaterial, materials[_dataID], 
             resolution, nb, seed, koeff, fo, water,grass , grassTreshold, ruble);
             terrains.Add(nb, newTerrain);
