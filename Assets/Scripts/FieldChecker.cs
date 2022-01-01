@@ -20,6 +20,8 @@ public class FieldChecker : MonoBehaviour
     public GameObject magazine;
     public GameObject volume;
     public GameObject panel;
+    public ParticleSystem healthParticle;
+    public ParticleSystem chargeParticle;
     public bool _upOrDown = true;
     public float fuel = 1000;
     public float fuelDecr = 2;
@@ -42,6 +44,7 @@ public class FieldChecker : MonoBehaviour
     private float _fuelDecr;
     private float _healthIncr = 0;
     private float _fuelIncr = 0;
+    public SphereCollider colliderTwo;
 
 
     private void Start()
@@ -70,7 +73,9 @@ public class FieldChecker : MonoBehaviour
         GetComponent<Rigidbody>().isKinematic = true;
         SaveParts();
         canvas.GetComponent<Animator>().Play("GameOver");
+        colliderTwo.enabled = false;
         GetComponent<FieldChecker>().enabled = false;
+
     }
     public void PauseGame()
     {
@@ -92,13 +97,16 @@ public class FieldChecker : MonoBehaviour
         }
     }
     public void GameStart()
-    {
+    {   
+        upSnap.TransitionTo(0.3f);
+        VolumeSetActive();
+        Mixer.audioMixer.SetFloat("MasterLowPass", 20000);
         StartCoroutine(Consumption());
         StartCoroutine(Restore());
         transform.GetChild(0).GetComponent<AudioSource>().Play();
         _healthIncr = 0;
         _fuelIncr = 0;
-        GetComponent<SphereCollider>().enabled = true;
+        colliderTwo.enabled = true;
     }
 
     private void FieldObjEvent(string type, Collider other = null)
@@ -109,9 +117,9 @@ public class FieldChecker : MonoBehaviour
             case "Chargers":
                 break;
             case "Missions":
-                GetComponent<Rigidbody>().isKinematic = false;
+                Camera.main.GetComponent<Storytell>().UnlockStory();
                 break;
-            case "Parts":
+            case "Ruble(Clone)":
                 PartsCollect();
                 other.enabled = false;
                 other.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = coinUsedMaterial;
@@ -131,7 +139,7 @@ public class FieldChecker : MonoBehaviour
     private void PartsCollect()
     {
         audio.CoinSound();
-        partsAll += (int)Random.Range(0, 10.0f);
+        partsAll++;
         partsAllText.text = "₽: " + partsAll.ToString();
         SaveParts();
     }
@@ -192,7 +200,8 @@ public class FieldChecker : MonoBehaviour
                 }
                 _upOrDown = true;
             }
-
+            healthParticle.emissionRate = _healthIncr * 4;
+            chargeParticle.emissionRate = _fuelIncr * 4;
             yield return new WaitForFixedUpdate();
         }
     }
@@ -235,7 +244,6 @@ public class FieldChecker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.CompareTag("Decorate"))
         {
             FieldObjEvent("Decorate");
@@ -245,33 +253,21 @@ public class FieldChecker : MonoBehaviour
             FieldObjEvent(other.name, other);
             if (other.name == "Repairs")
             {
-                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
+                other.GetComponent<InterFO>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
                 _healthIncr += healthIncr;
             }
             if (other.name == "Chargers")
             {
                 _fuelIncr += fuelIncr;
-                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
+                other.GetComponent<InterFO>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().RotateUp();
             }
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Interactive"))
-        {
-            if (other.name == "Repairs")
-            {
-                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
-                _healthIncr -= healthIncr;
-            }
-            if (other.name == "Chargers")
-            {
-                other.GetComponent<Repairs>().transform.GetChild(0).GetChild(0).gameObject.GetComponent<RepairUp>().DestroyLine();
-                _fuelIncr -= fuelIncr;
-            }
-
-        }
+    public void ChangeRepairChargeVelocity(string target)
+    {   
+        if (target == "Charger" ) _fuelIncr -= fuelIncr;
+        else if (target == "Repair") _healthIncr -= healthIncr;
     }
 
     void Update()
@@ -300,5 +296,13 @@ public class FieldChecker : MonoBehaviour
             }
         }
         //DEBUG TOOL
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.gameObject.CompareTag("Decorate"))
+        {
+            FieldObjEvent("Decorate");
+        }
     }
 }

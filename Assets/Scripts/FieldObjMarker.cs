@@ -23,9 +23,6 @@ public class FieldObjMarker : MonoBehaviour
             case "Missions":
                 _color = Color.yellow;
                 break;
-            case "Parts":
-                _color = Color.white;
-                break;
             case "Repairs":
                 _color = Color.green;
                 break;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class RepairUp : MonoBehaviour
 {
     private Transform _ball; private Vector3 _forward;
+    private GameObject ball;
     private LineRenderer line;
     private Vector2 _selfPos;
     private void Start()
@@ -12,6 +13,7 @@ public class RepairUp : MonoBehaviour
         _selfPos = new Vector2(transform.position.x, transform.position.z);
         _forward = transform.forward;
         _ball = Camera.main.transform.parent;
+        ball = GameObject.FindGameObjectWithTag("Ball");
         line = transform.GetChild(0).gameObject.GetComponent<LineRenderer>();
     }
     public void RotateUp()
@@ -36,13 +38,22 @@ public class RepairUp : MonoBehaviour
             Vector2 _targetPos = new Vector2(_ball.position.x, _ball.position.z) - _selfPos;
             Vector2 _forward2 = new Vector2(transform.forward.x, transform.forward.z);
             float _angle = SignedAngleBetween(_forward2, _targetPos, new Vector3(0, 1, 0));
-            if (line != null)
+            if (Vector3.Magnitude(_targetPos) > 37)
             {
-                line.SetPosition(0, transform.position);
-                line.SetPosition(1, _ball.position);
+                ball.GetComponent<FieldChecker>().ChangeRepairChargeVelocity(transform.parent.name);
+                DestroyLine();
+                break;
             }
-            yield return new WaitForSeconds(0.01f);
-            transform.Rotate(0, _angle / 3, 0);
+            else
+            {
+                if (line != null)
+                {
+                    line.SetPosition(0, transform.position);
+                    line.SetPosition(1, _ball.position);
+                }
+                transform.Rotate(0, _angle / 3, 0);
+            }
+            yield return new WaitForSeconds(0.0083f);
         }
     }
 

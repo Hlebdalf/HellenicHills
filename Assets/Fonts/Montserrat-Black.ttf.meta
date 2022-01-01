@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 212909ec4ecd6ac46841338ed3b2e9a3
+guid: ce09ca707d2dc6c45a4d13b23edda593
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Proxima Nova
+  - Montserrat
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

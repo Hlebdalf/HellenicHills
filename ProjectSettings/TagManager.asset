@@ -10,11 +10,13 @@ TagManager:
   - Water
   - Interactive
   - Ghost
+  - Grass
+  - Particle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Rubles
   - Water
   - UI
   - BloomLayer

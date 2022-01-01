@@ -12,17 +12,44 @@ public class TerrainInit : MonoBehaviour
     private Material _terrainMaterial;
     private Vector2Int _resolution;
     private Vector2Int _offset;
-    private float _seed;
+    private float _seedx;
+    private float _seedy;
+    private float _grassTreshold;
     private int _koeff;
     private GameObject _refFo;
     private GameObject _water;
+    private GameObject _grass;
+    private GameObject _ruble;
+    private GameObject _grassLPBatchRoot;
+    private GameObject _grassHPBatchRoot;
+    private List<GameObject> _grassesLP = new List<GameObject>();
+    private List<GameObject> _grassesHP = new List<GameObject>();
+    private void Awake()
+    {   
+        
+        GameObject[] grasses = GameObject.FindGameObjectsWithTag("Grass");
+        if(grasses[0].name == "GrassHP")
+        {
+            _grassHPBatchRoot = grasses[0];
+            _grassLPBatchRoot = grasses[1];
+        }
+        else
+        {
+            _grassHPBatchRoot = grasses[1];
+            _grassLPBatchRoot = grasses[0];
+            }
+        
+    }
     public void InitTerrain(Material ns, Material tr,
-        Vector2Int res, Vector2Int oft, float sd, int kf, GameObject rFo, GameObject rWater)
+        Vector2Int res, Vector2Int oft, float sdx, float sdy, int kf, GameObject rFo, GameObject rWater, GameObject gr, float gt, GameObject rb)
     {
         _noiseMaterial = ns; _terrainMaterial = tr;
-        _resolution = res; _offset = oft; _seed = sd; _koeff = kf; _refFo = rFo;
+        _resolution = res; _offset = oft; _seedx = sdx; _seedy = sdy; _koeff = kf; _refFo = rFo;
         _water = Instantiate(rWater);
+        _grass = gr;
         rWater.transform.position = new Vector3((_offset.x + 0.5f) * _resolution.x, 35, (_offset.y + 0.5f) * _resolution.x);
+        _grassTreshold = gt;
+        _ruble = rb;
         StartCoroutine(Build());
     }
     void OnDestroy()
@@ -34,14 +61,24 @@ public class TerrainInit : MonoBehaviour
         {
             DestroyImmediate(it, true);
         }
+        foreach (GameObject it in _grassesLP)
+        {
+            DestroyImmediate(it, true);
+        }
+        foreach (GameObject it in _grassesHP)
+        {
+            DestroyImmediate(it, true);
+        }
+        _grassesLP.Clear();
+        _grassesHP.Clear();
         _fOs.Clear();
     }
 
 
     private IEnumerator Build()
     {
-        _noiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", _offset.x + _seed);
-        _noiseMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", _offset.y);
+        _noiseMaterial.SetFloat("Vector1_2890a1d24f7f415986e2ea5c2f0e3b46", _offset.x +_seedx);
+        _noiseMaterial.SetFloat("Vector1_fd0d843ba4ac45c2bd344a013bfa0ab7", _offset.y + _seedy);
         RenderTexture renderTexture = RenderTexture.GetTemporary(_resolution.y + 1, _resolution.y + 1);
         Graphics.Blit(null, renderTexture, _noiseMaterial);
         texture = new Texture2D(_resolution.y + 1, _resolution.y + 1);
@@ -78,22 +115,47 @@ public class TerrainInit : MonoBehaviour
         gameObject.GetComponent<Terrain>().terrainData.size = new Vector3((_resolution.x) * _koeff, 100, (_resolution.x) * _koeff);
         gameObject.GetComponent<Terrain>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         gameObject.GetComponent<Terrain>().materialTemplate.mainTexture = texture;
-        for (int x = 0; x < _resolution.x / 2; x++)
+        for (int x = 0; x < _resolution.x; x++)
         {
-
-            for (int y = 0; y < _resolution.y / 2; y++)
+            for (int y = 0; y < _resolution.y; y++)
             {
-                if (Random.value > 0.992f)
+                float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x / (float)_resolution.x, y / (float)_resolution.y);
+                Vector3 normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x / (float)_resolution.x, y / (float)_resolution.y);
+                Color cl = texture.GetPixel(x, y);
+                if (Random.value > _grassTreshold && height > 37 && !(texture.GetPixel(x, y).r > 0.65f && texture.GetPixel(x, y).g > 0.65f && texture.GetPixel(x, y).b > 0.65f))
+                {   
+                    GameObject gr = Instantiate(_grass);
+                    gr.transform.position = transform.position + new Vector3(x * _koeff, height - 0.5f, y * _koeff);  
+                    gr.transform.LookAt(normal + gr.transform.position - gr.transform.up);
+                    _grassesHP.Add(gr.transform.GetChild(0).gameObject);
+                    _grassesLP.Add(gr.transform.GetChild(1).gameObject);
+                }
+                if(Random.value > 0.9995f) {
+                    GameObject rbl = Instantiate(_ruble);
+                    _fOs.Add(rbl);
+                    rbl.transform.position = transform.position + new Vector3(x * _koeff, height - 0.5f, y * _koeff);  
+                }
+                if ((x + y % 2) % 2 == 0 & y % 2 == 0)
                 {
-                    yield return null;
-                    GameObject fo = Instantiate(_refFo);
-                    float height = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedHeight(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
-                    fo.transform.position = transform.position + new Vector3(x * _koeff * 2, height, y * 2 * _koeff);
-                    fo.GetComponent<FieldObject>().normal = gameObject.GetComponent<Terrain>().terrainData.GetInterpolatedNormal(x * 2 / (float)_resolution.x, y * 2 / (float)_resolution.y);
-                    _fOs.Add(fo);
+                    if (Random.value > 0.992f)
+                    {
+                        yield return null;
+                        GameObject fo = Instantiate(_refFo);
+
+                        fo.transform.position = transform.position + new Vector3(x * _koeff, height, y * _koeff);
+                        fo.GetComponent<FieldObject>().normal = normal;
+                        _fOs.Add(fo);
+                        y++;
+                    }
                 }
             }
         }
+        
+        /*StaticBatchingUtility.Combine(_grassesLP.ToArray(), _grassLPBatchRoot);
+        StaticBatchingUtility.Combine(_grassesHP.ToArray(), _grassHPBatchRoot);
+        _grassesLP.Clear(); //BATCHING FEATURE
+        _grassesHP.Clear();*/
+        GetComponent<TerrainCollider>().enabled = true;
         yield return null;
     }
 }
