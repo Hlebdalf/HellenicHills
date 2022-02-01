@@ -116,10 +116,13 @@ public class GenScript : MonoBehaviour
         }
     }
 
+
+
     public void SetGrassTreshold(float val)
     {
         grassTreshold = (1 - val) / 50 + 0.98f;
     }
+
 }
 
 

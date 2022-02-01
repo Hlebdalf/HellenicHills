@@ -22,11 +22,12 @@ public class TerrainInit : MonoBehaviour
     private GameObject _ruble;
     private GameObject _grassLPBatchRoot;
     private GameObject _grassHPBatchRoot;
+    private Transform _ball;
     private List<GameObject> _grassesLP = new List<GameObject>();
     private List<GameObject> _grassesHP = new List<GameObject>();
     private void Awake()
-    {   
-        
+    {
+        _ball = Camera.main.transform.parent;
         GameObject[] grasses = GameObject.FindGameObjectsWithTag("Grass");
         if(grasses[0].name == "GrassHP")
         {
@@ -150,12 +151,39 @@ public class TerrainInit : MonoBehaviour
                 }
             }
         }
-        
         /*StaticBatchingUtility.Combine(_grassesLP.ToArray(), _grassLPBatchRoot);
         StaticBatchingUtility.Combine(_grassesHP.ToArray(), _grassHPBatchRoot);
         _grassesLP.Clear(); //BATCHING FEATURE
         _grassesHP.Clear();*/
         GetComponent<TerrainCollider>().enabled = true;
+        StartCoroutine(SinusOptimize());
         yield return null;
+    }
+
+    IEnumerator SinusOptimize()
+    {
+        
+        
+        while (true)
+        {
+            Vector3 ballPosition = new Vector3(_ball.transform.position.x - 50, 0, _ball.transform.position.z);
+            foreach (GameObject it in _fOs)
+            {
+                if (it)
+                {
+                    Vector3 itPosition = new Vector3(it.transform.position.x, 0, it.transform.position.z);
+                    if (Mathf.Abs((itPosition.z - ballPosition.z) / (itPosition.x - ballPosition.x)) >= 2f ||
+                        Vector3.Magnitude(ballPosition - itPosition) >= 500 ||   ballPosition.x - itPosition.x >= 60)
+                    {
+                        it.SetActive(false);
+                    }
+                    else
+                    {
+                        it.SetActive(true);
+                    }
+                }
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 }
