@@ -10,7 +10,9 @@ public class Chunk : MonoBehaviour
     private GameObject _terrain;
     private TerrainData _terrainData;
     private Texture2D _heightMap;
+    private Texture2D _colorMap;
     private Material _noiseMaterial;
+    private Material _colorMaterial;
     private Vector2 _offset;
     public List<GameObject> FieldObjects = new List<GameObject>();
     private List<GameObject> trash = new List<GameObject>();
@@ -19,7 +21,8 @@ public class Chunk : MonoBehaviour
         _offset = new Vector2(transform.position.x / (resolution.x  +1), transform.position.z /( resolution.y+1));
         LoadResources();
         BakeHeights();
-        BuildTerrain();
+        BakeColor();
+        StartCoroutine(BuildTerrain());
     }
     private void LoadResources()
     {
@@ -31,7 +34,7 @@ public class Chunk : MonoBehaviour
         FieldObjects.Add(Resources.Load("Stone3") as GameObject);
     }
 
-    private void BuildTerrain()
+    private IEnumerator BuildTerrain()
     {
         float[,] heights = new float[resolution.y + 1, resolution.y + 1];
         for (int p = 0; p < resolution.y + 1; p++)
@@ -50,6 +53,9 @@ public class Chunk : MonoBehaviour
         _terrain.transform.position = gameObject.transform.position;
         _terrain.transform.parent = gameObject.transform;
         Terrain tr = transform.GetChild(0).GetComponent<Terrain>();
+        Material mt = new Material(Shader.Find("Unlit/Texture"));
+        mt.mainTexture = _colorMap;
+        tr.materialTemplate = mt;
         
         for (int x = 0; x < resolution.y + 1; x++)
         {
@@ -58,6 +64,7 @@ public class Chunk : MonoBehaviour
                 float coin = Random.value;
                 if (coin > 0.975f)
                 {
+                    yield return null;
                     int coin2 = (int)Mathf.Round(Random.value * 5);
                     float height = tr.terrainData.GetInterpolatedHeight(x / (float)resolution.x, y / (float)resolution.y);
                     Vector3 normal = tr.terrainData.GetInterpolatedNormal(x / (float)resolution.x, y / (float)resolution.y);
@@ -109,12 +116,29 @@ public class Chunk : MonoBehaviour
         _noiseMaterial = Resources.Load("NoiseMaterial") as Material;
         _noiseMaterial.SetFloat("atrey", _offset.x + 100);
         _noiseMaterial.SetFloat("persey", _offset.y + 100);
-        _noiseMaterial = Resources.Load("NoiseMaterial") as Material;
         _heightMap = new Texture2D(resolution.y + 1, resolution.y + 1);      
         RenderTexture renderTexture = RenderTexture.GetTemporary(resolution.y + 1, resolution.y + 1);
         Graphics.Blit(null, renderTexture, _noiseMaterial);
         RenderTexture.active = renderTexture;
         _heightMap.ReadPixels(new Rect(Vector2.zero, new Vector2Int(resolution.y + 1, resolution.y + 1)), 0, 0);
         _heightMap.Apply();
+        RenderTexture.active = null;
+        RenderTexture.ReleaseTemporary(renderTexture);
+    }
+
+    private void BakeColor()
+    {
+        int k = 4;
+        _colorMaterial = Resources.Load("TerrainMaterial") as Material;
+        _colorMaterial.SetFloat("atrey", _offset.x+ 100);
+        _colorMaterial.SetFloat("persey", _offset.y + 100);
+        _colorMap = new Texture2D(k * resolution.y + 1, k * resolution.y + 1);
+        RenderTexture renderTexture = RenderTexture.GetTemporary(k * resolution.y + 1, k * resolution.y + 1);
+        Graphics.Blit(null, renderTexture, _colorMaterial);
+        RenderTexture.active = renderTexture;
+        _colorMap.ReadPixels(new Rect(Vector2.zero, new Vector2Int(k * resolution.y + 1, k * resolution.y + 1)), 0, 0);
+        _colorMap.Apply();
+        RenderTexture.active = null;
+        RenderTexture.ReleaseTemporary(renderTexture);
     }
 }
