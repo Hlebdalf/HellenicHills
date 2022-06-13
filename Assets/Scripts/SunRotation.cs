@@ -24,7 +24,6 @@ public class SunRotation : MonoBehaviour
     private GameObject _moon;
     private Light _moonLight;
     private Light _sunLight;
-    private Light _ballLight;
     private float _angle;
     private float _angle1;
     [SerializeField]
@@ -38,12 +37,10 @@ public class SunRotation : MonoBehaviour
         _moon = transform.GetChild(1).gameObject;
         _sunLight = _sun.GetComponent<Light>();
         _moonLight = _moon.GetComponent<Light>();
-        _ballLight = ball.GetComponent<Light>();
         _myRate = rate;
         _mySpeed = speed;
         transform.Rotate(coin * 180 + 90, 0, 0);
         StartCoroutine(RotatorCoroutine());
-
     }
 
     private IEnumerator RotatorCoroutine()
@@ -66,11 +63,9 @@ public class SunRotation : MonoBehaviour
                 upOrDown = false;
                 _sun.SetActive(false);
                 _moon.SetActive(true);
-                ball.SetActive(true);
             }
             else if (_angle > 0 && !upOrDown)
             {
-                ball.SetActive(false);
                 _sun.SetActive(true);
                 _moon.SetActive(false);
                 upOrDown = true;
@@ -97,7 +92,7 @@ public class SunRotation : MonoBehaviour
             }
             _backGround = new Color(_angle, _angle, _angle);
             transform.Rotate(_mySpeed, 0, 0);
-            yield return new WaitForSeconds(1 / _myRate);
+            yield return new WaitForFixedUpdate();
         }
     }
 }

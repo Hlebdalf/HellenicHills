@@ -12,6 +12,7 @@ TagManager:
   - Ghost
   - Grass
   - Particle
+  - Baker
   layers:
   - Default
   - TransparentFX
