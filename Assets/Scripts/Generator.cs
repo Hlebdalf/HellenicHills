@@ -9,10 +9,14 @@ public class Generator : MonoBehaviour
 {
     public Dictionary<Vector2Int, GameObject> terrains = new Dictionary<Vector2Int, GameObject>();
     private Vector2Int _nowPos;
-    private Vector2Int _prePos = new Vector2Int(0, 0);
+    private Vector2Int _prePos;
 
-    void FixedUpdate()
+    private void Start()
     {
+        _prePos = new Vector2Int(-Chunk.resolution.x, 0);
+    }
+    private void FixedUpdate()
+    {      
         _nowPos = new Vector2Int((int)Mathf.Floor(transform.position.x / Chunk.resolution.x), (int)Mathf.Floor(transform.position.z / Chunk.resolution.y));
         if (_nowPos != _prePos)
         {
