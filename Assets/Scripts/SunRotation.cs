@@ -25,7 +25,6 @@ public class SunRotation : MonoBehaviour
     private Light _moonLight;
     private Light _sunLight;
     private float _angle;
-    private float _angle1;
     [SerializeField]
     private bool upOrDown = true;
     private Vector3 _up;
@@ -53,7 +52,6 @@ public class SunRotation : MonoBehaviour
             } 
             else
             {
-                Debug.Log(Mathf.Asin(transform.up.y));
                 if (upOrDown) _angle = 180;
                 else _angle = 0;
 

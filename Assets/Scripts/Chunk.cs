@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Chunk : MonoBehaviour
 {
-    private Vector2Int resolution = new Vector2Int(64, 64);
+    public static  Vector2Int resolution = new Vector2Int(64, 64);
     private float height = 30;
     private float pixelError = 25;
     private GameObject _terrain;
@@ -14,7 +14,6 @@ public class Chunk : MonoBehaviour
     private Vector2 _offset;
     private void Start()
     {
-        Debug.Log(transform.position);
         _offset = new Vector2(transform.position.x / (resolution.x  +1), transform.position.z /( resolution.y+1));
         BakeHeights();
         BuildTerrain();
