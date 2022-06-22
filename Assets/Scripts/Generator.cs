@@ -8,16 +8,18 @@ using UnityEngine.UI;
 public class Generator : MonoBehaviour
 {
     public Dictionary<Vector2Int, GameObject> terrains = new Dictionary<Vector2Int, GameObject>();
+    private Vector2Int _resolution;
     private Vector2Int _nowPos;
     private Vector2Int _prePos;
 
     private void Start()
     {
-        _prePos = new Vector2Int(-Chunk.resolution.x, 0);
+        _resolution = Settings.TerrainResolution;
+        _prePos = new Vector2Int(-_resolution.x, 0);
     }
     private void FixedUpdate()
     {      
-        _nowPos = new Vector2Int((int)Mathf.Floor(transform.position.x / Chunk.resolution.x), (int)Mathf.Floor(transform.position.z / Chunk.resolution.y));
+        _nowPos = new Vector2Int((int)Mathf.Floor(transform.position.x / _resolution.x), (int)Mathf.Floor(transform.position.z / _resolution.y));
         if (_nowPos != _prePos)
         {
             _prePos = _nowPos;
@@ -49,7 +51,7 @@ public class Generator : MonoBehaviour
         Vector2Int[] neighbours = GetNeighbours(_nowPos);
         foreach (Vector2Int nb in neighbours)
         {
-            GameObject terrainObject = Instantiate(new GameObject(), new Vector3(nb.x * Chunk.resolution.x, 0, nb.y * Chunk.resolution.y), Quaternion.identity);
+            GameObject terrainObject = Instantiate(new GameObject(), new Vector3(nb.x * _resolution.x, 0, nb.y * _resolution.y), Quaternion.identity);
             terrainObject.AddComponent<Chunk>();
             terrains.Add(nb, terrainObject);
         }
@@ -61,7 +63,7 @@ public class Generator : MonoBehaviour
         List<Vector2Int> keys = terrains.Keys.ToList();
         for (int i = 0; i < keys.Count; i++)
         {
-            if (terrains[keys[i]].transform.position.x < transform.position.x - Chunk.resolution.y - 10)
+            if (terrains[keys[i]].transform.position.x < transform.position.x - _resolution.y - 10)
             {          
                 DestroyImmediate(terrains[keys[i]].transform.parent, true);
                 DestroyImmediate(terrains[keys[i]], true);
