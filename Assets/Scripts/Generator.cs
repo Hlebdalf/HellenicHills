@@ -20,7 +20,7 @@ public class Generator : MonoBehaviour
         _nowPos = new Vector2Int((int)Mathf.Floor(transform.position.x / Chunk.resolution.x), (int)Mathf.Floor(transform.position.z / Chunk.resolution.y));
         if (_nowPos != _prePos)
         {
-            _prePos = new Vector2Int(0, 0);
+            _prePos = _nowPos;
             SpawnTerrains();
             DestroyOldTerrains();
         }

@@ -108,8 +108,8 @@ Material:
     - _ZWrite: 1
     - _x: 100
     - _y: 100
-    - atrey: 100.98462
-    - persey: 97.04615
+    - atrey: 105.90769
+    - persey: 100.98462
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 0}

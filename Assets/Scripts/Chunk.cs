@@ -8,6 +8,7 @@ public class Chunk : MonoBehaviour
     private float height = 22;
     private float pixelError = 25;
     private GameObject _terrain;
+    private GameObject _water;
     private TerrainData _terrainData;
     private Texture2D _heightMap;
     private Texture2D _colorMap;
@@ -32,6 +33,7 @@ public class Chunk : MonoBehaviour
         FieldObjects.Add(Resources.Load("Stone1") as GameObject);
         FieldObjects.Add(Resources.Load("Stone2") as GameObject);
         FieldObjects.Add(Resources.Load("Stone3") as GameObject);
+        _water = Resources.Load("WaterPlane") as GameObject;
     }
 
     private IEnumerator BuildTerrain()
@@ -53,7 +55,9 @@ public class Chunk : MonoBehaviour
         _terrain.transform.position = gameObject.transform.position;
         _terrain.transform.parent = gameObject.transform;
         Terrain tr = transform.GetChild(0).GetComponent<Terrain>();
-        Material mt = new Material(Shader.Find("Unlit/Texture"));
+        Material mt = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+        GameObject wt = Instantiate(_water, new Vector3((_offset.x + 0.5f) * resolution.x, 7, (_offset.y + 0.5f) * resolution.y), Quaternion.identity);
+        trash.Add(wt);
         mt.mainTexture = _colorMap;
         tr.materialTemplate = mt;
         
@@ -62,7 +66,7 @@ public class Chunk : MonoBehaviour
             for (int y = 0; y < resolution.y + 1; y++)
             {
                 float coin = Random.value;
-                if (coin > 0.975f)
+                if (coin > 0.985f)
                 {
                     yield return null;
                     int coin2 = (int)Mathf.Round(Random.value * 5);
