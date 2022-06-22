@@ -124,8 +124,10 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 0
     - _ZWrite: 1
-    - atrey: 105.90769
-    - persey: 100.98462
+    - _scale: 0
+    - atrey: 109.69697
+    - persey: 100.969696
+    - tesey: 10
     m_Colors:
     - _BaseColor: {r: 0.34901962, g: 0.44705886, b: 0.27058825, a: 0}
     - _Color: {r: 0.34901962, g: 0.44705886, b: 0.27058825, a: 0}

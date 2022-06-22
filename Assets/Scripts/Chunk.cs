@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Chunk : MonoBehaviour
 {
-    public static  Vector2Int resolution = new Vector2Int(64, 64);
+    public static  Vector2Int resolution = new Vector2Int(32, 32);
     private float height = 22;
     private float pixelError = 25;
     private GameObject _terrain;
@@ -20,6 +20,7 @@ public class Chunk : MonoBehaviour
     private void Start()
     {
         _offset = new Vector2(transform.position.x / (resolution.x  +1), transform.position.z /( resolution.y+1));
+        //height = resolution.x / 2;
         LoadResources();
         BakeHeights();
         BakeColor();
@@ -57,6 +58,7 @@ public class Chunk : MonoBehaviour
         Terrain tr = transform.GetChild(0).GetComponent<Terrain>();
         Material mt = new Material(Shader.Find("Universal Render Pipeline/Lit"));
         GameObject wt = Instantiate(_water, new Vector3((_offset.x + 0.5f) * resolution.x, 7, (_offset.y + 0.5f) * resolution.y), Quaternion.identity);
+        wt.transform.localScale = wt.transform.localScale * resolution.y / 64;
         trash.Add(wt);
         mt.mainTexture = _colorMap;
         tr.materialTemplate = mt;
@@ -120,6 +122,7 @@ public class Chunk : MonoBehaviour
         _noiseMaterial = Resources.Load("NoiseMaterial") as Material;
         _noiseMaterial.SetFloat("atrey", _offset.x + 100);
         _noiseMaterial.SetFloat("persey", _offset.y + 100);
+        _noiseMaterial.SetFloat("tesey", resolution.y / 3);
         _heightMap = new Texture2D(resolution.y + 1, resolution.y + 1);      
         RenderTexture renderTexture = RenderTexture.GetTemporary(resolution.y + 1, resolution.y + 1);
         Graphics.Blit(null, renderTexture, _noiseMaterial);
@@ -136,6 +139,7 @@ public class Chunk : MonoBehaviour
         _colorMaterial = Resources.Load("TerrainMaterial") as Material;
         _colorMaterial.SetFloat("atrey", _offset.x+ 100);
         _colorMaterial.SetFloat("persey", _offset.y + 100);
+        _colorMaterial.SetFloat("tesey", resolution.y/3);
         _colorMap = new Texture2D(k * resolution.y + 1, k * resolution.y + 1);
         RenderTexture renderTexture = RenderTexture.GetTemporary(k * resolution.y + 1, k * resolution.y + 1);
         Graphics.Blit(null, renderTexture, _colorMaterial);
